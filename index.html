@@ -48,7 +48,7 @@ body::before{content:"";position:fixed;inset:-16%;background:var(--aur);z-index:
 
 #app{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;overflow:hidden}
 #side{width:100%;height:100%;position:relative;flex:none;overflow:hidden}
-.pg{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px calc(env(safe-area-inset-bottom,0px) + 104px);display:none}
+.pg{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px calc(env(safe-area-inset-bottom,0px) + 84px);display:none}
 .pg.on{display:block}
 h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .top{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 12px;gap:8px}
@@ -98,11 +98,11 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .mention{color:#7ee8ff;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .mw:not(.me) .mention{color:var(--ac)}
 
-#tb{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);transform:translateX(-50%);display:flex;padding:6px;border-radius:32px;z-index:4}
-#tb button{width:76px;height:54px;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--mu);position:relative;z-index:1}
+#tb{position:absolute;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom,8px));display:grid;grid-template-columns:repeat(4,1fr);padding:5px;border-radius:30px;z-index:4}
+#tb button{width:100%;height:54px;border-radius:25px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11.5px;color:var(--mu);position:relative;z-index:1}
 #tb .on{color:var(--tx);font-weight:600}
-#ind{position:absolute;top:6px;left:6px;width:76px;height:54px;border-radius:26px;background:var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.45);transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
-#bd{position:absolute;top:4px;left:54px;min-width:18px;height:18px;border-radius:9px;background:#ff4d6d;color:#fff;font-size:11px;font-weight:700;display:none;place-items:center;padding:0 5px;z-index:2}
+#ind{position:absolute;top:5px;left:5px;width:calc((100% - 10px)/4);height:54px;border-radius:25px;background:var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.45);transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
+#bd{position:absolute;top:6px;right:22%;min-width:18px;height:18px;border-radius:9px;background:#ff4d6d;color:#fff;font-size:11px;font-weight:700;display:none;place-items:center;padding:0 5px;z-index:2}
 
 #chat{position:absolute;inset:0;z-index:5;background:var(--wimg),var(--wp),var(--bg);background-size:cover,auto,auto;background-position:center;transform:translateX(102%);transition:transform .36s cubic-bezier(.2,.86,.2,1);overflow:hidden}
 #chat::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--wpdim));pointer-events:none;z-index:0}
@@ -123,7 +123,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 #sq{position:absolute;top:calc(env(safe-area-inset-top,0px) + 70px);left:14px;right:14px;z-index:4;display:none;align-items:center;gap:8px;border-radius:20px;padding:0 14px}
 #sq input{flex:1;height:42px}
 
-#ms{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 78px) 12px calc(env(safe-area-inset-bottom,0px) + 86px)}
+#ms{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 76px) 12px calc(env(safe-area-inset-bottom,0px) + 74px)}
 #cv.pinned #ms{padding-top:calc(env(safe-area-inset-top,0px) + 118px)}
 .ds{text-align:center;margin:12px 0 8px}
 .ds span{display:inline-block;padding:4px 13px;border-radius:14px;font-size:12px;color:var(--mu);font-weight:500}
@@ -227,7 +227,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .stk-img{display:block;width:136px;height:136px;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
 
 #dn{position:absolute;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);width:42px;height:42px;border-radius:50%;display:none;place-items:center;z-index:3}
-#cp{position:absolute;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:4;display:flex;flex-direction:column;gap:6px}
+#cp{position:absolute;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom,8px));z-index:4;display:flex;flex-direction:column;gap:6px}
 #ab,#em{display:none;border-radius:22px;padding:8px 12px;font-size:13px}
 #ab{align-items:center;gap:8px;justify-content:space-between;animation:pop .2s}
 #ab b{color:var(--ac)}
@@ -367,7 +367,9 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 
 #call{z-index:45;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 46px) 20px calc(env(safe-area-inset-bottom,0px) + 40px);text-align:center;background:#080a14;color:#fff;overflow:hidden;transform:translateY(102%)}
 #call-bg{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(34px) brightness(.42);z-index:0}
-#call-self{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none}
+#call-remote{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;transform:none!important}
+#call-self{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);right:16px;width:108px;height:152px;border-radius:22px;object-fit:cover;z-index:4;display:none;border:2px solid rgba(255,255,255,.35);box-shadow:0 10px 28px rgba(0,0,0,.5);transform:none!important}
+.vrec-circle video,.vnote-wrap video{transform:none!important}
 .call-top,.call-bot{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;align-items:center}
 .call-ring-wrap{position:relative;display:grid;place-items:center;margin-bottom:14px}
 .call-pulse{position:absolute;width:136px;height:136px;border-radius:50%;border:2px solid rgba(255,255,255,.28);animation:cpulse 2s ease-out infinite}
@@ -695,7 +697,7 @@ if(!ST.sbKey)ST.sbKey=DEFAULT_SB_KEY;
 
 function saveAll(){
   try{
-    const safeP=P.map(p=>Object.assign({},p,{m:p.m.slice(-80).map(m=>m.src&&m.src.length>260000?Object.assign({},m,{src:''}):m)}));
+    const safeP=P.map(p=>Object.assign({},p,{m:p.m.slice(-80).map(m=>m.src&&m.src.length>950000?Object.assign({},m,{src:''}):m)}));
     ls('lunarn_chats',JSON.stringify(safeP));
     ls('lunarn_calls',JSON.stringify(LG.slice(0,30)));
     ls('lunarn_moons',String(moons));
@@ -856,7 +858,9 @@ function handleIncomingEvent(ev){
     if(m){m.t=ev.text;m.ed=1;m._edAnim=1;if(cur===p)drawMsgs();list();saveAll()}
   }else if(ev.type==='call'){
     const p=ensureUserChat(ev.sender);
-    toast(`📞 Входящий звонок от ${p.n}`);call(p,!!ev.vid,true);
+    call(p,!!ev.vid,true,ev.offer);
+  }else if(ev.type==='webrtc'){
+    handleWebRTCSignal(ev);
   }
 }
 if(bc)bc.onmessage=e=>{if(e.data)handleIncomingEvent(e.data)};
@@ -1025,7 +1029,7 @@ bindSwipeBack($('#imgv'),()=>$('#imgv').classList.remove('on'));
 function go(i){
   tabs=i;$$('.pg').forEach((p,j)=>p.classList.toggle('on',i==j));
   $$('#tb button').forEach((b,j)=>b.classList.toggle('on',i==j));
-  $('#ind').style.transform=`translateX(${i*76}px)`;
+  $('#ind').style.transform=`translateX(${i*100}%)`;
   [list,cons,logs,mset][i]();
 }
 
@@ -1543,11 +1547,11 @@ function stopAudioRec(doSend){
   }
 }
 
-let vrInt=null,vrSec=0,vrFacing='user',vrTorch=false,vrCamStream=null,vrCanvas=null,vrDrawRaf=null,vrAudioStream=null;
+let vrInt=null,vrSec=0,vrFacing='user',vrTorch=false,vrCamStream=null,vrCanvas=null,vrDrawTimer=null,vrAudioStream=null,vrActive=false;
 
 async function openVrCam(){
-  if(vrCamStream)vrCamStream.getTracks().forEach(t=>t.stop());
-  vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:360,height:360},audio:false});
+  if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}
+  vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:{ideal:320},height:{ideal:320}},audio:false});
   const vid=$('#vrec-v');vid.srcObject=vrCamStream;await vid.play();
   applyVrTorch();
 }
@@ -1558,57 +1562,67 @@ async function applyVrTorch(){
   vrec.classList.remove('flash-front');
   const track=vrCamStream&&vrCamStream.getVideoTracks()[0];
   if(track&&track.applyConstraints){
-    try{await track.applyConstraints({advanced:[{torch:vrTorch}]})}catch(e){if(vrTorch)toast('Фонарик не поддерживается на этой камере')}
+    try{await track.applyConstraints({advanced:[{torch:vrTorch}]})}catch(e){if(vrTorch)toast('Фонарик недоступен на этой камере')}
   }
 }
 
 async function startVideoCircle(){
-  vrSec=0;recChunks=[];vrTorch=false;
+  if(vrActive)return;
+  vrActive=true;vrSec=0;recChunks=[];vrTorch=false;
   $('#vrec').classList.add('on');$('#vrec').classList.remove('flash-front');
-  $('#vr-torch').classList.remove('on');$('#vrt').textContent='0:00 / 1:00';
+  $('#vr-torch').classList.remove('on');$('#vrt').textContent='0:00 / 0:30';
   $('#vr-ring').style.strokeDashoffset='816';
   try{
     await openVrCam();
-    vrAudioStream=await navigator.mediaDevices.getUserMedia({audio:true});
-    vrCanvas=document.createElement('canvas');vrCanvas.width=320;vrCanvas.height=320;
+    if(!vrActive)return;
+    vrAudioStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    if(!vrActive){stopVideoCircle(0);return}
+    vrCanvas=document.createElement('canvas');vrCanvas.width=240;vrCanvas.height=240;
     const ctx=vrCanvas.getContext('2d'),vid=$('#vrec-v');
-    const draw=()=>{
-      const vw=vid.videoWidth||320,vh=vid.videoHeight||320,s=Math.min(vw,vh);
-      ctx.drawImage(vid,(vw-s)/2,(vh-s)/2,s,s,0,0,320,320);
-      vrDrawRaf=requestAnimationFrame(draw);
-    };
-    draw();
-    const outStream=new MediaStream([...vrCanvas.captureStream(25).getVideoTracks(),...vrAudioStream.getAudioTracks()]);
-    mediaRec=new MediaRecorder(outStream);
-    mediaRec.ondataavailable=e=>{if(e.data.size)recChunks.push(e.data)};
-    mediaRec.start();
-  }catch(e){toast('Разрешите камеру и микрофон для кружков');stopVideoCircle(0);return}
+    vrDrawTimer=setInterval(()=>{
+      if(!vrActive||vid.readyState<2)return;
+      const vw=vid.videoWidth||240,vh=vid.videoHeight||240,s=Math.min(vw,vh);
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.drawImage(vid,(vw-s)/2,(vh-s)/2,s,s,0,0,240,240);
+    },50);
+    const outStream=new MediaStream([...vrCanvas.captureStream(20).getVideoTracks(),...vrAudioStream.getAudioTracks()]);
+    const mime=['video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m))||'';
+    const opts=mime?{mimeType:mime,videoBitsPerSecond:260000,audioBitsPerSecond:32000}:{videoBitsPerSecond:260000};
+    mediaRec=new MediaRecorder(outStream,opts);
+    mediaRec.ondataavailable=e=>{if(e.data&&e.data.size>0)recChunks.push(e.data)};
+    mediaRec.start(250);
+  }catch(e){
+    toast('Разрешите камеру и микрофон');stopVideoCircle(0);return;
+  }
   vrInt=setInterval(()=>{
     vrSec++;
-    $('#vrt').textContent=`${Math.floor(vrSec/60)}:${String(vrSec%60).padStart(2,'0')} / 1:00`;
-    $('#vr-ring').style.strokeDashoffset=String(816*(1-vrSec/60));
-    if(vrSec>=60)stopVideoCircle(1);
+    $('#vrt').textContent=`${Math.floor(vrSec/60)}:${String(vrSec%60).padStart(2,'0')} / 0:30`;
+    $('#vr-ring').style.strokeDashoffset=String(816*(1-vrSec/30));
+    if(vrSec>=30)stopVideoCircle(1);
   },1000);
 }
 
 function stopVideoCircle(doSend){
-  clearInterval(vrInt);cancelAnimationFrame(vrDrawRaf);
+  vrActive=false;
+  clearInterval(vrInt);clearInterval(vrDrawTimer);
   $('#vrec').classList.remove('on','flash-front');
   const dur=Math.max(vrSec,1);
+  const rec=mediaRec;mediaRec=null;
   const cleanup=()=>{
     if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}
     if(vrAudioStream){vrAudioStream.getTracks().forEach(t=>t.stop());vrAudioStream=null}
-    $('#vrec-v').srcObject=null;mediaRec=null;
+    $('#vrec-v').srcObject=null;
   };
-  if(mediaRec&&mediaRec.state!=='inactive'){
-    mediaRec.onstop=()=>{
-      if(doSend){
-        const blob=new Blob(recChunks,{type:mediaRec.mimeType||'video/webm'});
+  if(rec&&rec.state!=='inactive'){
+    rec.onstop=()=>{
+      cleanup();
+      if(doSend&&recChunks.length){
+        const blob=new Blob(recChunks,{type:rec.mimeType||'video/webm'});
+        if(blob.size>900000)return toast('Кружок слишком тяжёлый, запишите короче');
         const r=new FileReader();r.onload=()=>add({k:'vnote',d:dur,src:r.result});r.readAsDataURL(blob);
       }
-      cleanup();
     };
-    mediaRec.stop();
+    try{rec.stop()}catch(e){cleanup()}
   }else cleanup();
 }
 $('#vr-flip').onclick=async()=>{vrFacing=vrFacing==='user'?'environment':'user';try{await openVrCam()}catch(e){toast('Вторая камера недоступна')}};
@@ -1882,54 +1896,155 @@ function prof(p){
   renderProfShowcase($('#pf-showcase'),p.m||[],'gifts');
 }
 
-let cs,callToneInt,callStream=null,callSec=0,callTarget=null,callFacing='user';
+let cs,callToneInt,callLocalStream=null,callSec=0,callTarget=null,callFacing='user',pc=null,pendingOffer=null,iceQueue=[],callIsVid=false;
+const RTC_CFG={iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'}]};
+
 function playRingTone(){
   if(!ST.snd)return;
   try{const a=new(window.AudioContext||window.webkitAudioContext)(),o1=a.createOscillator(),o2=a.createOscillator(),g=a.createGain();o1.frequency.value=425;o2.frequency.value=440;g.gain.value=.03;o1.connect(g);o2.connect(g);g.connect(a.destination);o1.start();o2.start();setTimeout(()=>{o1.stop();o2.stop();a.close()},620)}catch(e){}
 }
-async function call(p,isVid,incoming){
-  callTarget=p;callSec=0;callFacing='user';
+
+function startCallTimer(){
+  clearInterval(callToneInt);clearInterval(cs);
+  const e=$('#cs');if(!e)return;
+  e.textContent='00:00';
+  cs=setInterval(()=>{callSec++;const el=$('#cs');if(el)el.textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
+}
+
+function setupPeer(targetU){
+  if(pc){try{pc.close()}catch(e){}}
+  iceQueue=[];
+  pc=new RTCPeerConnection(RTC_CFG);
+  pc.onicecandidate=e=>{
+    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',sig:'ice',fromU:me.u,candidate:e.candidate}).catch(()=>{});
+  };
+  pc.ontrack=e=>{
+    const remV=$('#call-remote');
+    if(remV&&e.streams[0]){
+      remV.srcObject=e.streams[0];
+      if(e.streams[0].getVideoTracks().length)remV.style.display='block';
+      remV.play().catch(()=>{});
+    }
+  };
+  pc.onconnectionstatechange=()=>{
+    if(!pc)return;
+    if(pc.connectionState==='connected')startCallTimer();
+    else if(pc.connectionState==='disconnected'||pc.connectionState==='failed'){toast('Соединение прервано');endCall(true)}
+  };
+  if(callLocalStream)callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
+  return pc;
+}
+
+async function call(p,isVid,incoming,offer){
+  if(p.t==='s')return toast('Нельзя позвонить в Избранное');
+  callTarget=p;callSec=0;callFacing='user';callIsVid=!!isVid;pendingOffer=offer||null;
   const c=$('#call');
   const bg=p.av?`background-image:url(${p.av})`:`background:linear-gradient(155deg,hsl(${p.h||240} 70% 35%),#070912)`;
   c.innerHTML=`
     <div id="call-bg" style="${bg}"></div>
+    <video id="call-remote" autoplay playsinline></video>
     <video id="call-self" autoplay playsinline muted></video>
     <div class="call-top">
       <div class="call-ring-wrap"><span class="call-pulse"></span><span class="call-pulse"></span>${av(p,112)}</div>
       <h2 style="font-size:26px">${esc(p.n)}</h2>
-      <p id="cs" style="color:rgba(255,255,255,.8);margin-top:4px">${incoming?'Входящий звонок…':isVid?'Видеозвонок…':'Вызов…'}</p>
-      <div class="call-qual">🔒 E2E Шифрование · HD</div>
+      <p id="cs" style="color:rgba(255,255,255,.85);margin-top:4px">${incoming?(isVid?'Входящий видеозвонок…':'Входящий аудиозвонок…'):(isVid?'Видеовызов…':'Вызов…')}</p>
+      <div class="call-qual">🔒 WebRTC · Живой звук и видео</div>
     </div>
-    <div class="call-bot"><div class="cx">
-      <button class="cbt" id="cmic">${I('mic',24)}</button>
-      <button class="cbt${isVid?' on':''}" id="cvid">${I('video',24)}</button>
-      <button class="cbt" id="cflip" aria-label="Перевернуть камеру">${I('flip',24)}</button>
-      <button class="cbt end" id="ce">${I('phone',24)}</button>
-    </div></div>`;
+    <div class="call-bot">
+      ${incoming?`<div class="cx" id="call-in-btns">
+        <button class="cbt" id="c-acc" style="background:#34d399;width:68px;height:68px" aria-label="Принять">${I('phone',28)}</button>
+        <button class="cbt end" id="c-rej" style="width:68px;height:68px" aria-label="Отклонить">${I('phone',28)}</button>
+      </div>`:''}
+      <div class="cx" id="call-act-btns" style="${incoming?'display:none':''}">
+        <button class="cbt" id="cmic">${I('mic',24)}</button>
+        <button class="cbt${isVid?' on':''}" id="cvid">${I('video',24)}</button>
+        <button class="cbt" id="cflip" aria-label="Перевернуть камеру">${I('flip',24)}</button>
+        <button class="cbt end" id="ce">${I('phone',24)}</button>
+      </div>
+    </div>`;
   c.classList.add('on');
-  if(!incoming&&p.t!=='s')pushEventToTarget(p.u,{type:'call',vid:isVid,sender:{n:me.n,u:me.u,h:me.h,av:me.av}}).catch(()=>{});
   playRingTone();callToneInt=setInterval(playRingTone,1800);
-  if(isVid)toggleCallVideo(true);
-  clearInterval(cs);
-  setTimeout(()=>{
-    clearInterval(callToneInt);const e=$('#cs');if(!e||!c.classList.contains('on'))return;
-    e.textContent='00:00';
-    cs=setInterval(()=>{callSec++;e.textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
-  },2200);
+
+  if(!incoming){
+    try{
+      callLocalStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:isVid?{facingMode:callFacing}:false});
+      if(isVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
+      const peer=setupPeer(p.u);
+      const off=await peer.createOffer();
+      await peer.setLocalDescription(off);
+      await pushEventToTarget(p.u,{type:'call',vid:isVid,offer:off,sender:{n:me.n,u:me.u,h:me.h,av:me.av}});
+    }catch(e){
+      toast('Нет доступа к микрофону или камере');endCall(false);
+    }
+  }
 }
+
+async function acceptIncomingCall(){
+  if(!callTarget||!pendingOffer)return;
+  clearInterval(callToneInt);
+  $('#call-in-btns').style.display='none';
+  $('#call-act-btns').style.display='flex';
+  $('#cs').textContent='Подключение…';
+  try{
+    callLocalStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:callIsVid?{facingMode:callFacing}:false});
+    if(callIsVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
+    const peer=setupPeer(callTarget.u);
+    await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
+    for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
+    iceQueue=[];
+    const ans=await peer.createAnswer();
+    await peer.setLocalDescription(ans);
+    await pushEventToTarget(callTarget.u,{type:'webrtc',sig:'answer',fromU:me.u,answer:ans});
+    startCallTimer();
+  }catch(e){
+    toast('Не удалось подключить микрофон/камеру');endCall(false);
+  }
+}
+
+async function handleWebRTCSignal(ev){
+  if(ev.sig==='hangup'||ev.sig==='reject'){
+    toast(ev.sig==='reject'?'Вызов отклонён':'Собеседник завершил звонок');
+    endCall(true);return;
+  }
+  if(!pc){
+    if(ev.sig==='ice'&&ev.candidate)iceQueue.push(ev.candidate);
+    return;
+  }
+  if(ev.sig==='answer'&&ev.answer){
+    await pc.setRemoteDescription(new RTCSessionDescription(ev.answer)).catch(()=>{});
+    for(const cand of iceQueue)await pc.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
+    iceQueue=[];startCallTimer();
+  }else if(ev.sig==='ice'&&ev.candidate){
+    if(pc.remoteDescription)await pc.addIceCandidate(new RTCIceCandidate(ev.candidate)).catch(()=>{});
+    else iceQueue.push(ev.candidate);
+  }
+}
+
 async function toggleCallVideo(enable){
-  const selfV=$('#call-self');if(!selfV)return;
-  if(callStream){callStream.getTracks().forEach(t=>t.stop());callStream=null}
+  const selfV=$('#call-self');if(!selfV||!callLocalStream)return;
+  const oldVt=callLocalStream.getVideoTracks()[0];
+  if(oldVt){oldVt.stop();callLocalStream.removeTrack(oldVt)}
   if(enable){
-    try{callStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:callFacing},audio:false});selfV.srcObject=callStream;selfV.style.display='block'}
-    catch(e){toast('Камера недоступна')}
-  }else selfV.style.display='none';
+    try{
+      const vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:callFacing}});
+      const nt=vs.getVideoTracks()[0];
+      callLocalStream.addTrack(nt);
+      selfV.srcObject=callLocalStream;selfV.style.display='block';
+      if(pc){const snd=pc.getSenders().find(s=>s.track&&s.track.kind==='video');if(snd)snd.replaceTrack(nt);else pc.addTrack(nt,callLocalStream)}
+    }catch(e){toast('Камера недоступна')}
+  }else{
+    selfV.style.display='none';
+  }
 }
-function endCall(){
+
+function endCall(remoteEnded){
   clearInterval(cs);clearInterval(callToneInt);
-  if(callStream){callStream.getTracks().forEach(t=>t.stop());callStream=null}
+  if(!remoteEnded&&callTarget)pushEventToTarget(callTarget.u,{type:'webrtc',sig:pendingOffer&&!pc?'reject':'hangup',fromU:me.u}).catch(()=>{});
+  if(pc){try{pc.close()}catch(e){}pc=null}
+  if(callLocalStream){callLocalStream.getTracks().forEach(t=>t.stop());callLocalStream=null}
   $('#call').classList.remove('on');
-  if(callTarget){const dur=callSec?String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0'):'';LG.unshift([callTarget.id,'out',Date.now(),dur,callTarget.n]);saveAll();if(tabs===2)logs()}
+  if(callTarget){const dur=callSec?String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0'):'';LG.unshift([callTarget.id,pendingOffer&&!callSec?'miss':'out',Date.now(),dur,callTarget.n]);saveAll();if(tabs===2)logs()}
+  callTarget=null;pendingOffer=null;
 }
 
 $('#nw').innerHTML=I('plus');$('#addc').innerHTML=I('plus');$('#si').innerHTML=I('search',18);
@@ -2096,10 +2211,15 @@ $('#pf').onclick=e=>{
 
 $('#call').onclick=e=>{
   const b=e.target.closest('.cbt');if(!b)return;
-  if(b.id==='ce')return endCall();
+  if(b.id==='c-acc')return acceptIncomingCall();
+  if(b.id==='c-rej'||b.id==='ce')return endCall(false);
   if(b.id==='cflip'){callFacing=callFacing==='user'?'environment':'user';if($('#cvid').classList.contains('on'))toggleCallVideo(true);toast('Камера перевёрнута');return}
   b.classList.toggle('on');
-  if(b.id==='cmic')toast(b.classList.contains('on')?'Микрофон выкл.':'Микрофон вкл.');
+  if(b.id==='cmic'){
+    const muted=b.classList.contains('on');
+    if(callLocalStream)callLocalStream.getAudioTracks().forEach(t=>t.enabled=!muted);
+    toast(muted?'Микрофон выкл.':'Микрофон вкл.');
+  }
   if(b.id==='cvid')toggleCallVideo(b.classList.contains('on'));
 };
 
