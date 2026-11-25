@@ -923,11 +923,12 @@ async function pushEventToTarget(targetU,ev){
   const key=cleanU(targetU);if(!key)return;
   ev.evId=ev.evId||('ev_'+Date.now()+'_'+Math.random().toString(36).slice(2,7));
   const fullEv=Object.assign({targetKey:key},ev);
-  if(bc)bc.postMessage(fullEv);
+  try{if(bc)bc.postMessage(fullEv)}catch(e){}
+  let live=false;
   if(rtLive&&dbOnline){
-    rtLive.send({type:'broadcast',event:'live_ev',payload:fullEv}).catch(()=>{});
+    try{const r=await rtLive.send({type:'broadcast',event:'live_ev',payload:fullEv});live=(r==='ok')}catch(e){}
   }
-  if(sb&&navigator.onLine){
+  if(sb&&navigator.onLine&&!(ev.type==='webrtc'&&live)){
     const {error}=await sb.from('inbox').insert({target_u:key,payload:fullEv});
     if(error)throw error;
   }
@@ -2196,10 +2197,15 @@ const RTC_CFG={
   ]
 };
 
-function unlockCallAudio(){
-  const ca=$('#call-audio');
-  if(ca){ca.muted=false;ca.volume=1;ca.play().catch(()=>{})}
+function playRemoteAudio(){
+  const ca=$('#call-audio');if(!ca||!ca.srcObject)return;
+  ca.muted=false;ca.volume=1;
+  ca.play().catch(()=>{
+    toast('Нажмите на экран, чтобы включить звук 🔊');
+    $('#call').addEventListener('click',()=>ca.play().catch(()=>{}),{once:true});
+  });
 }
+function unlockCallAudio(){playRemoteAudio()}
 
 function playTone(incoming){
   if(!ST.snd)return;
@@ -2239,7 +2245,7 @@ function setupPeer(targetU,keepQueue){
   callRemoteStream=new MediaStream();
   pc=new RTCPeerConnection(RTC_CFG);
   pc.onicecandidate=e=>{
-    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',callId:curCallId,sig:'ice',fromU:me.u,candidate:e.candidate}).catch(()=>{});
+    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',callId:curCallId,sig:'ice',fromU:me.u,candidate:e.candidate.toJSON()}).catch(err=>console.warn('ice push',err));
   };
   pc.ontrack=e=>{
     if(!callRemoteStream.getTracks().includes(e.track))callRemoteStream.addTrack(e.track);
@@ -2247,8 +2253,7 @@ function setupPeer(targetU,keepQueue){
       const ca=$('#call-audio');
       if(ca){
         ca.srcObject=new MediaStream(callRemoteStream.getAudioTracks());
-        ca.muted=false;ca.volume=1;
-        ca.play().catch(()=>{});
+        playRemoteAudio();
       }
     }
     if(e.track.kind==='video'){
@@ -2265,8 +2270,8 @@ function setupPeer(targetU,keepQueue){
   pc.oniceconnectionstatechange=()=>{
     if(!pc)return;
     const st=pc.iceConnectionState;
-    if(st==='connected'||st==='completed'){startCallTimer();unlockCallAudio()}
-    else if(st==='failed'){toast('Сбой соединения');endCall(true)}
+    if(st==='connected'||st==='completed'){startCallTimer();playRemoteAudio()}
+    else if(st==='failed'){toast('Сбой соединения');endCall(false)}
   };
   if(callLocalStream&&callLocalStream.getTracks().length){
     callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
@@ -2336,10 +2341,10 @@ async function acceptIncomingCall(){
   await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
   for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
   iceQueue=[];
+  pendingOffer=null;
   const ans=await peer.createAnswer();
   await peer.setLocalDescription(ans);
   await pushEventToTarget(callTarget.u,{type:'webrtc',callId:curCallId,sig:'answer',fromU:me.u,answer:ans}).catch(()=>{});
-  startCallTimer();
 }
 
 async function handleWebRTCSignal(ev){
@@ -2361,7 +2366,11 @@ async function handleWebRTCSignal(ev){
   }else if(ev.sig==='answer'&&ev.answer){
     await pc.setRemoteDescription(new RTCSessionDescription(ev.answer)).catch(()=>{});
     for(const cand of iceQueue)await pc.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
-    iceQueue=[];startCallTimer();unlockCallAudio();
+    iceQueue=[];
+    clearInterval(callToneInt);clearTimeout(callTimeout);
+    $('#cs').textContent='Соединение…';
+    const cid=curCallId;
+    setTimeout(()=>{if(curCallId===cid&&callTarget&&!cs){toast('Не удалось соединиться');endCall(false)}},20000);
   }else if(ev.sig==='ice'&&ev.candidate){
     if(pc.remoteDescription)await pc.addIceCandidate(new RTCIceCandidate(ev.candidate)).catch(()=>{});
     else iceQueue.push(ev.candidate);
