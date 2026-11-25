@@ -98,7 +98,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .mention{color:#7ee8ff;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .mw:not(.me) .mention{color:var(--ac)}
 
-#tb{position:absolute;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom,8px));display:grid;grid-template-columns:repeat(4,1fr);padding:5px;border-radius:30px;z-index:4}
+#tb{position:absolute;left:10px;right:10px;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:6px 5px calc(6px + env(safe-area-inset-bottom,0px));border-radius:30px 30px 0 0;border-bottom:0;z-index:4}
 #tb button{width:100%;height:54px;border-radius:25px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11.5px;color:var(--mu);position:relative;z-index:1}
 #tb .on{color:var(--tx);font-weight:600}
 #ind{position:absolute;top:5px;left:5px;width:calc((100% - 10px)/4);height:54px;border-radius:25px;background:var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.45);transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
@@ -1897,7 +1897,15 @@ function prof(p){
 }
 
 let cs,callToneInt,callLocalStream=null,callSec=0,callTarget=null,callFacing='user',pc=null,pendingOffer=null,iceQueue=[],callIsVid=false;
-const RTC_CFG={iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'}]};
+const RTC_CFG={
+  iceServers:[
+    {urls:'stun:stun.l.google.com:19302'},
+    {urls:'stun:stun.relay.metered.ca:80'},
+    {urls:'turn:global.relay.metered.ca:80',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},
+    {urls:'turn:global.relay.metered.ca:443',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},
+    {urls:'turn:global.relay.metered.ca:443?transport=tcp',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'}
+  ]
+};
 
 function playRingTone(){
   if(!ST.snd)return;
@@ -1905,15 +1913,16 @@ function playRingTone(){
 }
 
 function startCallTimer(){
-  clearInterval(callToneInt);clearInterval(cs);
+  if(cs)return;
+  clearInterval(callToneInt);
   const e=$('#cs');if(!e)return;
   e.textContent='00:00';
   cs=setInterval(()=>{callSec++;const el=$('#cs');if(el)el.textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
 }
 
-function setupPeer(targetU){
+function setupPeer(targetU,keepQueue){
   if(pc){try{pc.close()}catch(e){}}
-  iceQueue=[];
+  if(!keepQueue)iceQueue=[];
   pc=new RTCPeerConnection(RTC_CFG);
   pc.onicecandidate=e=>{
     if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',sig:'ice',fromU:me.u,candidate:e.candidate}).catch(()=>{});
@@ -1926,10 +1935,11 @@ function setupPeer(targetU){
       remV.play().catch(()=>{});
     }
   };
-  pc.onconnectionstatechange=()=>{
+  pc.oniceconnectionstatechange=()=>{
     if(!pc)return;
-    if(pc.connectionState==='connected')startCallTimer();
-    else if(pc.connectionState==='disconnected'||pc.connectionState==='failed'){toast('Соединение прервано');endCall(true)}
+    const st=pc.iceConnectionState;
+    if(st==='connected'||st==='completed')startCallTimer();
+    else if(st==='failed'){toast('Не удалось соединиться (ошибка сети)');endCall(true)}
   };
   if(callLocalStream)callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
   return pc;
@@ -1988,7 +1998,7 @@ async function acceptIncomingCall(){
   try{
     callLocalStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:callIsVid?{facingMode:callFacing}:false});
     if(callIsVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
-    const peer=setupPeer(callTarget.u);
+    const peer=setupPeer(callTarget.u,true);
     await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
     for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
     iceQueue=[];
