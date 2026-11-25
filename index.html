@@ -993,12 +993,20 @@ function subscribeMyChats(){
   }
 }
 
+function resumeCloud(){
+  if(!cleanU(me.u)||!sb)return;
+  publishMyProfile(true);
+  pullPendingInbox();
+  if(!dbOnline&&navigator.onLine)subscribeMyChats();
+}
 document.addEventListener('visibilitychange',()=>{
   if(cleanU(me.u)&&sb){
-    publishMyProfile(!document.hidden);
-    if(!document.hidden)pullPendingInbox();
+    if(document.hidden)publishMyProfile(false);
+    else resumeCloud();
   }
 });
+window.addEventListener('focus',resumeCloud);
+window.addEventListener('pageshow',resumeCloud);
 window.addEventListener('beforeunload',()=>{if(cleanU(me.u)&&sb)publishMyProfile(false)});
 
 async function pushEventToTarget(targetU,ev){
@@ -1133,7 +1141,7 @@ function updateNetUI(){
   const el=$('#net-pill');if(!el)return;
   if(!navigator.onLine){el.className='net-pill off';el.innerHTML='<i></i><span>Нет сети</span>'}
   else if(sb&&dbOnline){el.className='net-pill';el.innerHTML='<i></i><span>Облако</span>'}
-  else{el.className='net-pill loc';el.innerHTML='<i></i><span>Локально</span>'}
+  else{el.className='net-pill loc';el.innerHTML='<i></i><span>Подключение…</span>'}
 }
 window.addEventListener('online',()=>{updateNetUI();toast('Сеть восстановлена — отправка сообщений…');flushOutbox();pullPendingInbox()});
 window.addEventListener('offline',()=>{updateNetUI();toast('Нет подключения к интернету')});
@@ -1177,9 +1185,16 @@ function popEmoji(x,y,em){const s=document.createElement('span');s.className='db
 function linkMentions(txt){return esc(txt).replace(/\n/g,'<br>').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">$1</a>').replace(/(^|\s)(@[a-zA-Z0-9_]{3,28})/g,'$1<span class="mention" data-u="$2">$2</span>')}
 
 function syncVP(){
-  const vv=window.visualViewport,app=$('#app');
-  if(vv&&vv.height<window.innerHeight-120){app.style.height=vv.height+'px';app.style.top=vv.offsetTop+'px'}
-  else{app.style.height='';app.style.top='0px'}
+  const vv=window.visualViewport,app=$('#app'),cp=$('#cp');
+  if(vv&&vv.height<window.innerHeight-80){
+    const h=Math.round(vv.height)+'px';
+    app.style.height=h;app.style.minHeight=h;app.style.top=Math.round(vv.offsetTop)+'px';
+    if(cp)cp.style.bottom='6px';
+    const ms=$('#ms');if(ms&&cur)ms.scrollTop=ms.scrollHeight;
+  }else{
+    app.style.height='';app.style.minHeight='';app.style.top='0px';
+    if(cp)cp.style.bottom='';
+  }
   window.scrollTo(0,0);
 }
 if(window.visualViewport){window.visualViewport.addEventListener('resize',syncVP);window.visualViewport.addEventListener('scroll',syncVP)}
@@ -2352,7 +2367,7 @@ $('#csx').onclick=()=>{$('#sq').style.display='none';$('#csi').value=''};
 let stm=null,svIdx=0,svRem=6000,svStart=0,svPaused=false,svScale=1,svPinch0=0;
 function strs(){
   const myKey=cleanU(me.u),myArr=getStoriesArr(myKey),hasMy=myArr.length>0;
-  const others=Object.keys(STORIES).filter(k=>k!==myKey&&!isAnyBlocked(k)&&getStoriesArr(k).length>0);
+  const others=Object.keys(STORIES).filter(k=>k!==myKey&&isContact(k)&&!isAnyBlocked(k)&&getStoriesArr(k).length>0);
   $('#sr').innerHTML=`<button data-sk="${myKey}" style="position:relative"><span class="rg${hasMy?'':' sn'}"><span>${av({n:me.n||'Я',u:me.u,h:me.h,av:me.av},52)}</span></span><span id="add-st-plus" style="position:absolute;right:4px;bottom:18px;width:20px;height:20px;border-radius:50%;background:var(--ac);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;border:2px solid var(--bg)">+</span>Моя</button>`
     +others.map(k=>{const arr=getStoriesArr(k),u=USERS[k]||{n:'@'+k,u:'@'+k,h:240},allSeen=arr.every(x=>x._sn);return`<button data-sk="${k}"><span class="rg${allSeen?' sn':''}"><span>${av(Object.assign({t:'u'},u),52)}</span></span>${esc(dispName(Object.assign({t:'u'},u)).split(' ')[0])}</button>`}).join('');
 }
