@@ -658,6 +658,7 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 <input type="file" id="fi" hidden><script>
 const DEFAULT_SB_URL = "https://xtzsycwxasbnammniumy.supabase.co";
 const DEFAULT_SB_KEY = "sb_publishable_RYt20KOfGsYeN8Iw3bE7lg_1c7YSwVe";
+const DEFAULT_VAPID_PUB = "";
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -754,6 +755,7 @@ let ST=Object.assign({},DEF);
 try{Object.assign(ST,JSON.parse(ls('lunarn_st')||'{}'))}catch(e){}
 if(!ST.sbUrl)ST.sbUrl=DEFAULT_SB_URL;
 if(!ST.sbKey)ST.sbKey=DEFAULT_SB_KEY;
+if(!ST.vapidPub&&DEFAULT_VAPID_PUB)ST.vapidPub=DEFAULT_VAPID_PUB;
 
 function saveAll(){
   try{
@@ -976,7 +978,7 @@ function subscribeMyChats(){
     .subscribe(status=>{
       dbOnline=(status==='SUBSCRIBED');
       updateNetUI();
-      if(dbOnline){publishMyProfile(true);flushOutbox();pullPendingInbox()}
+      if(dbOnline){publishMyProfile(true);flushOutbox();pullPendingInbox();if('Notification' in window&&Notification.permission==='granted')reqSysNotif(true)}
     });
   rtLive=chGlobal;
   sbChannels.push(chGlobal);
@@ -1426,7 +1428,7 @@ function openGiftModal(m,fromUser){
 function renderProfShowcase(targetEl,msgs,userKey,isSelf,tab){
   const uKey=cleanU(userKey);
   const gifts=msgs.filter(m=>m.k==='gift'&&(isSelf?!m.me:!!m.me));
-  const pubs=getStoriesArr(uKey);
+  const pubs=(isSelf||(isContact(uKey)&&!isAnyBlocked(uKey)))?getStoriesArr(uKey):[];
   const media=msgs.filter(m=>m.k==='img'||m.k==='vnote');
   const voices=msgs.filter(m=>m.k==='voice');
   const links=msgs.filter(m=>m.t&&/https?:\/\/\S+/.test(m.t));
@@ -2395,6 +2397,7 @@ function pauseStory(p){
 function openStory(key,idx=0){
   clearTimeout(stm);svPaused=false;svScale=1;
   const myKey=cleanU(me.u),arr=getStoriesArr(key);
+  if(key!==myKey&&(!isContact(key)||isAnyBlocked(key)))return toast('Публикации видны только контактам');
   if(key===myKey&&!arr.length)return pickNewStory();
   if(!arr.length)return;if(idx<0)idx=0;
   if(idx>=arr.length){$('#sv').classList.remove('on');strs();return}
