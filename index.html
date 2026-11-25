@@ -40,15 +40,15 @@
 input,textarea{-webkit-user-select:text;user-select:text;font:inherit;color:inherit;border:0;background:none;outline:0;font-size:16px!important}
 button{font:inherit;color:inherit;border:0;background:none;outline:0;cursor:pointer;transition:transform .24s cubic-bezier(.3,1.55,.5,1),background .2s,color .2s,opacity .2s}
 button:active{transform:scale(.92)}
-html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y;background:var(--bg);color:var(--tx);font:var(--fs)/1.38 'Onest',system-ui,-apple-system,sans-serif}
+html,body{position:fixed;inset:0;width:100%;height:100dvh;min-height:100vh;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y;background:var(--bg);color:var(--tx);font:var(--fs)/1.38 'Onest',system-ui,-apple-system,sans-serif}
 body::before{content:"";position:fixed;inset:-16%;background:var(--aur);z-index:-1;pointer-events:none;animation:dr 34s ease-in-out infinite alternate}
 @keyframes dr{to{transform:translate(3%,4%) rotate(5deg)}}
 [data-aur="0"] body::before{display:none}
 .gl{background:var(--gl);-webkit-backdrop-filter:blur(var(--bl)) saturate(195%);backdrop-filter:blur(var(--bl)) saturate(195%);border:1px solid var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.3),inset 0 -8px 18px rgba(255,255,255,.03),0 10px 30px var(--sh)}
 
-#app{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;overflow:hidden}
+#app{position:fixed;inset:0;width:100%;height:100dvh;display:flex;overflow:hidden}
 #side{width:100%;height:100%;position:relative;flex:none;overflow:hidden}
-.pg{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px calc(env(safe-area-inset-bottom,0px) + 84px);display:none}
+.pg{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px calc(env(safe-area-inset-bottom,0px) + 104px);display:none}
 .pg.on{display:block}
 h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .top{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 12px;gap:8px}
@@ -98,11 +98,11 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .mention{color:#7ee8ff;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .mw:not(.me) .mention{color:var(--ac)}
 
-#tb{position:absolute;left:10px;right:10px;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:6px 5px calc(6px + env(safe-area-inset-bottom,0px));border-radius:30px 30px 0 0;border-bottom:0;z-index:4}
-#tb button{width:100%;height:54px;border-radius:25px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11.5px;color:var(--mu);position:relative;z-index:1}
+#tb{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);transform:translateX(-50%);display:flex;padding:6px;border-radius:32px;z-index:4}
+#tb button{width:76px;height:54px;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--mu);position:relative;z-index:1}
 #tb .on{color:var(--tx);font-weight:600}
-#ind{position:absolute;top:5px;left:5px;width:calc((100% - 10px)/4);height:54px;border-radius:25px;background:var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.45);transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
-#bd{position:absolute;top:6px;right:22%;min-width:18px;height:18px;border-radius:9px;background:#ff4d6d;color:#fff;font-size:11px;font-weight:700;display:none;place-items:center;padding:0 5px;z-index:2}
+#ind{position:absolute;top:6px;left:6px;width:76px;height:54px;border-radius:26px;background:var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.45);transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
+#bd{position:absolute;top:4px;left:54px;min-width:18px;height:18px;border-radius:9px;background:#ff4d6d;color:#fff;font-size:11px;font-weight:700;display:none;place-items:center;padding:0 5px;z-index:2}
 
 #chat{position:absolute;inset:0;z-index:5;background:var(--wimg),var(--wp),var(--bg);background-size:cover,auto,auto;background-position:center;transform:translateX(102%);transition:transform .36s cubic-bezier(.2,.86,.2,1);overflow:hidden}
 #chat::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--wpdim));pointer-events:none;z-index:0}
@@ -116,14 +116,20 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 #hd{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:10px;right:10px;z-index:4;display:flex;align-items:center;gap:4px;padding:6px 8px;border-radius:30px}
 .hm{flex:1;display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer;padding:2px 4px;border-radius:20px}
 .hm b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15.5px}
-.hm small{display:block;color:var(--mu);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm small{display:block;color:var(--mu);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
+.typ-tx{color:var(--ac2)!important;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.typ-dots{display:inline-flex;gap:2.5px;align-items:center}
+.typ-dots i{width:4px;height:4px;border-radius:50%;background:currentColor;animation:tdot 1.2s infinite ease-in-out}
+.typ-dots i:nth-child(2){animation-delay:.2s}
+.typ-dots i:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-3px);opacity:1}}
 
 #pn{position:absolute;top:calc(env(safe-area-inset-top,0px) + 70px);left:14px;right:14px;z-index:3;display:none;align-items:center;gap:8px;padding:8px 14px;border-radius:18px;font-size:13px;cursor:pointer;color:var(--ac)}
 #pn span{color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
 #sq{position:absolute;top:calc(env(safe-area-inset-top,0px) + 70px);left:14px;right:14px;z-index:4;display:none;align-items:center;gap:8px;border-radius:20px;padding:0 14px}
 #sq input{flex:1;height:42px}
 
-#ms{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 76px) 12px calc(env(safe-area-inset-bottom,0px) + 74px)}
+#ms{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 78px) 12px calc(env(safe-area-inset-bottom,0px) + 86px)}
 #cv.pinned #ms{padding-top:calc(env(safe-area-inset-top,0px) + 118px)}
 .ds{text-align:center;margin:12px 0 8px}
 .ds span{display:inline-block;padding:4px 13px;border-radius:14px;font-size:12px;color:var(--mu);font-weight:500}
@@ -204,11 +210,12 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .rec-wv{display:flex;align-items:center;gap:2px;flex:1;height:26px;overflow:hidden}
 .rec-wv i{width:3px;border-radius:2px;background:var(--ac);transition:height .08s ease;min-height:4px}
 
+.vnote-box{position:relative;width:214px;padding-bottom:10px}
 .vnote-wrap{position:relative;width:214px;height:214px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.32);box-shadow:0 12px 30px rgba(0,0,0,.35);cursor:pointer;background:#0e101c}
-.vnote-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vnote-wrap video{width:100%;height:100%;object-fit:cover;display:block;transform:none!important}
 .vnote-ring{position:absolute;inset:0;pointer-events:none;transform:rotate(-90deg)}
 .vnote-ring circle{fill:none;stroke:var(--ac2);stroke-width:4;stroke-dasharray:654;stroke-dashoffset:654;transition:stroke-dashoffset .1s linear}
-.vnote-badge{position:absolute;left:14px;bottom:14px;padding:3px 9px;border-radius:12px;background:rgba(0,0,0,.58);color:#fff;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:4px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.vnote-badge{position:absolute;left:2px;bottom:-14px;padding:2px 9px;border-radius:11px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);z-index:2}
 .vnote-play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.22);color:#fff;transition:opacity .2s}
 .vnote-wrap.playing .vnote-play{opacity:0}
 
@@ -227,7 +234,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .stk-img{display:block;width:136px;height:136px;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
 
 #dn{position:absolute;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);width:42px;height:42px;border-radius:50%;display:none;place-items:center;z-index:3}
-#cp{position:absolute;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom,8px));z-index:4;display:flex;flex-direction:column;gap:6px}
+#cp{position:absolute;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:4;display:flex;flex-direction:column;gap:6px}
 #ab,#em{display:none;border-radius:22px;padding:8px 12px;font-size:13px}
 #ab{align-items:center;gap:8px;justify-content:space-between;animation:pop .2s}
 #ab b{color:var(--ac)}
@@ -275,7 +282,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .vrec-prog circle.bg{fill:none;stroke:rgba(255,255,255,.15);stroke-width:5}
 .vrec-prog circle.fg{fill:none;stroke:var(--ac2);stroke-width:5;stroke-linecap:round;stroke-dasharray:816;stroke-dashoffset:816;transition:stroke-dashoffset .25s linear}
 .vrec-circle{width:250px;height:250px;border-radius:50%;overflow:hidden;position:relative;background:#090b15;box-shadow:0 16px 46px rgba(0,0,0,.5)}
-.vrec-circle video{width:100%;height:100%;object-fit:cover;display:block}
+.vrec-circle video{width:100%;height:100%;object-fit:cover;display:block;transform:none!important}
 .vrec-time{padding:7px 16px;border-radius:18px;background:rgba(255,255,255,.14);color:#fff;font-weight:700;display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
 .vrec-btns{display:flex;gap:14px;align-items:center}
 .vrec-btns button{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
@@ -359,7 +366,6 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .pmed{aspect-ratio:1;border-radius:16px;overflow:hidden;background:var(--th);cursor:pointer;position:relative}
 .pmed img,.pmed video{width:100%;height:100%;object-fit:cover;display:block}
 .pmed-tag{position:absolute;right:6px;bottom:6px;padding:2px 6px;border-radius:8px;background:rgba(0,0,0,.6);color:#fff;font-size:10px}
-.pvoice-list{padding:8px 12px;display:flex;flex-direction:column;gap:8px}
 
 #pf,#call,#sp{position:absolute;inset:0;z-index:15;background:var(--aur),var(--bg);transform:translateX(102%);transition:transform .36s cubic-bezier(.2,.9,.2,1);overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px calc(env(safe-area-inset-bottom,0px) + 34px)}
 #sp{z-index:8}
@@ -369,7 +375,6 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 #call-bg{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(34px) brightness(.42);z-index:0}
 #call-remote{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;transform:none!important}
 #call-self{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);right:16px;width:108px;height:152px;border-radius:22px;object-fit:cover;z-index:4;display:none;border:2px solid rgba(255,255,255,.35);box-shadow:0 10px 28px rgba(0,0,0,.5);transform:none!important}
-.vrec-circle video,.vnote-wrap video{transform:none!important}
 .call-top,.call-bot{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;align-items:center}
 .call-ring-wrap{position:relative;display:grid;place-items:center;margin-bottom:14px}
 .call-pulse{position:absolute;width:136px;height:136px;border-radius:50%;border:2px solid rgba(255,255,255,.28);animation:cpulse 2s ease-out infinite}
@@ -434,10 +439,12 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 
 #sv{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#000;color:#fff}
 #sv.on{display:flex;animation:pop .25s}
-.sb{height:3px;margin:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;background:rgba(255,255,255,.3);border-radius:2px;overflow:hidden}
+.sb-row{display:flex;gap:4px;margin:calc(env(safe-area-inset-top,0px) + 10px) 12px 0}
+.sb{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:2px;overflow:hidden}
 .sb i{display:block;height:100%;background:#fff;width:0%}
+.sb.done i{width:100%}
 @keyframes sg{from{width:0}to{width:100%}}
-.sh2{display:flex;align-items:center;gap:10px;padding:10px 12px}.sh2 b{flex:1}
+.sh2{display:flex;align-items:center;gap:10px;padding:10px 12px}.sh2>div{flex:1;min-width:0}
 .sm{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;background-size:cover!important;background-position:center!important;position:relative;overflow:hidden}
 .sm video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 .sr2{display:flex;align-items:center;gap:8px;padding:12px 14px calc(22px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,rgba(0,0,0,.78),transparent)}
@@ -552,7 +559,7 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 </div>
 
 <div id="vrec">
-  <div class="vrec-time"><i class="rec-dot"></i><span id="vrt">0:00 / 1:00</span></div>
+  <div class="vrec-time"><i class="rec-dot"></i><span id="vrt">0:00 / 0:30</span></div>
   <div class="vrec-stage">
     <svg class="vrec-prog" viewBox="0 0 268 268"><circle class="bg" cx="134" cy="134" r="130"/><circle class="fg" id="vr-ring" cx="134" cy="134" r="130"/></svg>
     <div class="vrec-circle"><video id="vrec-v" autoplay muted playsinline></video></div>
@@ -652,7 +659,9 @@ const STATUS_IC=(m)=>{
 };
 
 const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('lunarn_rt_v4'):null;
-let sb=null,dbOnline=false,sbChannels=[];
+let sb=null,dbOnline=false,sbChannels=[],rtLive=null,lastTypSent=0;
+const typTimers={};
+const TYP_HTML=`<span class="typ-tx">печатает<span class="typ-dots"><i></i><i></i><i></i></span></span>`;
 const seenEv=new Set();
 
 let cur=null,fl='all',ed=null,rp=null,fm=null,gsel=null,ri=null,rs=0,tabs=0,recMode='mic',activePackIdx=0;
@@ -714,7 +723,7 @@ function syncUserRow(row){
   const u={n:row.n,u:fmtU(row.username),ph:row.ph||'',b:row.b||'',h:row.h||240,av:row.av||'',on:row.is_online?1:0,ts:row.updated_at||Date.now()};
   USERS[row.username]=u;
   const c=P.find(x=>x.t==='u'&&cleanU(x.u)===row.username);
-  if(c){c.n=u.n;c.av=u.av;c.b=u.b;c.h=u.h;c.on=u.on;c.s=u.on?'онлайн':'был(а) недавно'}
+  if(c){c.n=u.n;c.av=u.av;c.b=u.b;c.h=u.h;c.on=u.on;c.s=u.on?'онлайн':'был(а) недавно';updateChatStatus(c)}
 }
 
 async function initCloud(){
@@ -744,7 +753,7 @@ async function loadCloudState(){
   if(sRes.data){
     STORIES={};
     sRes.data.forEach(r=>{if(r.data)STORIES[r.username]=r.data});
-    strs();
+    strs();if(tabs===3)mset();
   }
   saveAll();
   await pullPendingInbox();
@@ -784,13 +793,17 @@ function subscribeMyChats(){
     .on('postgres_changes',{event:'*',schema:'public',table:'stories'},payload=>{
       if(payload.eventType==='DELETE'&&payload.old){delete STORIES[payload.old.username]}
       else if(payload.new){STORIES[payload.new.username]=payload.new.data}
-      strs();saveAll();
+      strs();if(tabs===3)mset();saveAll();
+    })
+    .on('broadcast',{event:'typing'},({payload})=>{
+      if(payload)handleTypingEvent(payload);
     })
     .subscribe(status=>{
       dbOnline=(status==='SUBSCRIBED');
       updateNetUI();
       if(dbOnline){publishMyProfile(true);flushOutbox();pullPendingInbox()}
     });
+  rtLive=chGlobal;
   sbChannels.push(chGlobal);
 
   if(myKey){
@@ -819,6 +832,37 @@ async function pushEventToTarget(targetU,ev){
   }
 }
 
+function sendTypingState(isTyp){
+  if(!cur||cur.t!=='u')return;
+  const now=Date.now();
+  if(isTyp&&now-lastTypSent<1800)return;
+  lastTypSent=isTyp?now:0;
+  const payload={type:'typing',targetKey:cleanU(cur.u),fromU:cleanU(me.u),isTyp:!!isTyp};
+  if(bc)bc.postMessage(payload);
+  if(rtLive&&dbOnline)rtLive.send({type:'broadcast',event:'typing',payload}).catch(()=>{});
+}
+
+function handleTypingEvent(ev){
+  if(!ev||ev.targetKey!==cleanU(me.u))return;
+  const from=cleanU(ev.fromU);
+  const p=P.find(x=>x.t==='u'&&cleanU(x.u)===from);
+  if(!p)return;
+  clearTimeout(typTimers[from]);
+  p.typing=!!ev.isTyp;
+  if(p.typing){
+    typTimers[from]=setTimeout(()=>{p.typing=false;updateChatStatus(p);list()},3400);
+  }
+  updateChatStatus(p);
+  list();
+}
+
+function updateChatStatus(p){
+  if(cur!==p)return;
+  const hs=$('#hs');if(!hs)return;
+  if(p.typing)hs.innerHTML=TYP_HTML;
+  else hs.textContent=p.s||fmtU(p.u);
+}
+
 function handleIncomingEvent(ev){
   if(!ev)return;
   if(ev.evId){if(seenEv.has(ev.evId))return;seenEv.add(ev.evId);if(seenEv.size>300)seenEv.clear()}
@@ -830,6 +874,7 @@ function handleIncomingEvent(ev){
       p={id:ev.chatId||chatRoomId(myKey,ev.fromU),n:ev.sender.n,u:fmtU(ev.sender.u),h:ev.sender.h||240,av:ev.sender.av||'',t:ev.chatType||'u',role:'member',on:1,s:'онлайн',m:[]};
       P.unshift(p);
     }
+    p.typing=false;updateChatStatus(p);
     if(!p.m.some(x=>x.id===ev.msg.id)){
       const incoming=Object.assign({},ev.msg,{me:0,nw:1,pending:0});
       p.m.push(incoming);
@@ -840,6 +885,7 @@ function handleIncomingEvent(ev){
         p.un=(p.un|0)+1;
         if(!p.mute&&ST.n)toast(`${p.n}: ${ST.prev?pv(incoming):'Новое сообщение'}`);
       }
+      if(incoming.k==='gift'&&tabs===3)mset();
       fx();list();saveAll();
     }
   }else if(ev.type==='read'){
@@ -857,13 +903,15 @@ function handleIncomingEvent(ev){
     const m=p&&p.m.find(x=>x.id===ev.msgId);
     if(m){m.t=ev.text;m.ed=1;m._edAnim=1;if(cur===p)drawMsgs();list();saveAll()}
   }else if(ev.type==='call'){
+    if(ev.ts&&Date.now()-ev.ts>25000)return;
+    if(callTarget)return;
     const p=ensureUserChat(ev.sender);
-    call(p,!!ev.vid,true,ev.offer);
+    call(p,!!ev.vid,true,ev.offer,ev.callId);
   }else if(ev.type==='webrtc'){
     handleWebRTCSignal(ev);
   }
 }
-if(bc)bc.onmessage=e=>{if(e.data)handleIncomingEvent(e.data)};
+if(bc)bc.onmessage=e=>{if(e.data){if(e.data.type==='typing')handleTypingEvent(e.data);else handleIncomingEvent(e.data)}};
 
 function updateNetUI(){
   const el=$('#net-pill');if(!el)return;
@@ -909,7 +957,7 @@ function burst(){for(let i=0;i<28;i++){const s=document.createElement('span');s.
 function popEmoji(x,y,em){const s=document.createElement('span');s.className='dbl-pop';s.textContent=em;s.style.left=x+'px';s.style.top=y+'px';document.body.append(s);setTimeout(()=>s.remove(),680)}
 function linkMentions(txt){return esc(txt).replace(/\n/g,'<br>').replace(/(^|\s)(@[a-zA-Z0-9_]{3,28})/g,'$1<span class="mention" data-u="$2">$2</span>')}
 
-function syncVP(){const vv=window.visualViewport,app=$('#app');app.style.height=(vv?vv.height:window.innerHeight)+'px';if(vv)app.style.top=vv.offsetTop+'px';window.scrollTo(0,0)}
+function syncVP(){const vv=window.visualViewport,app=$('#app');if(vv&&vv.height<window.innerHeight-80){app.style.height=vv.height+'px';app.style.top=vv.offsetTop+'px'}else{app.style.height='100dvh';app.style.top='0px'}window.scrollTo(0,0)}
 if(window.visualViewport){window.visualViewport.addEventListener('resize',syncVP);window.visualViewport.addEventListener('scroll',syncVP)}
 window.addEventListener('resize',syncVP);syncVP();
 document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
@@ -1029,7 +1077,7 @@ bindSwipeBack($('#imgv'),()=>$('#imgv').classList.remove('on'));
 function go(i){
   tabs=i;$$('.pg').forEach((p,j)=>p.classList.toggle('on',i==j));
   $$('#tb button').forEach((b,j)=>b.classList.toggle('on',i==j));
-  $('#ind').style.transform=`translateX(${i*100}%)`;
+  $('#ind').style.transform=`translateX(${i*76}px)`;
   [list,cons,logs,mset][i]();
 }
 
@@ -1072,7 +1120,7 @@ function list(){
       <div class="rb">
         <div class="r1"><b>${esc(p.n)}</b><i>${m.me?STATUS_IC(m):''}${ds(m.ts)}</i></div>
         <div class="r1">
-          <span>${m.ts?(m.me?'Вы: ':p.t=='g'&&m.a?m.a.split(' ')[0]+': ':'')+(p.un&&!ST.prev?'Новое сообщение':esc(pv(m))):'Нет сообщений'}</span>
+          <span>${p.typing?TYP_HTML:(m.ts?(m.me?'Вы: ':p.t=='g'&&m.a?m.a.split(' ')[0]+': ':'')+(p.un&&!ST.prev?'Новое сообщение':esc(pv(m))):'Нет сообщений')}</span>
           <em>${p.pin&&!p.un?I('pin',15):''}${p.un?`<s class="${p.mute?'mu':''}">${p.un}</s>`:''}</em>
         </div>
       </div>
@@ -1108,37 +1156,56 @@ function bindExpandAvatar(container,hero){
   container.addEventListener('scroll',()=>{if(container.scrollTop>14&&hero.classList.contains('exp'))hero.classList.remove('exp')},{passive:true});
 }
 
-function renderProfShowcase(targetEl,msgs,tab='gifts'){
-  const gifts=msgs.filter(m=>m.k==='gift');
-  const media=msgs.filter(m=>m.k==='img'||m.k==='vnote');
-  const voices=msgs.filter(m=>m.k==='voice');
-  const gifs=msgs.filter(m=>m.k==='gif');
+function getStoriesArr(key){
+  const raw=STORIES[cleanU(key)];
+  if(!raw)return[];
+  return Array.isArray(raw)?raw:[raw];
+}
+
+function openGiftModal(m,fromUser){
+  const sender=m.anon?'Анонимный отправитель':(m.me?`${me.n} (${fmtU(me.u)})`:(fromUser||m.a||'Пользователь'));
+  sheet(`
+    <div style="text-align:center;padding:8px 0 4px">
+      <div style="font-size:74px;line-height:1.1;margin-bottom:8px">${m.g}</div>
+      <h3 style="font-size:22px;margin-bottom:4px">${esc(m.gn)}</h3>
+      <span class="st" style="display:inline-block;margin-bottom:14px">🌙 Стоимость: ${m.gp} Лун</span>
+      <div class="card gl" style="text-align:left">
+        <div class="inf"><small>От кого</small><b>${esc(sender)}</b></div>
+        ${m.gt?`<div class="inf"><small>Пожелание</small><p style="margin-top:4px;font-size:15px">${esc(m.gt)}</p></div>`:''}
+        <div class="inf"><small>Дата</small><span>${dl(m.ts)} в ${tm(m.ts)}</span></div>
+      </div>
+      <button class="pbt" onclick="csh()">Закрыть</button>
+    </div>
+  `);
+}
+
+function renderProfShowcase(targetEl,msgs,userKey,isSelf,tab){
+  const uKey=cleanU(userKey);
+  const gifts=msgs.filter(m=>m.k==='gift'&&(isSelf?!m.me:!!m.me));
+  const pubs=getStoriesArr(uKey);
+  if(!tab)tab=gifts.length?'gifts':'pubs';
+  if(tab==='gifts'&&!gifts.length)tab='pubs';
+
   let body='';
   if(tab==='gifts'){
-    body=gifts.length?`<div class="pgrid3">${gifts.map(m=>`<div class="pgift"><span>${m.g}</span><b>${esc(m.gn)}</b><small>🌙 ${m.gp}</small></div>`).join('')}</div>`:'<p class="em0" style="padding:22px">Подарков пока нет</p>';
-  }else if(tab==='media'){
-    body=media.length?`<div class="pgrid3">${media.map(m=>m.k==='img'?`<div class="pmed" data-openimg="${m.src}"><img src="${m.src}"></div>`:`<div class="pmed"><video src="${m.src||''}" muted playsinline></video><span class="pmed-tag">⭕ ${m.d}с</span></div>`).join('')}</div>`:'<p class="em0" style="padding:22px">Медиа пока нет</p>';
-  }else if(tab==='voices'){
-    body=voices.length?`<div class="pvoice-list">${voices.map(m=>`<div class="vc" style="width:100%;padding:8px 10px;border-radius:16px;background:var(--th)" data-psrc="${m.src||''}" data-pd="${m.d||1}"><button class="vp pplay">${I('play',16)}</button><div class="wv-wrap"><div class="wv-layer wv-bg">${(m.peaks||Array(24).fill(14)).map(h=>`<i style="height:${h}px"></i>`).join('')}</div></div><span class="vc-tm">${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`).join('')}</div>`:'<p class="em0" style="padding:22px">Голосовых пока нет</p>';
+    body=`<div class="pgrid3">${gifts.map((m,idx)=>`<button class="pgift" data-gfidx="${idx}"><span>${m.g}</span><b>${esc(m.gn)}</b><small>🌙 ${m.gp}</small></button>`).join('')}</div>`;
   }else{
-    body=gifs.length?`<div class="pgrid3">${gifs.map(m=>`<div class="pmed" data-openimg="${m.src}"><img src="${m.src}"></div>`).join('')}</div>`:'<p class="em0" style="padding:22px">GIF пока нет</p>';
+    const addCard=isSelf?`<button class="pmed" id="add-pub-btn" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1.5px dashed var(--gb);color:var(--ac);font-weight:600;font-size:12px">${I('plus',24)}<span>Добавить</span></button>`:'';
+    const itemsHtml=pubs.map((st,idx)=>`<div class="pmed" data-pubidx="${idx}">${st.type==='vid'?`<video src="${st.src}" muted playsinline></video><span class="pmed-tag">▶ Видео</span>`:`<img src="${st.src}">`}</div>`).join('');
+    body=(pubs.length||isSelf)?`<div class="pgrid3">${addCard}${itemsHtml}</div>`:'<p class="em0" style="padding:22px">Публикаций пока нет</p>';
   }
+
   targetEl.innerHTML=`
     <div class="ptabs">
-      <button data-pt="gifts" class="${tab==='gifts'?'on':''}">Подарки (${gifts.length})</button>
-      <button data-pt="media" class="${tab==='media'?'on':''}">Медиа (${media.length})</button>
-      <button data-pt="voices" class="${tab==='voices'?'on':''}">Голос (${voices.length})</button>
-      <button data-pt="gifs" class="${tab==='gifs'?'on':''}">GIF (${gifs.length})</button>
+      ${gifts.length?`<button data-pt="gifts" class="${tab==='gifts'?'on':''}">Подарки (${gifts.length})</button>`:''}
+      <button data-pt="pubs" class="${tab==='pubs'?'on':''}">Публикации (${pubs.length})</button>
     </div>${body}`;
+
   targetEl.onclick=e=>{
-    const tb=e.target.closest('[data-pt]');if(tb){renderProfShowcase(targetEl,msgs,tb.dataset.pt);return}
-    const oi=e.target.closest('[data-openimg]');if(oi){openLightbox(oi.dataset.openimg);return}
-    const pp=e.target.closest('.pplay');
-    if(pp){
-      const vc=pp.closest('.vc'),src=vc.dataset.psrc;
-      if(src){if(activeAudio){activeAudio.pause();activeAudio=null}activeAudio=new Audio(src);activeAudio.play().catch(()=>{})}
-      else toast('Аудиозапись не сохранена в кэше');
-    }
+    const tb=e.target.closest('[data-pt]');if(tb){renderProfShowcase(targetEl,msgs,uKey,isSelf,tb.dataset.pt);return}
+    const gf=e.target.closest('[data-gfidx]');if(gf){const m=gifts[+gf.dataset.gfidx];if(m)openGiftModal(m,isSelf?null:m.a);return}
+    if(e.target.closest('#add-pub-btn')){pickNewStory();return}
+    const pb=e.target.closest('[data-pubidx]');if(pb){openStory(uKey,+pb.dataset.pubidx);return}
   };
 }
 
@@ -1244,7 +1311,7 @@ function mset(){
     <button class="mrow" id="logout-btn" style="color:#ff5470"><span class="fi" style="background:#ff4d6d">${I('out',18)}</span><span style="flex:1">Выйти из аккаунта</span></button>
   </div>`;
   bindExpandAvatar($('#p3'),$('#my-hero'));
-  renderProfShowcase($('#my-showcase'),myMsgs,'gifts');
+  renderProfShowcase($('#my-showcase'),myMsgs,me.u,true);
 }
 
 function sp(k,keep){
@@ -1264,7 +1331,7 @@ function sp(k,keep){
   }else if(k==='str'){
     html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>${moons} Лун</h2><small style="color:var(--mu)">Валюта Lunarn для подарков</small></div>
       <div class="acts" style="margin:0;padding:0 12px 14px">${[50,150,500].map(n=>`<button class="gl" data-top="${n}">+${n} 🌙</button>`).join('')}</div>
-      <div class="inf">Неудаляемые подарки<small>Подарки в Lunarn навсегда остаются в чате и отображаются в витрине профиля (по 3 в ряд).</small></div></div>`;
+      <div class="inf">Неудаляемые подарки<small>Подарки в Lunarn навсегда остаются в чате и отображаются в витрине получателя (по 3 в ряд).</small></div></div>`;
   }else if(k==='cld'){
     html=`<div class="card gl">
         <div class="inf">Статус подключения<small>${dbOnline?'🟢 Подключено к Supabase Realtime':'🟡 Подключение к Supabase…'}</small></div>
@@ -1279,13 +1346,12 @@ function sp(k,keep){
     const b=P.filter(p=>p.blk);
     html=`<div class="card gl">${b.length?b.map(p=>`<div class="set"><span>${esc(p.n)}</span><button class="st" data-u="${p.id}">Разблокировать</button></div>`).join(''):'<p class="em0">Список заблокированных пуст</p>'}</div>`;
   }else if(k==='abt'){
-    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 4.0</h2><small style="color:var(--mu)">Liquid Glass · Supabase Realtime</small></div>
-      <div class="chg"><b>v4.0 — Supabase & Полная версия</b><ul>
-        <li>Реальная облачная синхронизация на базе Supabase Realtime (PostgreSQL).</li>
-        <li>Регистрация с проверкой занятости @username и глобальным поиском пользователей.</li>
-        <li>Очередь сообщений при отсутствии сети и мгновенная доставка оффлайн-сообщений.</li>
-        <li>Живые аудиоволны с плавной перемоткой, кружки до 60 сек с фонариком и переворотом камеры.</li>
-        <li>Раскрытие аватара 4:3, паки стикеров, неудаляемые подарки за Луны 🌙 и испарение при удалении у всех.</li>
+    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 4.2</h2><small style="color:var(--mu)">Liquid Glass · Supabase Realtime & WebRTC</small></div>
+      <div class="chg"><b>v4.2 — Звонки, Кружки и Публикации</b><ul>
+        <li>Живые аудио- и видеозвонки WebRTC через Supabase с TURN-ретрансляцией.</li>
+        <li>Статус «печатает...» в реальном времени в шапке и списке чатов.</li>
+        <li>Видеокружки без отзеркаливания с вынесенным таймером и фонариком.</li>
+        <li>Анонимные подарки за Луны 🌙 с карточкой деталей и витриной публикаций (мульти-историй).</li>
       </ul></div></div>`;
   }else{
     html=S[3].map(grp=>`<div class="sec-lbl">${grp.lbl}</div><div class="card gl">${grp.it.map(ctl).join('')}</div>`).join('');
@@ -1337,7 +1403,7 @@ function open(id){
   if(cur.t!=='s'&&ST.ro)pushEventToTarget(cur.u,{type:'read',chatId:cur.id,fromU:me.u}).catch(()=>{});
   const c=$('#chat');c.classList.add('has','open');
   $('#ha').innerHTML=av(cur,40);$('#hn').textContent=cur.n;
-  $('#hs').textContent=cur.s||fmtU(cur.u);
+  updateChatStatus(cur);
   const editable=canPost(cur);
   $('#bar').style.display=editable?'flex':'none';
   $('#cb').style.display=editable?'none':'block';
@@ -1354,12 +1420,13 @@ function pin(){
 function bh(m,prevM){
   const p=cur;
   if(m.k==='gift'){
-    const who=m.me?'Вы отправили подарок':`${esc(m.a||p.n)} подарил(а)`;
-    return`<div class="mw center${m.nw?' nw':''}" data-id="${m.id}"><div class="mw-inner"><div class="gf-card">
+    const senderName=m.anon?'Анонимно':esc(m.a||p.n);
+    const who=m.me?(m.anon?'Вы отправили подарок (анонимно)':'Вы отправили подарок'):`${senderName} подарил(а)`;
+    return`<div class="mw center${m.nw?' nw':''}" data-id="${m.id}"><div class="mw-inner"><div class="gf-card gf-open" style="cursor:pointer">
       <div class="gf-who">${who}</div><div class="gf-em">${m.g}</div><b class="gf-name">${esc(m.gn)}</b>
       ${m.gt?`<div class="gf-txt">«${esc(m.gt)}»</div>`:''}
       <span class="gf-price">🌙 ${m.gp} Лун</span>
-      ${!m.me&&!m.ok?`<button class="gf-btn">Принять подарок</button>`:`<span class="gf-ok">${m.me?'Подарок доставлен':'Принят ✨'} · ${tm(m.ts)}</span>`}
+      ${!m.me&&!m.ok?`<button class="gf-btn">Принять подарок</button>`:`<span class="gf-ok">${m.me?'Нажмите для деталей':'Нажмите, чтобы открыть'} · ${tm(m.ts)}</span>`}
     </div></div></div>`;
   }
   let c='';
@@ -1376,7 +1443,7 @@ function bh(m,prevM){
     c+=`<div class="vc" data-src="${m.src||''}" data-d="${m.d||1}"><button class="vp">${I('play',18)}</button><div class="wv-wrap"><div class="wv-layer wv-bg">${barHtml}</div><div class="wv-layer wv-fg">${barHtml}</div></div><span class="vc-tm">${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
   }else if(k==='vnote'){
     cls=' big';
-    c+=`<div class="vnote-wrap"><video src="${m.src||''}" playsinline loop ${ST.autoV?'autoplay muted':''}></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div><span class="vnote-badge">⭕ ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
+    c+=`<div class="vnote-box"><div class="vnote-wrap"><video src="${m.src||''}" playsinline loop ${ST.autoV?'autoplay muted':''}></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div></div><span class="vnote-badge">⭕ ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
   }else if(k==='poll'){
     const t=m.o.reduce((s,o)=>s+o[1],0)||1;
     c+=`<div class="pq">📊 ${esc(m.q)}</div>`+m.o.map((o,i)=>`<div class="po${m.my===i?' my':''}" data-v="${i}"><span class="pb" style="width:${Math.round(o[1]/t*100)}%"></span><i>${esc(o[0])}</i><em>${Math.round(o[1]/t*100)}%</em></div>`).join('')+`<small>${m.o.reduce((s,o)=>s+o[1],0)} голосов</small>`;
@@ -1483,6 +1550,7 @@ function send(){
   }else{
     add({t:v,re:rp});
   }
+  sendTypingState(false);
   $('#in').value='';rp=null;ab();ui();auto();
 }
 function auto(){const t=$('#in');t.style.height='42px';t.style.height=Math.min(t.scrollHeight,110)+'px'}
@@ -1676,7 +1744,7 @@ $('#sb').onclick=()=>{
   if(sbDidHold){sbDidHold=0;return}
   if($('#in').value.trim()){send();return}
   recMode=recMode==='mic'?'vcam':'mic';if(ST.vib)try{navigator.vibrate(14)}catch(e){}ui();
-  toast(recMode==='mic'?'🎤 Голосовое (удерживайте)':'⭕ Кружок до 1 мин (удерживайте)');
+  toast(recMode==='mic'?'🎤 Голосовое (удерживайте)':'⭕ Кружок до 30 сек (удерживайте)');
 };
 $('#rx').onclick=()=>stopAudioRec(0);$('#rs').onclick=()=>stopAudioRec(1);
 
@@ -1800,11 +1868,13 @@ function contactPickerModal(){
   sheet(`<div class="sh1"><h3>Отправить контакт</h3></div><div class="card gl">${listU.length?listU.map(u=>`<button class="row" data-sendct="${cleanU(u.u)}">${av(u,42)}<div class="rb"><b>${esc(u.n)}</b><span>${esc(fmtU(u.u))}</span></div></button>`).join(''):'<p class="em0">Нет других зарегистрированных контактов</p>'}</div>`);
 }
 
+let giftAnon=false;
 function shop(){
-  gsel=null;
+  gsel=null;giftAnon=false;
   sheet(`<div class="sh1"><h3>Подарок для ${esc(cur.n.split(' ')[0])}</h3><span class="st" id="bal">🌙 ${moons}</span></div>
     <div class="gg">${G.map((g,i)=>`<button class="gi" data-i="${i}"><span>${g[0]}</span><b>${g[1]}</b><small>🌙 ${g[2]}</small></button>`).join('')}</div>
     <input class="inp" id="gtxt" style="margin-top:12px" placeholder="Текст к подарку (необязательно)">
+    <div class="set" style="padding:8px 4px"><span>Отправить анонимно</span><button class="sw" id="ganon" type="button"></button></div>
     <button class="pbt" id="gs" disabled>Выберите подарок</button>
     <button class="tp" id="tpu">Пополнить на 100 🌙</button>`);
 }
@@ -1893,10 +1963,10 @@ function prof(p){
     ${p.t!='s'&&p.t!='c'?`<div class="card gl"><button class="inf btn" data-x="gift"><span>🌙 Отправить подарок</span>${CH}</button><button class="inf btn" data-x="mute"><span>${p.mute?'🔔 Включить звук':'🔕 Отключить звук'}</span>${CH}</button>${p.t==='u'?`<button class="inf btn rd" style="color:#ff5470" data-x="blk">${p.blk?'Разблокировать':'Заблокировать'}</button>`:''}</div>`:''}`;
   $('#pf').dataset.id=p.id;$('#pf').classList.add('on');$('#pf').scrollTop=0;
   bindExpandAvatar($('#pf'),$('#pf-hero'));
-  renderProfShowcase($('#pf-showcase'),p.m||[],'gifts');
+  renderProfShowcase($('#pf-showcase'),p.m||[],p.u,false);
 }
 
-let cs,callToneInt,callLocalStream=null,callSec=0,callTarget=null,callFacing='user',pc=null,pendingOffer=null,iceQueue=[],callIsVid=false;
+let cs=null,callToneInt=null,callTimeout=null,callLocalStream=null,callSec=0,callTarget=null,callFacing='user',pc=null,pendingOffer=null,iceQueue=[],callIsVid=false,curCallId='';
 const RTC_CFG={
   iceServers:[
     {urls:'stun:stun.l.google.com:19302'},
@@ -1907,17 +1977,36 @@ const RTC_CFG={
   ]
 };
 
-function playRingTone(){
+function playTone(incoming){
   if(!ST.snd)return;
-  try{const a=new(window.AudioContext||window.webkitAudioContext)(),o1=a.createOscillator(),o2=a.createOscillator(),g=a.createGain();o1.frequency.value=425;o2.frequency.value=440;g.gain.value=.03;o1.connect(g);o2.connect(g);g.connect(a.destination);o1.start();o2.start();setTimeout(()=>{o1.stop();o2.stop();a.close()},620)}catch(e){}
+  try{
+    const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();
+    if(incoming){
+      o.type='sine';o.frequency.setValueAtTime(587,a.currentTime);o.frequency.setValueAtTime(784,a.currentTime+.16);
+      g.gain.setValueAtTime(.04,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.45);
+      o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.46);
+    }else{
+      o.frequency.value=425;g.gain.value=.025;
+      o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.55);
+    }
+    setTimeout(()=>a.close(),650);
+  }catch(e){}
 }
 
 function startCallTimer(){
   if(cs)return;
-  clearInterval(callToneInt);
+  clearInterval(callToneInt);clearTimeout(callTimeout);
   const e=$('#cs');if(!e)return;
   e.textContent='00:00';
   cs=setInterval(()=>{callSec++;const el=$('#cs');if(el)el.textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
+}
+
+async function getSafeMedia(wantVid){
+  try{return await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:wantVid?{facingMode:callFacing}:false})}
+  catch(e){
+    try{return await navigator.mediaDevices.getUserMedia({audio:true,video:false})}
+    catch(e2){return null}
+  }
 }
 
 function setupPeer(targetU,keepQueue){
@@ -1925,13 +2014,14 @@ function setupPeer(targetU,keepQueue){
   if(!keepQueue)iceQueue=[];
   pc=new RTCPeerConnection(RTC_CFG);
   pc.onicecandidate=e=>{
-    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',sig:'ice',fromU:me.u,candidate:e.candidate}).catch(()=>{});
+    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',callId:curCallId,sig:'ice',fromU:me.u,candidate:e.candidate}).catch(()=>{});
   };
   pc.ontrack=e=>{
     const remV=$('#call-remote');
-    if(remV&&e.streams[0]){
-      remV.srcObject=e.streams[0];
-      if(e.streams[0].getVideoTracks().length)remV.style.display='block';
+    if(remV){
+      const stream=e.streams[0]||new MediaStream([e.track]);
+      remV.srcObject=stream;
+      if(stream.getVideoTracks().length||e.track.kind==='video')remV.style.display='block';
       remV.play().catch(()=>{});
     }
   };
@@ -1939,15 +2029,21 @@ function setupPeer(targetU,keepQueue){
     if(!pc)return;
     const st=pc.iceConnectionState;
     if(st==='connected'||st==='completed')startCallTimer();
-    else if(st==='failed'){toast('Не удалось соединиться (ошибка сети)');endCall(true)}
+    else if(st==='failed'){toast('Сбой соединения');endCall(true)}
   };
-  if(callLocalStream)callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
+  if(callLocalStream&&callLocalStream.getTracks().length){
+    callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
+  }else{
+    pc.addTransceiver('audio',{direction:'recvonly'});
+    if(callIsVid)pc.addTransceiver('video',{direction:'recvonly'});
+  }
   return pc;
 }
 
-async function call(p,isVid,incoming,offer){
+async function call(p,isVid,incoming,offer,inCallId){
   if(p.t==='s')return toast('Нельзя позвонить в Избранное');
   callTarget=p;callSec=0;callFacing='user';callIsVid=!!isVid;pendingOffer=offer||null;
+  curCallId=inCallId||('call_'+Date.now()+'_'+Math.random().toString(36).slice(2,6));
   const c=$('#call');
   const bg=p.av?`background-image:url(${p.av})`:`background:linear-gradient(155deg,hsl(${p.h||240} 70% 35%),#070912)`;
   c.innerHTML=`
@@ -1957,7 +2053,7 @@ async function call(p,isVid,incoming,offer){
     <div class="call-top">
       <div class="call-ring-wrap"><span class="call-pulse"></span><span class="call-pulse"></span>${av(p,112)}</div>
       <h2 style="font-size:26px">${esc(p.n)}</h2>
-      <p id="cs" style="color:rgba(255,255,255,.85);margin-top:4px">${incoming?(isVid?'Входящий видеозвонок…':'Входящий аудиозвонок…'):(isVid?'Видеовызов…':'Вызов…')}</p>
+      <p id="cs" style="color:rgba(255,255,255,.85);margin-top:4px">${incoming?(isVid?'Входящий видеозвонок…':'Входящий звонок…'):(isVid?'Видеовызов…':'Вызов…')}</p>
       <div class="call-qual">🔒 WebRTC · Живой звук и видео</div>
     </div>
     <div class="call-bot">
@@ -1973,47 +2069,43 @@ async function call(p,isVid,incoming,offer){
       </div>
     </div>`;
   c.classList.add('on');
-  playRingTone();callToneInt=setInterval(playRingTone,1800);
+  playTone(incoming);callToneInt=setInterval(()=>playTone(incoming),1900);
+  clearTimeout(callTimeout);callTimeout=setTimeout(()=>{if(!cs&&callTarget){toast('Нет ответа');endCall(false)}},28000);
 
   if(!incoming){
-    try{
-      callLocalStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:isVid?{facingMode:callFacing}:false});
-      if(isVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
-      const peer=setupPeer(p.u);
-      const off=await peer.createOffer();
-      await peer.setLocalDescription(off);
-      await pushEventToTarget(p.u,{type:'call',vid:isVid,offer:off,sender:{n:me.n,u:me.u,h:me.h,av:me.av}});
-    }catch(e){
-      toast('Нет доступа к микрофону или камере');endCall(false);
-    }
+    callLocalStream=await getSafeMedia(isVid);
+    if(!callLocalStream)toast('Микрофон не найден — режим прослушивания');
+    else if(isVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
+    const peer=setupPeer(p.u,false);
+    const off=await peer.createOffer();
+    await peer.setLocalDescription(off);
+    await pushEventToTarget(p.u,{type:'call',callId:curCallId,ts:Date.now(),vid:isVid,offer:off,sender:{n:me.n,u:me.u,h:me.h,av:me.av}}).catch(()=>{toast('Ошибка вызова');endCall(true)});
   }
 }
 
 async function acceptIncomingCall(){
   if(!callTarget||!pendingOffer)return;
-  clearInterval(callToneInt);
+  clearInterval(callToneInt);clearTimeout(callTimeout);
   $('#call-in-btns').style.display='none';
   $('#call-act-btns').style.display='flex';
-  $('#cs').textContent='Подключение…';
-  try{
-    callLocalStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:callIsVid?{facingMode:callFacing}:false});
-    if(callIsVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
-    const peer=setupPeer(callTarget.u,true);
-    await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
-    for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
-    iceQueue=[];
-    const ans=await peer.createAnswer();
-    await peer.setLocalDescription(ans);
-    await pushEventToTarget(callTarget.u,{type:'webrtc',sig:'answer',fromU:me.u,answer:ans});
-    startCallTimer();
-  }catch(e){
-    toast('Не удалось подключить микрофон/камеру');endCall(false);
-  }
+  $('#cs').textContent='Соединение…';
+  callLocalStream=await getSafeMedia(callIsVid);
+  if(!callLocalStream)toast('Микрофон не найден — вы слышите собеседника');
+  else if(callIsVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
+  const peer=setupPeer(callTarget.u,true);
+  await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
+  for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
+  iceQueue=[];
+  const ans=await peer.createAnswer();
+  await peer.setLocalDescription(ans);
+  await pushEventToTarget(callTarget.u,{type:'webrtc',callId:curCallId,sig:'answer',fromU:me.u,answer:ans}).catch(()=>{});
+  startCallTimer();
 }
 
 async function handleWebRTCSignal(ev){
+  if(ev.callId&&curCallId&&ev.callId!==curCallId)return;
   if(ev.sig==='hangup'||ev.sig==='reject'){
-    toast(ev.sig==='reject'?'Вызов отклонён':'Собеседник завершил звонок');
+    if(callTarget)toast(ev.sig==='reject'?'Вызов отклонён':'Звонок завершён');
     endCall(true);return;
   }
   if(!pc){
@@ -2031,30 +2123,32 @@ async function handleWebRTCSignal(ev){
 }
 
 async function toggleCallVideo(enable){
-  const selfV=$('#call-self');if(!selfV||!callLocalStream)return;
-  const oldVt=callLocalStream.getVideoTracks()[0];
-  if(oldVt){oldVt.stop();callLocalStream.removeTrack(oldVt)}
+  const selfV=$('#call-self');if(!selfV)return;
+  if(callLocalStream){
+    const oldVt=callLocalStream.getVideoTracks()[0];
+    if(oldVt){oldVt.stop();callLocalStream.removeTrack(oldVt)}
+  }
   if(enable){
     try{
       const vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:callFacing}});
       const nt=vs.getVideoTracks()[0];
+      if(!callLocalStream)callLocalStream=new MediaStream();
       callLocalStream.addTrack(nt);
       selfV.srcObject=callLocalStream;selfV.style.display='block';
       if(pc){const snd=pc.getSenders().find(s=>s.track&&s.track.kind==='video');if(snd)snd.replaceTrack(nt);else pc.addTrack(nt,callLocalStream)}
     }catch(e){toast('Камера недоступна')}
-  }else{
-    selfV.style.display='none';
-  }
+  }else selfV.style.display='none';
 }
 
 function endCall(remoteEnded){
-  clearInterval(cs);clearInterval(callToneInt);
-  if(!remoteEnded&&callTarget)pushEventToTarget(callTarget.u,{type:'webrtc',sig:pendingOffer&&!pc?'reject':'hangup',fromU:me.u}).catch(()=>{});
+  clearInterval(cs);cs=null;clearInterval(callToneInt);clearTimeout(callTimeout);
+  const tgt=callTarget,cid=curCallId,wasMiss=!!(pendingOffer&&!callSec);
+  callTarget=null;pendingOffer=null;curCallId='';iceQueue=[];
+  if(!remoteEnded&&tgt)pushEventToTarget(tgt.u,{type:'webrtc',callId:cid,sig:wasMiss?'reject':'hangup',fromU:me.u}).catch(()=>{});
   if(pc){try{pc.close()}catch(e){}pc=null}
   if(callLocalStream){callLocalStream.getTracks().forEach(t=>t.stop());callLocalStream=null}
   $('#call').classList.remove('on');
-  if(callTarget){const dur=callSec?String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0'):'';LG.unshift([callTarget.id,pendingOffer&&!callSec?'miss':'out',Date.now(),dur,callTarget.n]);saveAll();if(tabs===2)logs()}
-  callTarget=null;pendingOffer=null;
+  if(tgt){const dur=callSec?String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0'):'';LG.unshift([tgt.id,wasMiss?'miss':'out',Date.now(),dur,tgt.n]);saveAll();if(tabs===2)logs()}
 }
 
 $('#nw').innerHTML=I('plus');$('#addc').innerHTML=I('plus');$('#si').innerHTML=I('search',18);
@@ -2103,7 +2197,7 @@ $('#hx').onclick=e=>{
 };
 $('#pn').onclick=()=>jump($('#pn').dataset.g);
 $('#cb').onclick=()=>{cur.mute=!cur.mute;$('#cb').textContent=cur.mute?'Включить звук':'Отключить звук';list();saveAll()};
-$('#in').oninput=()=>{ui();auto()};
+$('#in').oninput=()=>{ui();auto();sendTypingState(!!$('#in').value.trim())};
 $('#in').onkeydown=e=>{if(e.key=='Enter'&&!e.shiftKey&&ST.ent&&matchMedia('(pointer:fine)').matches){e.preventDefault();send()}};
 $('#at').onclick=attach;
 $('#eb').onclick=()=>{const e=$('#em');e.style.display=e.style.display=='block'?'none':'block'};
@@ -2126,7 +2220,8 @@ $('#sc').onclick=e=>{
   if(t.dataset.a)att(t.dataset.a);
   else if(t.dataset.sendct){const u=USERS[t.dataset.sendct];csh();if(u)add({k:'ct',cn:u.n,cu:u.u})}
   else if(t.classList.contains('gi')){gsel=+t.dataset.i;$$('.gi').forEach(b=>b.classList.toggle('sel',b==t));const g=G[gsel],b=$('#gs');b.disabled=moons<g[2];b.textContent=moons<g[2]?'Не хватает 🌙':`Отправить за 🌙 ${g[2]}`}
-  else if(t.id==='gs'){const g=G[gsel],gt=$('#gtxt').value.trim();moons-=g[2];csh();add({k:'gift',g:g[0],gn:g[1],gp:g[2],gt});burst()}
+  else if(t.id==='ganon'){giftAnon=!giftAnon;t.classList.toggle('on',giftAnon)}
+  else if(t.id==='gs'){const g=G[gsel],gt=$('#gtxt').value.trim();moons-=g[2];csh();add({k:'gift',g:g[0],gn:g[1],gp:g[2],gt,anon:giftAnon,a:me.n});burst()}
   else if(t.id==='tpu'){moons+=100;saveAll();$('#bal').textContent='🌙 '+moons;toast('+100 🌙 на баланс');const s=$('.gi.sel');if(s)s.click()}
   else if(t.dataset.f){const p=P.find(x=>x.id===t.dataset.f);add(Object.assign({},fm,{pin:0,re:0,fw:cur.n}),p);csh();toast('Переслано: '+p.n)}
 };
@@ -2142,7 +2237,7 @@ $('#ms').addEventListener('pointermove',e=>{
 });
 $('#ms').addEventListener('pointerup',e=>{
   clearTimeout(lpTimer);lpTimer=null;const h=$('#ms .holding');if(h)h.classList.remove('holding');
-  if(lpFired||e.target.closest('button,.rq,.rc,.po,.vp,.wv-wrap,.gf-btn,.vnote-wrap,.ct-open,.mention,.an,[data-openimg]'))return;
+  if(lpFired||e.target.closest('button,.rq,.rc,.po,.vp,.wv-wrap,.gf-btn,.gf-open,.vnote-wrap,.ct-open,.mention,.an,[data-openimg]'))return;
   const w=e.target.closest('.mw');if(!w||!ST.dblr)return;
   const now=Date.now(),id=w.dataset.id;
   if(id===lastTapId&&now-lastTapT<330){
@@ -2190,7 +2285,8 @@ $('#ms').onclick=e=>{
     }
     return;
   }
-  if(t.closest('.gf-btn')&&!m.me&&!m.ok){m.ok=1;burst();toast('Подарок принят ✨');drawMsgs();saveAll()}
+  if(t.closest('.gf-btn')&&!m.me&&!m.ok){m.ok=1;burst();toast('Подарок принят ✨');drawMsgs();saveAll();return}
+  if(t.closest('.gf-open')){openGiftModal(m,cur.n);return}
 };
 
 $('#ms').onscroll=()=>{const m=$('#ms');$('#dn').style.display=m.scrollHeight-m.scrollTop-m.clientHeight>260?'grid':'none'};
@@ -2265,70 +2361,105 @@ $('#sp').oninput=e=>{
 $('#csi').oninput=e=>{const v=e.target.value.toLowerCase(),m=v&&[...cur.m].reverse().find(x=>pv(x).toLowerCase().includes(v));if(m)jump(m.id)};
 $('#csx').onclick=()=>{$('#sq').style.display='none';$('#csi').value=''};
 
-let stm=null;
+let stm=null,svIdx=0;
 function strs(){
-  const myKey=cleanU(me.u),hasMy=!!STORIES[myKey];
-  const others=Object.entries(STORIES).filter(([k])=>k!==myKey);
-  $('#sr').innerHTML=`<button data-sk="${myKey}"><span class="rg${hasMy?'':' sn'}"><span>${av({n:me.n||'Я',h:me.h,av:me.av},52)}</span></span>Моя</button>`
-    +others.map(([k,st])=>{const u=USERS[k]||{n:'@'+k,h:240};return`<button data-sk="${k}"><span class="rg${st._sn?' sn':''}"><span>${av(u,52)}</span></span>${esc((u.n||k).split(' ')[0])}</button>`}).join('');
+  const myKey=cleanU(me.u),myArr=getStoriesArr(myKey),hasMy=myArr.length>0;
+  const others=Object.keys(STORIES).filter(k=>k!==myKey&&getStoriesArr(k).length>0);
+  $('#sr').innerHTML=`<button data-sk="${myKey}" style="position:relative"><span class="rg${hasMy?'':' sn'}"><span>${av({n:me.n||'Я',h:me.h,av:me.av},52)}</span></span><span id="add-st-plus" style="position:absolute;right:4px;bottom:18px;width:20px;height:20px;border-radius:50%;background:var(--ac);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;border:2px solid var(--bg)">+</span>Моя</button>`
+    +others.map(k=>{const arr=getStoriesArr(k),u=USERS[k]||{n:'@'+k,h:240},allSeen=arr.every(x=>x._sn);return`<button data-sk="${k}"><span class="rg${allSeen?' sn':''}"><span>${av(u,52)}</span></span>${esc((u.n||k).split(' ')[0])}</button>`}).join('');
 }
-function openStory(key){
-  clearTimeout(stm);const myKey=cleanU(me.u),st=STORIES[key];
-  if(key===myKey&&!st){
-    const f=$('#fi');f.accept='image/*,video/*';
-    f.onchange=()=>{
-      const x=f.files[0];if(!x)return;
-      if(x.type.startsWith('video/')){
-        const url=URL.createObjectURL(x),tv=document.createElement('video');tv.preload='metadata';
-        tv.onloadedmetadata=()=>{
-          if(tv.duration>600){URL.revokeObjectURL(url);toast('Максимум 10 минут')}
-          else{saveStory({type:'vid',src:url,dur:Math.max(4,tv.duration),likes:{},ts:Date.now()})}
-        };tv.src=url;
-      }else compressImg(x,900,src=>saveStory({type:'img',src,dur:6,likes:{},ts:Date.now()}));
-      f.value='';
-    };f.click();return;
-  }
-  if(!st)return;
-  st._sn=1;const u=key===myKey?me:(USERS[key]||{n:'@'+key,u:'@'+key,h:240});
+
+function pickNewStory(){
+  const f=$('#fi');f.accept='image/*,video/*';
+  f.onchange=()=>{
+    const x=f.files[0];if(!x)return;
+    if(x.type.startsWith('video/')){
+      const url=URL.createObjectURL(x),tv=document.createElement('video');tv.preload='metadata';
+      tv.onloadedmetadata=()=>{
+        if(tv.duration>600){URL.revokeObjectURL(url);toast('Максимум 10 минут')}
+        else saveStory({id:'st_'+Date.now(),type:'vid',src:url,dur:Math.max(4,tv.duration),likes:{},ts:Date.now()});
+      };tv.src=url;
+    }else compressImg(x,900,src=>saveStory({id:'st_'+Date.now(),type:'img',src,dur:6,likes:{},ts:Date.now()}));
+    f.value='';
+  };f.click();
+}
+
+function openStory(key,idx=0){
+  clearTimeout(stm);const myKey=cleanU(me.u),arr=getStoriesArr(key);
+  if(key===myKey&&!arr.length)return pickNewStory();
+  if(!arr.length)return;
+  if(idx<0)idx=0;
+  if(idx>=arr.length){$('#sv').classList.remove('on');strs();return}
+  svIdx=idx;
+  const st=arr[idx];st._sn=1;
+  const u=key===myKey?me:(USERS[key]||{n:'@'+key,u:'@'+key,h:240});
   const likes=st.likes||{},liked=!!likes[myKey],likeCnt=Object.keys(likes).length;
+  const bars=arr.map((_,i)=>`<div class="sb${i<idx?' done':''}"><i${i===idx?` id="sv-bar" style="animation:sg ${st.dur||6}s linear forwards"`:''}></i></div>`).join('');
   const v=$('#sv');
   v.innerHTML=`
-    <div class="sb"><i id="sv-bar" style="animation:sg ${st.dur||6}s linear forwards"></i></div>
-    <div class="sh2">${av(u,40)}<b>${esc(u.n)}</b>${key===myKey?`<button class="ib" id="sv-del">${I('trash',20)}</button>`:''}<button class="ib" id="sx">${I('x')}</button></div>
-    <div class="sm" style="${st.type==='img'?`background:url(${st.src})`:''}">${st.type==='vid'?`<video src="${st.src}" autoplay playsinline></video>`:''}</div>
+    <div class="sb-row">${bars}</div>
+    <div class="sh2">${av(u,40)}<div><b>${esc(u.n)}</b><small style="display:block;font-size:11px;opacity:.7">${idx+1} из ${arr.length} · ${tm(st.ts||Date.now())}</small></div>${key===myKey?`<button class="ib" id="sv-add" title="Добавить ещё">${I('plus',20)}</button><button class="ib" id="sv-del">${I('trash',20)}</button>`:''}<button class="ib" id="sx">${I('x')}</button></div>
+    <div class="sm" id="sv-stage" style="${st.type==='img'?`background:url(${st.src})`:''}">${st.type==='vid'?`<video src="${st.src}" autoplay playsinline></video>`:''}</div>
     <div class="sr2">
-      ${key!==myKey?`<input id="sv-inp" placeholder="Ответить на историю…">`:'<span style="flex:1;font-size:13px;opacity:.75">Ваша история</span>'}
+      ${key!==myKey?`<input id="sv-inp" placeholder="Ответить на историю…">`:'<span style="flex:1;font-size:13px;opacity:.75">Ваша публикация</span>'}
       <button id="sv-like" class="${liked?'liked':''}">❤️ <small style="font-size:13px">${likeCnt||''}</small></button>
     </div>`;
   v.classList.add('on');v.dataset.k=key;
-  stm=setTimeout(()=>{v.classList.remove('on');strs()},(st.dur||6)*1000);
+  stm=setTimeout(()=>openStory(key,idx+1),(st.dur||6)*1000);
 }
+
 async function saveStory(obj){
-  const k=cleanU(me.u);STORIES[k]=obj;saveAll();
-  if(sb&&navigator.onLine&&obj.type==='img'){
-    await sb.from('stories').upsert({username:k,data:obj,updated_at:Date.now()},{onConflict:'username'});
+  const k=cleanU(me.u);
+  const arr=getStoriesArr(k);
+  arr.push(obj);
+  STORIES[k]=arr;saveAll();
+  const cloudArr=arr.filter(x=>x.type==='img');
+  if(sb&&navigator.onLine&&cloudArr.length){
+    await sb.from('stories').upsert({username:k,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
   }
-  strs();openStory(k);
+  strs();if(tabs===3)mset();openStory(k,arr.length-1);
 }
-$('#sr').onclick=e=>{const b=e.target.closest('[data-sk]');if(b)openStory(b.dataset.sk)};
+
+$('#sr').onclick=e=>{
+  if(e.target.closest('#add-st-plus')){pickNewStory();return}
+  const b=e.target.closest('[data-sk]');if(b)openStory(b.dataset.sk,0);
+};
+
 $('#sv').onclick=async e=>{
   const t=e.target,v=$('#sv'),key=v.dataset.k,myKey=cleanU(me.u);
   if(t.closest('#sx')){clearTimeout(stm);v.classList.remove('on');strs();return}
+  if(t.closest('#sv-add')){clearTimeout(stm);v.classList.remove('on');pickNewStory();return}
   if(t.closest('#sv-del')){
-    clearTimeout(stm);delete STORIES[myKey];
-    if(sb&&navigator.onLine)await sb.from('stories').delete().eq('username',myKey);
-    saveAll();v.classList.remove('on');strs();toast('История удалена');return;
+    clearTimeout(stm);
+    const arr=getStoriesArr(myKey);arr.splice(svIdx,1);
+    if(arr.length)STORIES[myKey]=arr;else delete STORIES[myKey];
+    if(sb&&navigator.onLine){
+      const cloudArr=arr.filter(x=>x.type==='img');
+      if(cloudArr.length)await sb.from('stories').upsert({username:myKey,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
+      else await sb.from('stories').delete().eq('username',myKey);
+    }
+    saveAll();strs();if(tabs===3)mset();
+    if(arr.length)openStory(myKey,Math.min(svIdx,arr.length-1));else v.classList.remove('on');
+    toast('История удалена');return;
   }
   if(t.closest('#sv-like')){
-    const st=STORIES[key];if(!st)return;st.likes=st.likes||{};
+    const arr=getStoriesArr(key),st=arr[svIdx];if(!st)return;st.likes=st.likes||{};
     if(st.likes[myKey])delete st.likes[myKey];else{st.likes[myKey]=1;if(ST.vib)try{navigator.vibrate(18)}catch(err){}}
-    if(sb&&navigator.onLine&&st.type==='img'){
-      await sb.from('stories').upsert({username:key,data:st,updated_at:Date.now()},{onConflict:'username'});
+    STORIES[key]=arr;
+    if(sb&&navigator.onLine){
+      const cloudArr=arr.filter(x=>x.type==='img');
+      if(cloudArr.length)await sb.from('stories').upsert({username:key,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
     }
-    saveAll();openStory(key);return;
+    saveAll();openStory(key,svIdx);return;
   }
-  if(t.closest('#sv-inp')){clearTimeout(stm);const b=$('#sv-bar');if(b)b.style.animationPlayState='paused'}
+  if(t.closest('#sv-inp')){clearTimeout(stm);const b=$('#sv-bar');if(b)b.style.animationPlayState='paused';return}
+  if(t.closest('#sv-stage')){
+    const r=$('#sv-stage').getBoundingClientRect();
+    if(e.clientX-r.left<r.width*0.35)openStory(key,svIdx-1);
+    else openStory(key,svIdx+1);
+  }
 };
+
 $('#sv').addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.id==='sv-inp'){
     const val=e.target.value.trim(),key=$('#sv').dataset.k;if(!val)return;
