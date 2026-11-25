@@ -42,13 +42,13 @@ button{font:inherit;color:inherit;border:0;background:none;outline:0;cursor:poin
 button:active{transform:scale(.92)}
 video{transform:none!important}
 html{width:100%;height:100vh;min-height:100lvh;background:var(--bg);overflow:hidden}
-body{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100vh;min-height:100lvh;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y;background:var(--bg);color:var(--tx);font:var(--fs)/1.38 'Onest',system-ui,-apple-system,sans-serif}
+body{position:fixed;inset:0;width:100%;height:100vh;min-height:100lvh;overflow:hidden;overscroll-behavior:none;touch-action:pan-x pan-y;background:var(--bg);color:var(--tx);font:var(--fs)/1.38 'Onest',system-ui,-apple-system,sans-serif}
 body::before{content:"";position:fixed;inset:-80px;background:var(--aur);z-index:-1;pointer-events:none;animation:dr 34s ease-in-out infinite alternate}
 @keyframes dr{to{transform:translate(3%,4%) rotate(5deg)}}
 [data-aur="0"] body::before{display:none}
 .gl{background:var(--gl);-webkit-backdrop-filter:blur(var(--bl)) saturate(195%);backdrop-filter:blur(var(--bl)) saturate(195%);border:1px solid var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.3),inset 0 -8px 18px rgba(255,255,255,.03),0 10px 30px var(--sh)}
 
-#app{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100vh;min-height:100lvh;display:flex;overflow:hidden}
+#app{position:fixed;inset:0;width:100%;height:100vh;min-height:100lvh;display:flex;overflow:hidden}
 #side{width:100%;height:100%;position:relative;flex:none;overflow:hidden}
 .pg{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 96px;display:none}
 .pg.on{display:block}
@@ -145,17 +145,18 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .wave-em{font-size:84px;line-height:1;display:inline-block;animation:fy 2.8s ease-in-out infinite;cursor:pointer}
 .wave-btn{padding:10px 18px;border-radius:20px;background:var(--ac);color:#fff;font-weight:600;font-size:14px;margin-top:4px}
 
-.mw{position:relative;display:flex;flex-direction:column;align-items:flex-start;margin:5px 0;touch-action:pan-y}
+.mw{position:relative;display:flex;flex-direction:column;align-items:flex-start;margin:5px 0;touch-action:pan-y;transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .26s ease,transform .28s cubic-bezier(.4,0,.2,1),margin .32s ease}
 .mw.me{align-items:flex-end}
 .mw.grp{margin-top:2px}
 .mw.center{align-items:center;margin:12px 0}
-.mw.vapor{transition:opacity .48s ease,transform .48s ease,filter .48s ease;opacity:0;transform:scale(.82) translateY(-14px);filter:blur(10px)}
+.mw.del-out{opacity:0!important;transform:scale(.88) translateX(-18px);max-height:0!important;margin:0!important;overflow:hidden;pointer-events:none}
+.mw.me.del-out{transform:scale(.88) translateX(18px)}
 .sw-ic{position:absolute;right:8px;top:50%;transform:translateY(-50%) scale(.4);width:34px;height:34px;border-radius:50%;background:var(--gl);border:1px solid var(--gb);color:var(--ac);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
 .mw-inner{display:flex;flex-direction:column;align-items:inherit;max-width:100%;will-change:transform}
-.mw.fh .b{box-shadow:0 0 0 3px var(--ac2),0 8px 26px color-mix(in srgb,var(--ac2) 45%,transparent)}
+.mw.fh .b{box-shadow:0 0 0 3px var(--ac2),0 0 28px color-mix(in srgb,var(--ac2) 55%,transparent);transform:scale(1.025)}
 .mw.holding .b{transform:scale(.96)}
 
-.b{max-width:min(82vw,420px);padding:9px 13px 7px;border-radius:var(--br) var(--br) var(--br) 6px;background:var(--inb);border:1px solid var(--gb);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 4px 16px rgba(0,0,0,.08);overflow-wrap:anywhere;transition:box-shadow .3s,transform .22s cubic-bezier(.3,1.5,.5,1)}
+.b{max-width:min(82vw,420px);padding:9px 13px 7px;border-radius:var(--br) var(--br) var(--br) 6px;background:var(--inb);border:1px solid var(--gb);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 4px 16px rgba(0,0,0,.08);overflow-wrap:anywhere;transition:box-shadow .35s,transform .28s cubic-bezier(.3,1.5,.5,1)}
 .b::after{content:"";display:table;clear:both}
 .me .b{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 38%,var(--ac2)));color:#fff;border-color:rgba(255,255,255,.18);border-radius:var(--br) var(--br) 6px var(--br);box-shadow:0 6px 20px color-mix(in srgb,var(--ac) 30%,transparent)}
 [data-grad="0"] .me .b{background:var(--ac)}
@@ -183,15 +184,20 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .clk{display:inline-flex;width:13px;height:13px;opacity:.85;animation:spinClk 2s linear infinite}
 @keyframes spinClk{to{transform:rotate(360deg)}}
 
-.fw{font-size:12px;color:var(--ac2);font-weight:600;margin-bottom:3px}.me .fw{color:rgba(255,255,255,.9)}
+.fw{font-size:12px;color:var(--ac2);font-weight:600;margin-bottom:3px;cursor:pointer;display:inline-block}
+.fw:hover{text-decoration:underline}
+.me .fw{color:rgba(255,255,255,.92)}
 .an{font-size:13px;font-weight:700;margin-bottom:2px;cursor:pointer;display:inline-block}
 .an:hover{text-decoration:underline}
-.rq{border-left:3px solid var(--ac2);padding:4px 9px;margin:2px 0 6px;font-size:13px;cursor:pointer;background:rgba(255,255,255,.12);border-radius:4px 10px 10px 4px}
+.rq{border-left:3px solid var(--ac2);padding:4px 9px;margin:2px 0 6px;font-size:13px;cursor:pointer;background:rgba(255,255,255,.12);border-radius:4px 10px 10px 4px;transition:background .15s}
+.rq:active{background:rgba(255,255,255,.22)}
 .me .rq{border-left-color:#fff;background:rgba(255,255,255,.18)}
 .rq b{display:block;font-size:12px}
 .rx{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap}
-.rc{padding:3px 9px;border-radius:12px;font-size:13px;background:var(--gl);border:1px solid var(--gb);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.rc{padding:3px 9px;border-radius:12px;font-size:13px;background:var(--gl);border:1px solid var(--gb);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:transform .2s}
 .rc.my{background:var(--ac);color:#fff;border-color:transparent}
+.rc.pop{animation:rxPop .42s cubic-bezier(.2,1.6,.4,1)}
+@keyframes rxPop{0%{transform:scale(.4)}60%{transform:scale(1.28)}100%{transform:scale(1)}}
 
 .gf-card{width:min(78vw,272px);padding:18px 16px 15px;border-radius:28px;text-align:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.32),transparent 65%),linear-gradient(155deg,color-mix(in srgb,var(--ac) 86%,#1b1040),color-mix(in srgb,var(--ac2) 55%,#ff5ea8));color:#fff;border:1px solid rgba(255,255,255,.35);box-shadow:0 14px 36px color-mix(in srgb,var(--ac) 40%,rgba(0,0,0,.35))}
 .gf-card::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 280deg,rgba(255,255,255,.22) 320deg,transparent 360deg);animation:spinGlow 8s linear infinite;pointer-events:none}
@@ -206,16 +212,22 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .gf-btn{display:block;width:100%;margin-top:10px;padding:9px;border-radius:16px;background:rgba(255,255,255,.94);color:#171a2b;font-weight:700;font-size:13.5px}
 .gf-ok{display:block;margin-top:8px;font-size:12px;opacity:.88}
 
+#gf-anim{position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(5,7,18,.58);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);pointer-events:none}
+#gf-anim.on{display:flex;animation:fadeIn .25s}
+.gfa-em{font-size:112px;filter:drop-shadow(0 16px 36px rgba(124,92,255,.65));animation:gfaBounce 1.1s cubic-bezier(.2,1.5,.4,1)}
+@keyframes gfaBounce{0%{transform:scale(.15) rotate(-18deg);opacity:0}45%{transform:scale(1.22) rotate(6deg);opacity:1}75%{transform:scale(.95) rotate(-3deg)}100%{transform:scale(1) rotate(0)}}
+.gfa-tx{font-size:20px;font-weight:700;color:#fff;text-shadow:0 4px 16px rgba(0,0,0,.5)}
+
 .vc{display:flex;align-items:center;gap:10px;width:236px}
 .vp{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;flex:none}
 .wv-wrap{position:relative;flex:1;height:30px;cursor:pointer;display:flex;align-items:center}
 .wv-layer{display:flex;align-items:center;gap:2px;width:100%;height:100%}
-.wv-layer i{flex:1;border-radius:2px;background:currentColor;min-height:4px}
+.wv-layer i{flex:1;border-radius:2px;background:currentColor;min-height:4px;transition:height .12s ease}
 .wv-bg{opacity:.35}
-.wv-fg{position:absolute;inset:0;clip-path:inset(0 100% 0 0);transition:clip-path .05s linear;opacity:1}
+.wv-fg{position:absolute;inset:0;clip-path:inset(0 100% 0 0);transition:clip-path .06s linear;opacity:1}
 .vc-tm{font-size:11.5px;font-variant-numeric:tabular-nums;opacity:.85;min-width:30px;text-align:right}
-.rec-wv{display:flex;align-items:center;gap:2px;flex:1;height:26px;overflow:hidden}
-.rec-wv i{width:3px;border-radius:2px;background:var(--ac);transition:height .08s ease;min-height:4px}
+.rec-wv{display:flex;align-items:center;gap:2.5px;flex:1;height:28px;overflow:hidden}
+.rec-wv i{width:3px;border-radius:3px;background:linear-gradient(to top,var(--ac),var(--ac2));transition:height .09s cubic-bezier(.2,.9,.3,1);min-height:4px;flex:none}
 
 .vnote-box{position:relative;width:214px;padding-bottom:10px}
 .vnote-wrap{position:relative;width:214px;height:214px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.32);box-shadow:0 12px 30px rgba(0,0,0,.35);cursor:pointer;background:#0e101c;background-size:cover;background-position:center}
@@ -225,6 +237,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .vnote-badge{position:absolute;left:2px;bottom:-14px;padding:2px 9px;border-radius:11px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);z-index:2}
 .vnote-play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.22);color:#fff;transition:opacity .2s}
 .vnote-wrap.playing .vnote-play{opacity:0}
+.vnote-once{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(8,10,20,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:#fff;font-size:13px;font-weight:600;z-index:2}
 
 .po{position:relative;display:flex;justify-content:space-between;padding:8px 11px;margin:4px 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.12);cursor:pointer;min-width:210px}
 .po .pb{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.24);transition:width .45s}
@@ -276,26 +289,30 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 
 #rc{position:absolute;inset:0;border-radius:24px;display:none;align-items:center;gap:8px;padding:0 6px 0 14px;background:color-mix(in srgb,var(--bg) 94%,transparent);border:1px solid var(--gb);z-index:3;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
 #rc.on{display:flex;animation:pop .2s}
-#rc span{color:var(--tx);font-weight:600;font-variant-numeric:tabular-nums;font-size:14px;min-width:36px}
+#rc span{color:var(--tx);font-weight:600;font-variant-numeric:tabular-nums;font-size:14px;min-width:44px}
 .rec-dot{width:10px;height:10px;border-radius:50%;background:#ff4d6d;animation:bl 1s infinite;flex:none}
 @keyframes bl{50%{opacity:.2}}
 
-#vrec{position:fixed;inset:0;z-index:55;display:none;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:rgba(4,6,14,.78);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);transition:background .25s}
-#vrec.on{display:flex;animation:pop .24s}
-#vrec.flash-front{background:rgba(255,250,240,.92)}
-#vrec.flash-front .vrec-time{background:rgba(0,0,0,.7)}
-.vrec-stage{position:relative;width:268px;height:268px;display:grid;place-items:center}
-.vrec-prog{position:absolute;inset:0;transform:rotate(-90deg);pointer-events:none}
-.vrec-prog circle.bg{fill:none;stroke:rgba(255,255,255,.15);stroke-width:5}
-.vrec-prog circle.fg{fill:none;stroke:var(--ac2);stroke-width:5;stroke-linecap:round;stroke-dasharray:816;stroke-dashoffset:816;transition:stroke-dashoffset .25s linear}
-.vrec-circle{width:250px;height:250px;border-radius:50%;overflow:hidden;position:relative;background:#090b15;box-shadow:0 16px 46px rgba(0,0,0,.5)}
+#vrec{position:fixed;inset:0;z-index:55;display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 52px) 16px 26px;background:rgba(4,6,14,.84);-webkit-backdrop-filter:blur(28px);backdrop-filter:blur(28px);transition:background .25s}
+#vrec.on{display:flex;animation:fadeIn .22s}
+#vrec.flash-front{background:rgba(255,250,240,.94)}
+.vrec-stage{position:relative;width:min(82vw,310px);height:min(82vw,310px);display:grid;place-items:center;margin:auto 0}
+.vrec-prog{position:absolute;inset:0;transform:rotate(-90deg);pointer-events:none;width:100%;height:100%}
+.vrec-prog circle.bg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:4}
+.vrec-prog circle.fg{fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-dasharray:816;stroke-dashoffset:816;transition:stroke-dashoffset .12s linear}
+.vrec-circle{width:94%;height:94%;border-radius:50%;overflow:hidden;position:relative;background:#000;box-shadow:0 20px 54px rgba(0,0,0,.6)}
 .vrec-circle video{width:100%;height:100%;object-fit:cover;display:block;transform:none!important}
-.vrec-time{padding:7px 16px;border-radius:18px;background:rgba(255,255,255,.14);color:#fff;font-weight:700;display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
-.vrec-btns{display:flex;gap:14px;align-items:center}
-.vrec-btns button{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-.vrec-btns button.on{background:#fff;color:#111}
-.vrec-btns button.main{width:64px;height:64px;background:var(--ac);box-shadow:0 8px 24px color-mix(in srgb,var(--ac) 55%,transparent)}
-.vrec-btns button.danger{background:rgba(255,77,109,.88)}
+.vrec-controls{width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}
+.vrec-mid{display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px}
+.vrec-left{display:flex;gap:10px}
+.vrec-right{display:flex;flex-direction:column;gap:10px;align-items:center}
+.vr-ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);font-weight:700;font-size:15px}
+.vr-ic.on{background:#fff;color:#111}
+.vrec-dock{display:flex;align-items:center;gap:10px}
+.vrec-pill{flex:1;height:48px;border-radius:24px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff}
+.vrec-pill span{font-variant-numeric:tabular-nums;font-weight:600;font-size:15px}
+.vrec-pill button{color:#fff;font-weight:600;font-size:15px;padding:6px 10px}
+.vrec-send{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;display:grid;place-items:center;box-shadow:0 0 0 8px rgba(255,255,255,.18),0 10px 28px rgba(0,0,0,.4);flex:none}
 
 #ml{position:fixed;inset:0;z-index:60;display:none;background:rgba(5,7,16,.52);-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%)}
 #ml.on{display:block;animation:fadeIn .2s ease}
@@ -318,8 +335,6 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .del-btns{display:flex;flex-direction:column;gap:8px}
 .del-btns button{width:100%;padding:13px;border-radius:20px;font-weight:600;font-size:14.5px;background:var(--th)}
 .del-btns button.rd{background:rgba(255,77,109,.18);color:#ff5470;border:1px solid rgba(255,77,109,.35)}
-.vpart{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--ac2);pointer-events:none;z-index:68;animation:vpart .65s ease-out forwards}
-@keyframes vpart{to{transform:translate(var(--vx),var(--vy)) scale(0);opacity:0}}
 
 #imgv{position:fixed;inset:0;z-index:80;display:none;flex-direction:column;background:rgba(4,5,10,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
 #imgv.on{display:flex;animation:fadeIn .22s}
@@ -351,13 +366,15 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .u-stat{font-size:12.5px;font-weight:600;margin:-4px 0 10px 6px;min-height:17px;text-align:left}
 .u-stat.ok{color:#34d399}.u-stat.err{color:#ff5470}
 
-.pav-hero{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;position:relative;overflow:hidden;transition:padding .42s cubic-bezier(.22,1,.36,1)}
-.pav-box{width:106px;height:106px;border-radius:50%;overflow:hidden;position:relative;display:grid;place-items:center;color:#fff;font-size:38px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.22),inset 0 1px 2px rgba(255,255,255,.45);transition:width .44s cubic-bezier(.22,1,.36,1),aspect-ratio .44s,height .44s cubic-bezier(.22,1,.36,1),border-radius .44s cubic-bezier(.22,1,.36,1);cursor:pointer;background-size:cover!important;background-position:center!important}
-.pav-ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 58%);opacity:0;pointer-events:none;transition:opacity .3s;text-align:left;color:#fff}
+.pf-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px}
+.pf-float{position:absolute;font-size:24px;opacity:.82;pointer-events:none;animation:fy 3.4s ease-in-out infinite;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
+.pav-hero{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;position:relative;overflow:hidden;transition:padding .42s cubic-bezier(.22,1,.36,1)}
+.pav-box{width:108px;height:108px;border-radius:50%;overflow:hidden;position:relative;display:grid;place-items:center;color:#fff;font-size:38px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.26),inset 0 1px 2px rgba(255,255,255,.45);transition:width .44s cubic-bezier(.22,1,.36,1),aspect-ratio .44s,height .44s cubic-bezier(.22,1,.36,1),border-radius .44s cubic-bezier(.22,1,.36,1);cursor:pointer;background-size:cover!important;background-position:center!important}
+.pav-ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.74),transparent 58%);opacity:0;pointer-events:none;transition:opacity .3s;text-align:left;color:#fff}
 .pav-hero.exp{padding:0}
 .pav-hero.exp .pav-box{width:100%;height:auto;aspect-ratio:4/3;border-radius:26px}
 .pav-hero.exp .pav-ov{opacity:1}
-.pav-hero.exp .pav-meta,.pav-hero.exp .pav-hint{display:none}
+.pav-hero.exp .pav-meta,.pav-hero.exp .pav-hint,.pav-hero.exp .pf-float{display:none}
 .pav-hint{font-size:11.5px;color:var(--mu);opacity:.72}
 .pav-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;padding:0 12px 14px}
 .pav-st{padding:10px 6px;border-radius:18px;background:var(--th);text-align:center}
@@ -365,7 +382,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 
 .ptabs{display:flex;gap:4px;padding:6px;border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
 .ptabs::-webkit-scrollbar{display:none}
-.ptabs button{flex:1;min-width:74px;padding:8px;border-radius:16px;font-size:13px;font-weight:600;color:var(--mu);white-space:nowrap}
+.ptabs button{flex:1;min-width:74px;padding:8px 10px;border-radius:16px;font-size:13px;font-weight:600;color:var(--mu);white-space:nowrap}
 .ptabs button.on{background:var(--ac);color:#fff}
 .pgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
 .pgift{padding:12px 6px;border-radius:20px;background:linear-gradient(155deg,color-mix(in srgb,var(--ac) 34%,var(--th)),var(--th));border:1px solid var(--gb);text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
@@ -382,7 +399,7 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 #call-bg{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(34px) brightness(.42);z-index:0}
 #call-remote{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;pointer-events:none;transition:opacity .25s;transform:none!important}
 #call-remote.vis{opacity:1}
-#call-self{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);right:16px;width:108px;height:152px;border-radius:22px;object-fit:cover;z-index:4;display:none;border:2px solid rgba(255,255,255,.35);box-shadow:0 10px 28px rgba(0,0,0,.5);transform:none!important}
+#call-self{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);right:16px;width:112px;height:156px;border-radius:22px;object-fit:cover;z-index:6;display:none;border:2px solid rgba(255,255,255,.35);box-shadow:0 12px 30px rgba(0,0,0,.55);cursor:grab;touch-action:none;transform:none!important}
 .call-top,.call-bot{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;align-items:center}
 .call-ring-wrap{position:relative;display:grid;place-items:center;margin-bottom:14px}
 .call-pulse{position:absolute;width:136px;height:136px;border-radius:50%;border:2px solid rgba(255,255,255,.28);animation:cpulse 2s ease-out infinite}
@@ -394,8 +411,8 @@ h1{font-size:29px;font-weight:700;letter-spacing:-.03em}
 .cbt.on{background:#fff;color:#111}
 .cbt.end{background:#ff445d;color:#fff}.cbt.end svg{transform:rotate(135deg)}
 
-.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
-.acts button{padding:12px 4px;border-radius:22px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:var(--ac)}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.acts button{padding:12px 4px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--ac)}
 .inf{padding:12px 16px}.inf+.inf{border-top:1px solid var(--ln)}.inf small{display:block;color:var(--mu);font-size:12px}
 .inf.btn{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
 .inf input,.inf textarea{width:100%;margin-top:3px;font-weight:500}
@@ -445,17 +462,17 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 [data-wp=forest]{--wp:linear-gradient(170deg,rgba(52,211,153,.35),rgba(8,60,50,.45))}
 [data-wp=plain]{--wp:linear-gradient(var(--bg),var(--bg))}
 
-#sv{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#000;color:#fff}
+#sv{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#000;color:#fff;touch-action:none}
 #sv.on{display:flex;animation:pop .25s}
-.sb-row{display:flex;gap:4px;margin:calc(env(safe-area-inset-top,0px) + 10px) 12px 0}
+.sb-row{display:flex;gap:4px;margin:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;z-index:3}
 .sb{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:2px;overflow:hidden}
 .sb i{display:block;height:100%;background:#fff;width:0%}
 .sb.done i{width:100%}
 @keyframes sg{from{width:0}to{width:100%}}
-.sh2{display:flex;align-items:center;gap:10px;padding:10px 12px}.sh2>div{flex:1;min-width:0}
-.sm{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;background-size:cover!important;background-position:center!important;position:relative;overflow:hidden}
-.sm video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
-.sr2{display:flex;align-items:center;gap:8px;padding:12px 14px 20px;background:linear-gradient(to top,rgba(0,0,0,.78),transparent)}
+.sh2{display:flex;align-items:center;gap:10px;padding:10px 12px;z-index:3}.sh2>div{flex:1;min-width:0}
+.sm{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;touch-action:none}
+.sm-media{width:100%;height:100%;object-fit:contain;transition:transform .12s ease-out;transform-origin:center center}
+.sr2{display:flex;align-items:center;gap:8px;padding:12px 14px 20px;background:linear-gradient(to top,rgba(0,0,0,.78),transparent);z-index:3}
 .sr2 input{flex:1;height:42px;padding:0 14px;border-radius:21px;background:rgba(255,255,255,.18);color:#fff}
 .sr2 input::placeholder{color:rgba(255,255,255,.7)}
 .sr2 button{font-size:21px;height:44px;min-width:44px;padding:0 10px;border-radius:22px;background:rgba(255,255,255,.18);color:#fff;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:4px}
@@ -477,7 +494,7 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 
 #tt{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translate(-50%,-95px);z-index:95;padding:10px 18px;border-radius:22px;transition:transform .35s cubic-bezier(.3,1.4,.5,1);font-size:14px;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
 #tt.on{transform:translate(-50%,0)}
-.cf{position:fixed;z-index:85;font-size:22px;pointer-events:none;animation:cf 1.3s cubic-bezier(.1,.7,.3,1) forwards}@keyframes cf{to{transform:translate(var(--x),calc(var(--y) + 170px)) rotate(360deg);opacity:0}}
+.cf{position:fixed;z-index:97;font-size:22px;pointer-events:none;animation:cf 1.35s cubic-bezier(.1,.7,.3,1) forwards}@keyframes cf{to{transform:translate(var(--x),calc(var(--y) + 170px)) rotate(360deg);opacity:0}}
 .dbl-pop{position:fixed;z-index:85;font-size:44px;pointer-events:none;transform:translate(-50%,-50%);animation:dblpop .65s cubic-bezier(.2,1.4,.4,1) forwards}
 @keyframes dblpop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}40%{transform:translate(-50%,-70%) scale(1.25);opacity:1}100%{transform:translate(-50%,-125%) scale(.8);opacity:0}}
 .chg{padding:12px 16px;border-top:1px solid var(--ln)}
@@ -574,19 +591,32 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 <canvas id="vr-cvs" width="480" height="480" style="position:fixed;left:-9999px;top:0;width:4px;height:4px;opacity:.01;pointer-events:none"></canvas>
 
 <div id="vrec">
-  <div class="vrec-time"><i class="rec-dot"></i><span id="vrt">0:00 / 0:30</span></div>
   <div class="vrec-stage">
     <svg class="vrec-prog" viewBox="0 0 268 268"><circle class="bg" cx="134" cy="134" r="130"/><circle class="fg" id="vr-ring" cx="134" cy="134" r="130"/></svg>
     <div class="vrec-circle"><video id="vrec-v" autoplay muted playsinline></video></div>
   </div>
-  <div class="vrec-btns">
-    <button class="danger" id="vr-cancel" aria-label="Отмена"></button>
-    <button id="vr-torch" aria-label="Фонарик"></button>
-    <button id="vr-flip" aria-label="Перевернуть камеру"></button>
-    <button class="main" id="vr-send" aria-label="Отправить кружок"></button>
+  <div class="vrec-controls">
+    <div class="vrec-mid">
+      <div class="vrec-left">
+        <button class="vr-ic" id="vr-flip" aria-label="Перевернуть камеру"></button>
+        <button class="vr-ic" id="vr-torch" aria-label="Вспышка"></button>
+      </div>
+      <div class="vrec-right">
+        <button class="vr-ic" id="vr-once" title="Одноразовый просмотр">①</button>
+        <button class="vr-ic" id="vr-pause" aria-label="Пауза"></button>
+      </div>
+    </div>
+    <div class="vrec-dock">
+      <div class="vrec-pill">
+        <span id="vrt">0:00,00</span>
+        <button id="vr-cancel">Отмена</button>
+      </div>
+      <button class="vrec-send" id="vr-send" aria-label="Отправить кружок"></button>
+    </div>
   </div>
 </div>
 
+<div id="gf-anim"><span class="gfa-em" id="gfa-em">🎁</span><div class="gfa-tx" id="gfa-tx"></div></div>
 <div id="ml"></div>
 <div id="del-modal"></div>
 <div id="imgv">
@@ -640,7 +670,7 @@ const IC={
   users:'M9 11a3 3 0 100-6 3 3 0 000 6zM3 20c0-3.3 2.7-5 6-5s6 1.7 6 5M17 11a2.5 2.5 0 100-5M18 15c2 .4 3 1.7 3 4',
   phone:'M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z',
   user:'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 3.5-6 8-6s8 2 8 6',
-  send:'M3 11l18-8-8 18-2-8z',
+  send:'M3 11l18-8-8 18-2-8z',up:'M12 19V5M5 12l7-7 7 7',
   clip:'M20 11l-8 8a5 5 0 01-7-7l8-8a3.5 3.5 0 015 5l-8 8a2 2 0 01-3-3l7-7',
   mic:'M12 3a3 3 0 013 3v5a3 3 0 01-6 0V6a3 3 0 013-3zM5 11a7 7 0 0014 0M12 18v3',
   vcam:'M12 21a9 9 0 100-18 9 9 0 000 18zM10 9.5l5 2.5-5 2.5z',
@@ -677,7 +707,7 @@ const STATUS_IC=(m)=>{
   return`<span class="ticks${m.rd?' rd':''}${m._rdAnim?' anim':''}"><svg viewBox="0 0 20 13"><path class="ck1" d="M1.5 7l3.5 3.5L12 3"/><path class="ck2" d="M7.5 7l3.5 3.5L18 3"/></svg></span>`;
 };
 
-const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('lunarn_rt_v6'):null;
+const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('lunarn_rt_v7'):null;
 let sb=null,dbOnline=false,sbChannels=[],rtLive=null,lastTypSent=0;
 const typTimers={};
 const TYP_HTML=`<span class="typ-tx">печатает<span class="typ-dots"><i></i><i></i><i></i></span></span>`;
@@ -685,8 +715,9 @@ const seenEv=new Set();
 
 let cur=null,fl='all',ed=null,rp=null,fm=null,gsel=null,ri=null,rs=0,tabs=0,recMode='mic',activePackIdx=0;
 let moons=+(ls('lunarn_moons')||280);
-let me=JSON.parse(ls('lunarn_me')||'null')||{n:'',u:'@',b:'В сети в Lunarn 🌙',ph:'',h:255,av:'',pw:'',contacts:[]};
+let me=JSON.parse(ls('lunarn_me')||'null')||{n:'',u:'@',b:'В сети в Lunarn 🌙',ph:'',h:255,av:'',pw:'',contacts:[],blocked:[]};
 if(!Array.isArray(me.contacts))me.contacts=[];
+if(!Array.isArray(me.blocked))me.blocked=[];
 let USERS=JSON.parse(ls('lunarn_users')||'{}');
 let P=JSON.parse(ls('lunarn_chats')||'null')||[{id:'sv',n:'Избранное',u:'@saved',h:230,t:'s',role:'owner',s:'ваши заметки и облако',m:[]}];
 let LG=JSON.parse(ls('lunarn_calls')||'[]');
@@ -714,7 +745,7 @@ let SK_PACKS=JSON.parse(ls('lunarn_packs')||'null')||[
 const DEF={
   theme:'dark',ac:'#7c5cff',ac2:'#35c6ff',bgc:'',wp:'aurora',wimg:'',wpdim:0,
   fs:15,br:22,bl:24,anim:1,aur:1,comp:0,grad:1,ticks:1,h24:1,ent:1,bigE:1,
-  dblr:1,dblE:'❤️',swrp:1,swbk:1,autoV:0,sbUrl:DEFAULT_SB_URL,sbKey:DEFAULT_SB_KEY,
+  dblr:1,dblE:'❤️',swrp:1,swbk:1,autoV:0,sbUrl:DEFAULT_SB_URL,sbKey:DEFAULT_SB_KEY,vapidPub:'',
   n:1,gn:1,cn:1,snd:1,vib:1,prev:1,bdg:1,ro:1,fa:0,lock:0,pin:'1234',
   lastseen:'Все',phone:'Контакты',photo:'Все',calls:'Все',invite:'Все',
   aph:1,avid:1,afile:0,saver:0,keep:'1 мес',f_u:1,f_g:1,f_c:1,f_un:1
@@ -738,44 +769,97 @@ function saveAll(){
 }
 
 const isContact=u=>Array.isArray(me.contacts)&&me.contacts.includes(cleanU(u));
+const iBlocked=u=>Array.isArray(me.blocked)&&me.blocked.includes(cleanU(u));
+const blockedMe=u=>{const x=USERS[cleanU(u)];return !!(x&&Array.isArray(x.blocked)&&x.blocked.includes(cleanU(me.u)))};
+const isAnyBlocked=u=>iBlocked(u)||blockedMe(u);
+
 const dispName=p=>{
   if(!p)return '';
   if(p.t==='u'&&cleanU(p.u)!==cleanU(me.u)&&!isContact(p.u))return 'Неизвестный';
   return p.n||fmtU(p.u);
 };
+
 function canSeeAvatar(p){
   if(!p||!p.av)return false;
   const k=cleanU(p.u);
   if(!k||k===cleanU(me.u)||p.t==='s'||p.t==='g'||p.t==='c')return true;
+  if(isAnyBlocked(k))return false;
   const u=USERS[k]||p;
   const priv=u.photo_priv||'Все';
   if(priv==='Никто')return false;
   if(priv==='Контакты')return Array.isArray(u.contacts)&&u.contacts.includes(cleanU(me.u));
   return true;
 }
+
+function formatLastSeen(p){
+  if(!p)return '';
+  if(p.t==='s')return 'ваши заметки и облако';
+  if(p.t==='g')return p.s||'Группа';
+  if(p.t==='c')return p.s||'Канал';
+  const k=cleanU(p.u);
+  if(isAnyBlocked(k))return 'был(а) очень давно';
+  const u=USERS[k]||p;
+  const priv=u.lastseen_priv||'Все';
+  const canExact=priv==='Все'||(priv==='Контакты'&&Array.isArray(u.contacts)&&u.contacts.includes(cleanU(me.u)));
+  if(!canExact)return 'был(а) недавно';
+  if(u.on)return 'в сети';
+  const ts=u.ts||p.ts;
+  if(!ts)return 'был(а) недавно';
+  const diffDays=dd(ts);
+  if(diffDays<1)return 'был(а) сегодня в '+tm(ts);
+  if(diffDays===1)return 'был(а) вчера в '+tm(ts);
+  return 'был(а) '+new Date(ts).toLocaleDateString('ru',{day:'numeric',month:'short'})+' в '+tm(ts);
+}
+
 function toggleContact(u){
   const k=cleanU(u);if(!k||k===cleanU(me.u))return;
-  if(!Array.isArray(me.contacts))me.contacts=[];
   const idx=me.contacts.indexOf(k);
   if(idx>=0){me.contacts.splice(idx,1);toast('Удалено из контактов')}
   else{me.contacts.push(k);toast('Добавлено в контакты ✓')}
   saveAll();publishMyProfile(true);
   if(cur&&cleanU(cur.u)===k){$('#hn').textContent=dispName(cur);$('#ha').innerHTML=av(cur,40);updateUnknownBar()}
-  list();if(tabs===1)cons();
+  list();if(tabs===1)cons();strs();
+}
+
+function toggleBlockUser(u){
+  const k=cleanU(u);if(!k||k===cleanU(me.u))return;
+  const idx=me.blocked.indexOf(k);
+  if(idx>=0){me.blocked.splice(idx,1);toast('Пользователь разблокирован')}
+  else{me.blocked.push(k);toast('Пользователь заблокирован')}
+  const c=P.find(x=>x.t==='u'&&cleanU(x.u)===k);
+  if(c)c.blk=idx<0?1:0;
+  saveAll();publishMyProfile(true);
+  if(cur&&cleanU(cur.u)===k)open(cur.id);
+  list();strs();
+}
+
+function urlB64ToUint8(b64){
+  const pad='='.repeat((4-b64.length%4)%4);
+  const raw=atob((b64+pad).replace(/-/g,'+').replace(/_/g,'/'));
+  return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
 }
 
 async function reqSysNotif(silent){
   if(!('Notification' in window)){if(!silent)toast('Браузер не поддерживает уведомления ОС');return}
-  if(Notification.permission==='granted'){if(!silent)toast('Уведомления ОС уже включены ✓');return}
   try{
-    const res=await Notification.requestPermission();
-    if(!silent)toast(res==='granted'?'Уведомления ОС включены 🔔':'Доступ к уведомлениям отклонён');
-  }catch(e){}
+    const res=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+    if(res!=='granted'){if(!silent)toast('Доступ к уведомлениям отклонён');return}
+    if(ST.vapidPub&&'serviceWorker' in navigator&&'PushManager' in window){
+      const reg=await navigator.serviceWorker.ready;
+      let sub=await reg.pushManager.getSubscription();
+      if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64ToUint8(ST.vapidPub.trim())});
+      if(sub&&sb&&cleanU(me.u)){
+        await sb.from('users').update({push_sub:sub.toJSON()}).eq('username',cleanU(me.u));
+      }
+    }
+    if(!silent)toast('Уведомления ОС включены 🔔');
+  }catch(e){if(!silent)toast('Уведомления ОС включены 🔔')}
 }
-function sysNotify(title,body){
+
+function sysNotify(title,body,tag){
   if(!ST.n||!('Notification' in window)||Notification.permission!=='granted')return;
   if(!document.hidden&&document.hasFocus())return;
-  const opts={body:body||'Новое событие',icon:'icon.svg',badge:'icon.svg',vibrate:[160,80,160],tag:'lunarn-ev'};
+  const opts={body:body||'Новое событие',icon:'icon.svg',badge:'icon.svg',vibrate:[180,80,180],tag:tag||'lunarn-ev',renotify:true};
   if(navigator.serviceWorker&&navigator.serviceWorker.ready){
     navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,opts)).catch(()=>{try{new Notification(title,opts)}catch(e){}});
   }else{try{new Notification(title,opts)}catch(e){}}
@@ -800,14 +884,17 @@ function syncUserRow(row){
     n:row.n,u:fmtU(row.username),ph:row.ph||'',b:row.b||'',h:row.h||240,av:row.av||'',
     on:row.is_online?1:0,ts:row.updated_at||Date.now(),
     contacts:Array.isArray(row.contacts)?row.contacts:[],
-    photo_priv:row.photo_priv||'Все'
+    blocked:Array.isArray(row.blocked)?row.blocked:[],
+    photo_priv:row.photo_priv||'Все',
+    lastseen_priv:row.lastseen_priv||'Все'
   };
   USERS[row.username]=u;
   const c=P.find(x=>x.t==='u'&&cleanU(x.u)===row.username);
   if(c){
-    c.n=u.n;c.av=u.av;c.b=u.b;c.h=u.h;c.on=u.on;c.contacts=u.contacts;c.photo_priv=u.photo_priv;
-    c.s=u.on?'онлайн':'был(а) недавно';
-    if(cur===c){$('#ha').innerHTML=av(c,40);$('#hn').textContent=dispName(c);updateChatStatus(c)}
+    c.n=u.n;c.av=u.av;c.b=u.b;c.h=u.h;c.on=u.on;c.ts=u.ts;
+    c.contacts=u.contacts;c.blocked=u.blocked;c.photo_priv=u.photo_priv;c.lastseen_priv=u.lastseen_priv;
+    c.s=formatLastSeen(c);
+    if(cur===c){$('#ha').innerHTML=av(c,40);$('#hn').textContent=dispName(c);updateChatStatus(c);updateComposerLock()}
   }
 }
 
@@ -820,15 +907,13 @@ async function initCloud(){
     sb=window.supabase.createClient(url,key);
     await loadCloudState();
     subscribeMyChats();
-  }catch(e){
-    dbOnline=false;updateNetUI();toast('Ошибка подключения к Supabase');
-  }
+  }catch(e){dbOnline=false;updateNetUI();toast('Ошибка подключения к Supabase')}
 }
 
 async function loadCloudState(){
   if(!sb)return;
   const [uRes,sRes]=await Promise.all([
-    sb.from('users').select('username,n,u,ph,b,h,av,is_online,updated_at,contacts,photo_priv'),
+    sb.from('users').select('username,n,u,ph,b,h,av,is_online,updated_at,contacts,blocked,photo_priv,lastseen_priv'),
     sb.from('stories').select('*')
   ]);
   if(uRes.data){
@@ -862,13 +947,13 @@ async function publishMyProfile(online=true){
     username:myKey,n:me.n,u:fmtU(myKey),ph:me.ph||'',b:me.b||'',h:me.h||255,av:me.av||'',
     is_online:!!online,updated_at:Date.now(),
     contacts:Array.isArray(me.contacts)?me.contacts:[],
-    photo_priv:ST.photo||'Все'
+    blocked:Array.isArray(me.blocked)?me.blocked:[],
+    photo_priv:ST.photo||'Все',
+    lastseen_priv:ST.lastseen||'Все'
   };
   if(me.pw)row.password=me.pw;
   syncUserRow(row);saveAll();
-  if(sb&&navigator.onLine){
-    await sb.from('users').upsert(row,{onConflict:'username'});
-  }
+  if(sb&&navigator.onLine)await sb.from('users').upsert(row,{onConflict:'username'});
 }
 
 function subscribeMyChats(){
@@ -886,12 +971,8 @@ function subscribeMyChats(){
       else if(payload.new){STORIES[payload.new.username]=payload.new.data}
       strs();if(tabs===3)mset();saveAll();
     })
-    .on('broadcast',{event:'typing'},({payload})=>{
-      if(payload)handleTypingEvent(payload);
-    })
-    .on('broadcast',{event:'live_ev'},({payload})=>{
-      if(payload)handleIncomingEvent(payload);
-    })
+    .on('broadcast',{event:'typing'},({payload})=>{if(payload)handleTypingEvent(payload)})
+    .on('broadcast',{event:'live_ev'},({payload})=>{if(payload)handleIncomingEvent(payload)})
     .subscribe(status=>{
       dbOnline=(status==='SUBSCRIBED');
       updateNetUI();
@@ -918,6 +999,7 @@ document.addEventListener('visibilitychange',()=>{
     if(!document.hidden)pullPendingInbox();
   }
 });
+window.addEventListener('beforeunload',()=>{if(cleanU(me.u)&&sb)publishMyProfile(false)});
 
 async function pushEventToTarget(targetU,ev){
   const key=cleanU(targetU);if(!key)return;
@@ -935,34 +1017,40 @@ async function pushEventToTarget(targetU,ev){
 }
 
 function sendTypingState(isTyp){
-  if(!cur||cur.t!=='u')return;
+  if(!cur||cur.t!=='u'||isAnyBlocked(cur.u))return;
   const now=Date.now();
   if(isTyp&&now-lastTypSent<1800)return;
   lastTypSent=isTyp?now:0;
   const payload={type:'typing',targetKey:cleanU(cur.u),fromU:cleanU(me.u),isTyp:!!isTyp};
-  if(bc)bc.postMessage(payload);
+  try{if(bc)bc.postMessage(payload)}catch(e){}
   if(rtLive&&dbOnline)rtLive.send({type:'broadcast',event:'typing',payload}).catch(()=>{});
 }
 
 function handleTypingEvent(ev){
   if(!ev||ev.targetKey!==cleanU(me.u))return;
   const from=cleanU(ev.fromU);
+  if(isAnyBlocked(from))return;
   const p=P.find(x=>x.t==='u'&&cleanU(x.u)===from);
   if(!p)return;
   clearTimeout(typTimers[from]);
   p.typing=!!ev.isTyp;
-  if(p.typing){
-    typTimers[from]=setTimeout(()=>{p.typing=false;updateChatStatus(p);list()},3400);
-  }
-  updateChatStatus(p);
-  list();
+  if(p.typing)typTimers[from]=setTimeout(()=>{p.typing=false;updateChatStatus(p);list()},3400);
+  updateChatStatus(p);list();
 }
 
 function updateChatStatus(p){
   if(cur!==p)return;
   const hs=$('#hs');if(!hs)return;
   if(p.typing)hs.innerHTML=TYP_HTML;
-  else hs.textContent=p.s||fmtU(p.u);
+  else hs.textContent=formatLastSeen(p);
+}
+
+function playGiftAnim(em,txt){
+  const el=$('#gf-anim');if(!el)return;
+  $('#gfa-em').textContent=em||'🎁';
+  $('#gfa-tx').textContent=txt||'Новый подарок!';
+  el.classList.add('on');burst();
+  setTimeout(()=>el.classList.remove('on'),1750);
 }
 
 function handleIncomingEvent(ev){
@@ -970,19 +1058,20 @@ function handleIncomingEvent(ev){
   if(ev.evId){if(seenEv.has(ev.evId))return;seenEv.add(ev.evId);if(seenEv.size>400)seenEv.clear()}
   const myKey=cleanU(me.u);
   if(ev.targetKey&&ev.targetKey!==myKey)return;
+  if(ev.fromU&&iBlocked(ev.fromU)&&ev.type!=='webrtc')return;
+
   if(ev.type==='msg'){
     let p=P.find(x=>x.id===ev.chatId||(ev.fromU&&cleanU(x.u)===cleanU(ev.fromU)&&x.t==='u'));
     if(!p){
       const known=USERS[cleanU(ev.fromU)]||{};
-      p={id:ev.chatId||chatRoomId(myKey,ev.fromU),n:ev.sender.n,u:fmtU(ev.sender.u),h:ev.sender.h||240,av:ev.sender.av||'',contacts:known.contacts||[],photo_priv:known.photo_priv||'Все',t:ev.chatType||'u',role:'member',on:1,s:'онлайн',m:[]};
+      p={id:ev.chatId||chatRoomId(myKey,ev.fromU),n:ev.sender.n,u:fmtU(ev.sender.u),h:ev.sender.h||240,av:ev.sender.av||'',contacts:known.contacts||[],blocked:known.blocked||[],photo_priv:known.photo_priv||'Все',lastseen_priv:known.lastseen_priv||'Все',t:ev.chatType||'u',role:'member',on:1,ts:Date.now(),m:[]};
       P.unshift(p);
     }
     p.typing=false;updateChatStatus(p);
     if(!p.m.some(x=>x.id===ev.msg.id)){
       const incoming=Object.assign({},ev.msg,{me:0,nw:1,pending:0});
       p.m.push(incoming);
-      const label=dispName(p);
-      const preview=ST.prev?pv(incoming):'Новое сообщение';
+      const label=dispName(p),preview=ST.prev?pv(incoming):'Новое сообщение';
       if(cur===p){
         drawMsgs(1);
         if(ST.ro)pushEventToTarget(ev.fromU,{type:'read',chatId:p.id,fromU:me.u}).catch(()=>{});
@@ -990,9 +1079,29 @@ function handleIncomingEvent(ev){
         p.un=(p.un|0)+1;
         if(!p.mute&&ST.n)toast(`${label}: ${preview}`);
       }
-      if(!p.mute)sysNotify(label,preview);
-      if(incoming.k==='gift'&&tabs===3)mset();
+      if(!p.mute)sysNotify(label,preview,'msg-'+p.id);
+      if(incoming.k==='gift'){playGiftAnim(incoming.g,`${incoming.anon?'Аноним':label} подарил(а) ${incoming.gn}`);if(tabs===3)mset()}
       fx();list();saveAll();
+    }
+  }else if(ev.type==='react'){
+    const p=P.find(x=>x.id===ev.chatId||cleanU(x.u)===cleanU(ev.fromU));
+    const m=p&&p.m.find(x=>x.id===ev.msgId);
+    if(m){
+      m.rx=m.rx||{};
+      const r=m.rx[ev.emoji]||(m.rx[ev.emoji]=[0,0]);
+      r[0]=Math.max(0,r[0]+(ev.add?1:-1));
+      if(!r[0])delete m.rx[ev.emoji];
+      m._rxPop=ev.emoji;
+      if(cur===p)drawMsgs();
+      saveAll();
+    }
+  }else if(ev.type==='vote'){
+    const p=P.find(x=>x.id===ev.chatId||cleanU(x.u)===cleanU(ev.fromU));
+    const m=p&&p.m.find(x=>x.id===ev.msgId);
+    if(m&&m.o&&m.o[ev.opt]!=null){
+      m.o[ev.opt][1]=(m.o[ev.opt][1]|0)+1;
+      if(cur===p)drawMsgs();
+      saveAll();
     }
   }else if(ev.type==='read'){
     const p=P.find(x=>x.id===ev.chatId||cleanU(x.u)===cleanU(ev.fromU));
@@ -1002,7 +1111,7 @@ function handleIncomingEvent(ev){
     if(p){
       const el=cur===p?$(`#ms [data-id="${ev.msgId}"]`):null;
       const done=()=>{p.m=p.m.filter(x=>x.id!==ev.msgId);if(cur===p){pin();drawMsgs()}list();saveAll()};
-      if(el)vaporizeEl(el,done);else done();
+      if(el)smoothDelEl(el,done);else done();
     }
   }else if(ev.type==='edit'){
     const p=P.find(x=>x.id===ev.chatId||cleanU(x.u)===cleanU(ev.fromU));
@@ -1012,7 +1121,7 @@ function handleIncomingEvent(ev){
     if(ev.ts&&Date.now()-ev.ts>30000)return;
     if(callTarget)return;
     const p=ensureUserChat(ev.sender);
-    sysNotify(dispName(p),ev.vid?'Входящий видеозвонок 📞':'Входящий звонок 📞');
+    sysNotify(dispName(p),ev.vid?'Входящий видеозвонок 📞':'Входящий звонок 📞','call-'+ev.callId);
     call(p,!!ev.vid,true,ev.offer,ev.callId);
   }else if(ev.type==='webrtc'){
     handleWebRTCSignal(ev);
@@ -1047,8 +1156,9 @@ const av=(p,s)=>{
   const showPic=canSeeAvatar(p);
   const name=p.t==='s'?'':dispName(p);
   const ini=p.t=='s'?I('bm',s*.48):(name==='Неизвестный'?'?':(name||'U').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase());
-  const bg=showPic?`background-image:url(${p.av})`:`background:linear-gradient(135deg,hsl(${p.h||240} 82% 60%),hsl(${(p.h||240)+48} 78% 48%))`;
-  return`<span class="av" style="width:${s}px;height:${s}px;font-size:${s*.38}px;${bg}">${showPic?'':ini}${p.on?'<i></i>':''}</span>`;
+  const bg=showPic?`background-image:url(${p.av})`:`background:linear-gradient(135deg,hsl(${p.h\vert{}\vert{}240} 82\% 60\%),hsl(${(p.h||240)+48} 78% 48%))`;
+  const online=p.t==='u'&&p.on&&!isAnyBlocked(p.u)&&(USERS[cleanU(p.u)]?.lastseen_priv||'Все')!=='Никто';
+  return`<span class="av" style="width:${s}px;height:${s}px;font-size:${s*.38}px;${bg}">${showPic?'':ini}${online?'<i></i>':''}</span>`;
 };
 const lm=p=>p.m[p.m.length-1]||{ts:0,t:'',rd:0};
 const tm=ts=>new Date(ts).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit',hour12:!ST.h24});
@@ -1057,14 +1167,14 @@ const dl=ts=>dd(ts)<1?'Сегодня':dd(ts)==1?'Вчера':new Date(ts).toLoc
 const ds=ts=>!ts?'':dd(ts)<1?tm(ts):dd(ts)==1?'Вчера':new Date(ts).toLocaleDateString('ru',{day:'numeric',month:'short'});
 const pv=m=>({
   st:'Стикер '+(m.e||'🖼'),gif:'🎬 GIF',gift:'🌙 Подарок · '+m.gn,
-  voice:'🎤 Голосовое сообщение',vnote:'⭕ Видеокружок',
+  voice:'🎤 Голосовое сообщение',vnote:m.once?'① Одноразовый кружок':'⭕ Видеокружок',
   img:'🖼 Фото',poll:'📊 '+m.q,file:'📎 '+m.fn,loc:'📍 Геопозиция',ct:'👤 Контакт: '+m.cn
 }[m.k]||m.t);
 
 function toast(t){const e=$('#tt');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2300)}
 function burst(){for(let i=0;i<28;i++){const s=document.createElement('span');s.className='cf';s.textContent=['🌙','✨','💜','🎉','🎁'][i%5];const a=Math.random()*6.28,d=90+Math.random()*185;s.style.cssText=`--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d-90}px;left:50%;top:58%`;document.body.append(s);setTimeout(()=>s.remove(),1400)}}
 function popEmoji(x,y,em){const s=document.createElement('span');s.className='dbl-pop';s.textContent=em;s.style.left=x+'px';s.style.top=y+'px';document.body.append(s);setTimeout(()=>s.remove(),680)}
-function linkMentions(txt){return esc(txt).replace(/\n/g,'<br>').replace(/(^|\s)(@[a-zA-Z0-9_]{3,28})/g,'$1<span class="mention" data-u="$2">$2</span>')}
+function linkMentions(txt){return esc(txt).replace(/\n/g,'<br>').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">$1</a>').replace(/(^|\s)(@[a-zA-Z0-9_]{3,28})/g,'$1<span class="mention" data-u="$2">$2</span>')}
 
 function syncVP(){
   const vv=window.visualViewport,app=$('#app');
@@ -1075,7 +1185,7 @@ function syncVP(){
 if(window.visualViewport){window.visualViewport.addEventListener('resize',syncVP);window.visualViewport.addEventListener('scroll',syncVP)}
 window.addEventListener('resize',syncVP);syncVP();
 document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
-document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('touchmove',e=>{if(e.touches.length>1&&!e.target.closest('#sv'))e.preventDefault()},{passive:false});
 
 function enforceAt(inp,statEl,allowSelf){
   const fix=()=>{
@@ -1100,10 +1210,7 @@ async function checkUsernameAvail(c,el,allowSelf){
   uChkT=setTimeout(async()=>{
     let taken=!!USERS[c];
     if(!taken&&sb&&navigator.onLine){
-      try{
-        const {data}=await sb.from('users').select('username').eq('username',c).maybeSingle();
-        taken=!!data;
-      }catch(e){}
+      try{const {data}=await sb.from('users').select('username').eq('username',c).maybeSingle();taken=!!data}catch(e){}
     }
     uIsTaken=taken;
     el.className='u-stat '+(taken?'err':'ok');
@@ -1140,23 +1247,13 @@ $('#au-go').onclick=async()=>{
     const {data,error}=await sb.from('users').select('*').eq('username',c).maybeSingle();
     if(error||!data)return toast('Аккаунт @'+c+' не найден');
     if(data.password&&data.password!==pw)return toast('Неверный пароль');
-    me={n:data.n,u:'@'+data.username,ph:data.ph||'',b:data.b||'В сети в Lunarn 🌙',h:data.h||255,av:data.av||'',pw:data.password||pw,contacts:Array.isArray(data.contacts)?data.contacts:[]};
+    me={n:data.n,u:'@'+data.username,ph:data.ph||'',b:data.b||'В сети в Lunarn 🌙',h:data.h||255,av:data.av||'',pw:data.password||pw,contacts:Array.isArray(data.contacts)?data.contacts:[],blocked:Array.isArray(data.blocked)?data.blocked:[]};
     if(!data.password)await sb.from('users').update({password:pw}).eq('username',c);
-    ST.photo=data.photo_priv||ST.photo;
+    ST.photo=data.photo_priv||ST.photo;ST.lastseen=data.lastseen_priv||ST.lastseen;
     ls('lunarn_me',JSON.stringify(me));ls('lunarn_auth','1');ls('lunarn_st',JSON.stringify(ST));
     $('#auth').classList.remove('on');
     await publishMyProfile(true);subscribeMyChats();strs();mset();list();reqSysNotif(true);
-    toast(`С возвращением, ${me.n}! 🌙`);
-    return;
-  }
-  const n=$('#au-n').value.trim();
-  if(!n)return toast('Введите ваше имя');
-  if(uIsTaken)return toast('@'+c+' уже занят — переключитесь на «Вход»');
-  me={n,u:'@'+c,ph:$('#au-ph').value.trim(),b:'В сети в Lunarn 🌙',h:Math.random()*360|0,av:auAv,pw,contacts:[]};
-  ls('lunarn_me',JSON.stringify(me));ls('lunarn_auth','1');
-  $('#auth').classList.remove('on');
-  await publishMyProfile(true);
-  subscribeMyChats();strs();mset();list();reqSysNotif(true);toast(`Добро пожаловать, ${me.n}! 🌙`);
+    toast(`С возвращением, ${me.n}! 🌙`); return; } const n=$('#au-n').value.trim(); if(!n)return toast('Введите ваше имя'); if(uIsTaken)return toast('@'+c+' уже занят — переключитесь на «Вход»'); me={n,u:'@'+c,ph:$('#au-ph').value.trim(),b:'В сети в Lunarn 🌙',h:Math.random()*360\vert{}0,av:auAv,pw,contacts:[],blocked:[]}; ls('lunarn_me',JSON.stringify(me));ls('lunarn_auth','1'); $('#auth').classList.remove('on'); await publishMyProfile(true); subscribeMyChats();strs();mset();list();reqSysNotif(true);toast(`Добро пожаловать, ${me.n}! 🌙`);
 };
 
 function checkAuth(){
@@ -1199,28 +1296,7 @@ function bindSwipeBack(el,onClose){
       if(Math.abs(cy)>Math.abs(cx)&&Math.abs(cy)>10){x0=-999;return}
       if(cx>16&&x0>-900){active=1;el.style.transition='none'}
     }
-    if(active&&cx>0){dx=cx;el.style.transform=`translateX(${dx}px)`}
-  },{passive:true});
-  const end=()=>{
-    if(!active)return;
-    el.style.transition='';
-    if(dx>90){el.style.transform='';onClose()}else{el.style.transform=''}
-    active=0;dx=0;
-  };
-  el.addEventListener('touchend',end);el.addEventListener('touchcancel',end);
-}
-bindSwipeBack($('#sp'),()=>{if(CK==='blk')sp('prv');else{$('#sp').classList.remove('on');mset()}});
-bindSwipeBack($('#pf'),()=>$('#pf').classList.remove('on'));
-bindSwipeBack($('#chat'),()=>{if(innerWidth<900){$('#chat').classList.remove('open');cur=null;list()}});
-bindSwipeBack($('#imgv'),()=>$('#imgv').classList.remove('on'));
-
-[['chat','Чаты'],['users','Контакты'],['phone','Звонки'],['user','Профиль']].forEach((t,i)=>{
-  const b=document.createElement('button');b.innerHTML=I(t[0],23)+t[1];b.onclick=()=>go(i);$('#tb').append(b);
-});
-function go(i){
-  tabs=i;$$('.pg').forEach((p,j)=>p.classList.toggle('on',i==j));
-  $$('#tb button').forEach((b,j)=>b.classList.toggle('on',i==j));
-  $('#ind').style.transform=`translateX(${i*76}px)`;
+    if(active&&cx>0){dx=cx;el.style.transform=`translateX(${dx}px)`} },{passive:true}); const end=()=>{ if(!active)return; el.style.transition=''; if(dx>90){el.style.transform='';onClose()}else{el.style.transform=''} active=0;dx=0; }; el.addEventListener('touchend',end);el.addEventListener('touchcancel',end); } bindSwipeBack($('#sp'),()=>{if(CK==='blk')sp('prv');else{$('#sp').classList.remove('on');mset()}}); bindSwipeBack($('#pf'),()=>$('#pf').classList.remove('on')); bindSwipeBack($('#chat'),()=>{if(innerWidth<900){$('#chat').classList.remove('open');cur=null;list()}}); bindSwipeBack($('#imgv'),()=>$('#imgv').classList.remove('on'));  [['chat','Чаты'],['users','Контакты'],['phone','Звонки'],['user','Профиль']].forEach((t,i)=>{ const b=document.createElement('button');b.innerHTML=I(t[0],23)+t[1];b.onclick=()=>go(i);$('#tb').append(b); }); function go(i){ tabs=i;$$('.pg').forEach((p,j)=>p.classList.toggle('on',i==j)); $$('#tb button').forEach((b,j)=>b.classList.toggle('on',i==j)); $('#ind').style.transform=`translateX(${i*76}px)`;
   [list,cons,logs,mset][i]();
 }
 
@@ -1230,7 +1306,7 @@ function ensureUserChat(u){
   let p=P.find(x=>x.t==='u'&&cleanU(x.u)===key);
   const full=USERS[key]||u;
   if(!p){
-    p={id:chatRoomId(me.u,key),n:full.n||'@'+key,u:'@'+key,h:full.h||240,av:full.av||'',b:full.b||'',ph:full.ph||'',contacts:full.contacts||[],photo_priv:full.photo_priv||'Все',t:'u',on:full.on?1:0,s:full.on?'онлайн':'был(а) недавно',m:[]};
+    p={id:chatRoomId(me.u,key),n:full.n||'@'+key,u:'@'+key,h:full.h||240,av:full.av||'',b:full.b||'',ph:full.ph||'',contacts:full.contacts||[],blocked:full.blocked||[],photo_priv:full.photo_priv||'Все',lastseen_priv:full.lastseen_priv||'Все',t:'u',on:full.on?1:0,ts:full.ts||Date.now(),m:[]};
     P.unshift(p);saveAll();list();
   }
   return p;
@@ -1282,7 +1358,10 @@ function list(){
 function cons(){
   const keys=(me.contacts||[]).filter(k=>k!==cleanU(me.u));
   const listU=keys.map(k=>USERS[k]||{n:'@'+k,u:'@'+k,h:240,on:0}).sort((a,b)=>(a.n||'').localeCompare(b.n||''));
-  $('#cn').innerHTML=listU.map(u=>`<div class="row" data-cu="${cleanU(u.u)}">${av(Object.assign({t:'u'},u),46)}<div class="rb"><b>${esc(u.n)}</b><span style="color:var(--mu);font-size:13px">${esc(fmtU(u.u))} · ${u.on?'онлайн':'не в сети'}</span></div></div>`).join('')||'<p class="em0">Контактов пока нет.<br>Найдите пользователя по <b>@username</b> в поиске и нажмите «+ В контакты».</p>';
+  $('#cn').innerHTML=listU.map(u=>{
+    const fake=Object.assign({t:'u'},u);
+    return`<div class="row" data-cu="${cleanU(u.u)}">${av(fake,46)}<div class="rb"><b>${esc(u.n)}</b><span style="color:var(--mu);font-size:13px">${esc(formatLastSeen(fake))}</span></div></div>`;
+  }).join('')||'<p class="em0">Контактов пока нет.<br>Найдите пользователя по <b>@username</b> в поиске и нажмите «+ В контакты».</p>';
 }
 $('#cn').onclick=e=>{
   const r=e.target.closest('[data-cu]');if(!r)return;
@@ -1321,8 +1400,7 @@ function openGiftModal(m,fromUser){
       <h3 style="font-size:22px;margin-bottom:4px">${esc(m.gn)}</h3>
       <span class="st" style="display:inline-block;margin-bottom:14px">🌙 Стоимость: ${m.gp} Лун</span>
       <div class="card gl" style="text-align:left">
-        <div class="inf"><small>От кого</small><b>${esc(sender)}</b></div>
-        ${m.gt?`<div class="inf"><small>Пожелание</small><p style="margin-top:4px;font-size:15px">${esc(m.gt)}</p></div>`:''}
+        <div class="inf"><small>От кого</small><b>${esc(sender)}</b></div>${m.gt?`<div class="inf"><small>Пожелание</small><p style="margin-top:4px;font-size:15px">${esc(m.gt)}</p></div>`:''}
         <div class="inf"><small>Дата</small><span>${dl(m.ts)} в ${tm(m.ts)}</span></div>
       </div>
       <button class="pbt" onclick="csh()">Закрыть</button>
@@ -1334,12 +1412,20 @@ function renderProfShowcase(targetEl,msgs,userKey,isSelf,tab){
   const uKey=cleanU(userKey);
   const gifts=msgs.filter(m=>m.k==='gift'&&(isSelf?!m.me:!!m.me));
   const pubs=getStoriesArr(uKey);
-  if(!tab)tab=gifts.length?'gifts':'pubs';
-  if(tab==='gifts'&&!gifts.length)tab='pubs';
+  const media=msgs.filter(m=>m.k==='img'||m.k==='vnote');
+  const voices=msgs.filter(m=>m.k==='voice');
+  const links=msgs.filter(m=>m.t&&/https?:\/\/\S+/.test(m.t));
+  if(!tab)tab=pubs.length?'pubs':(gifts.length?'gifts':(media.length?'media':'pubs'));
 
   let body='';
   if(tab==='gifts'){
-    body=`<div class="pgrid3">${gifts.map((m,idx)=>`<button class="pgift" data-gfidx="${idx}"><span>${m.g}</span><b>${esc(m.gn)}</b><small>🌙 ${m.gp}</small></button>`).join('')}</div>`;
+    body=gifts.length?`<div class="pgrid3">${gifts.map((m,idx)=>`<button class="pgift" data-gfidx="${idx}"><span>${m.g}</span><b>${esc(m.gn)}</b><small>🌙 ${m.gp}</small></button>`).join('')}</div>`:'<p class="em0" style="padding:22px">Подарков пока нет</p>';
+  }else if(tab==='media'){
+    body=media.length?`<div class="pgrid3">${media.map(m=>`<div class="pmed" data-openimg="${m.src}">${m.k==='vnote'?`<img src="${m.poster||''}"><span class="pmed-tag">⭕ ${m.d||1}с</span>`:`<img src="${m.src}">`}</div>`).join('')}</div>`:'<p class="em0" style="padding:22px">Медиафайлов нет</p>';
+  }else if(tab==='voice'){
+    body=voices.length?voices.map(m=>`<div class="inf"><b>🎤 Голосовое · ${m.d||1} сек</b><small>${dl(m.ts)} в ${tm(m.ts)}</small></div>`).join(''):'<p class="em0" style="padding:22px">Голосовых сообщений нет</p>';
+  }else if(tab==='links'){
+    body=links.length?links.map(m=>`<div class="inf"><span>${linkMentions(m.t)}</span><small>${dl(m.ts)}</small></div>`).join(''):'<p class="em0" style="padding:22px">Ссылок пока нет</p>';
   }else{
     const addCard=isSelf?`<button class="pmed" id="add-pub-btn" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1.5px dashed var(--gb);color:var(--ac);font-weight:600;font-size:12px">${I('plus',24)}<span>Добавить</span></button>`:'';
     const itemsHtml=pubs.map((st,idx)=>`<div class="pmed" data-pubidx="${idx}">${st.type==='vid'?`<video src="${st.src}" muted playsinline></video><span class="pmed-tag">▶ Видео</span>`:`<img src="${st.src}">`}</div>`).join('');
@@ -1348,8 +1434,11 @@ function renderProfShowcase(targetEl,msgs,userKey,isSelf,tab){
 
   targetEl.innerHTML=`
     <div class="ptabs">
-      ${gifts.length?`<button data-pt="gifts" class="${tab==='gifts'?'on':''}">Подарки (${gifts.length})</button>`:''}
-      <button data-pt="pubs" class="${tab==='pubs'?'on':''}">Публикации (${pubs.length})</button>
+      <button data-pt="pubs" class="${tab==='pubs'?'on':''}">Публикации${pubs.length?' ('+pubs.length+')':''}</button>
+      <button data-pt="gifts" class="${tab==='gifts'?'on':''}">Подарки${gifts.length?' ('+gifts.length+')':''}</button>
+      <button data-pt="media" class="${tab==='media'?'on':''}">Медиа${media.length?' ('+media.length+')':''}</button>
+      <button data-pt="voice" class="${tab==='voice'?'on':''}">Голосовые</button>
+      <button data-pt="links" class="${tab==='links'?'on':''}">Ссылки</button>
     </div>${body}`;
 
   targetEl.onclick=e=>{
@@ -1357,6 +1446,7 @@ function renderProfShowcase(targetEl,msgs,userKey,isSelf,tab){
     const gf=e.target.closest('[data-gfidx]');if(gf){const m=gifts[+gf.dataset.gfidx];if(m)openGiftModal(m,isSelf?null:m.a);return}
     if(e.target.closest('#add-pub-btn')){pickNewStory();return}
     const pb=e.target.closest('[data-pubidx]');if(pb){openStory(uKey,+pb.dataset.pubidx);return}
+    const oi=e.target.closest('[data-openimg]');if(oi&&oi.dataset.openimg){openLightbox(oi.dataset.openimg);return}
   };
 }
 
@@ -1370,14 +1460,14 @@ const PAL_BG=['','#070912','#120d1d','#07151a','#16110c','#eef1fe','#f8f0f6','#e
 const CH=I('back',16).replace('<svg','<svg style="transform:rotate(180deg);opacity:.5"'),TRI=['Все','Контакты','Никто'];
 
 const SEC={
-  pr:['Мой профиль'],pw:['Пароль аккаунта'],str:['Мои Луны'],blk:['Заблокированные'],abt:['О Lunarn'],cld:['Облако Supabase'],pks:['Паки стикеров'],
+  pr:['Мой профиль'],pw:['Пароль аккаунта'],str:['Мои Луны'],blk:['Чёрный список'],abt:['О Lunarn'],cld:['Облако и Web Push'],pks:['Паки стикеров'],
   ntf:['Уведомления','#ff4d6d','bell',[
     {lbl:'Уведомления ОС (iPhone / Android / ПК)',it:[['act','reqnotif','Включить системные уведомления ОС']]},
     {lbl:'Категории',it:[['sw','n','Личные чаты'],['sw','gn','Группы'],['sw','cn','Каналы']]},
     {lbl:'Поведение',it:[['sw','prev','Показывать текст сообщений'],['sw','snd','Звуки сообщений и звонков'],['sw','vib','Вибрация'],['sw','bdg','Счётчик на вкладке «Чаты»']]}
   ]],
   prv:['Конфиденциальность','#34d399','lock',[
-    {lbl:'Видимость данных',it:[['seg','photo','Кто видит мой аватар',TRI],['seg','lastseen','Последний визит',TRI],['seg','phone','Номер телефона',TRI]]},
+    {lbl:'Видимость данных',it:[['seg','photo','Кто видит мой аватар',TRI],['seg','lastseen','Время последнего захода',TRI],['seg','phone','Номер телефона',TRI]]},
     {lbl:'Звонки и группы',it:[['seg','calls','Кто может звонить',TRI],['seg','invite','Приглашать в группы',TRI],['sw','ro','Отчёты о прочтении']]},
     {lbl:'Безопасность',it:[['act','pw','Пароль от аккаунта'],['sw','lock','Код-пароль при входе'],['act','chpin','Изменить код-пароль'],['act','blk','Чёрный список']]}
   ]],
@@ -1407,7 +1497,7 @@ function storageSize(){
 
 function ctl(c){
   const[t,k,l,o,a]=c;
-  if(t=='prev')return`<div style="padding:12px 14px"><div class="chat-prev"><div class="pv-hd gl">${av({n:me.n||'Lunarn',u:me.u,h:me.h,av:me.av},30)}<div><b>${esc(me.n||'Lunarn')}</b><small style="display:block;color:var(--mu);font-size:11px">онлайн</small></div></div><div class="pv-msgs"><div class="pv-b">Как тебе новое стекло и палитра? ✨<span class="mt">14:20</span></div><div class="pv-b me">Идеально 🌙<span class="mt">14:21 ${STATUS_IC({rd:1})}</span></div></div></div></div>`;
+  if(t=='prev')return`<div style="padding:12px 14px"><div class="chat-prev"><div class="pv-hd gl">${av({n:me.n\vert{}\vert{}'Lunarn',u:me.u,h:me.h,av:me.av},30)}<div><b>${esc(me.n||'Lunarn')}</b><small style="display:block;color:var(--mu);font-size:11px">в сети</small></div></div><div class="pv-msgs"><div class="pv-b">Как тебе новое стекло и палитра? ✨<span class="mt">14:20</span></div><div class="pv-b me">Идеально 🌙<span class="mt">14:21 ${STATUS_IC({rd:1})}</span></div></div></div></div>`;
   if(t=='mem')return`<div class="set"><span>Занято в памяти</span><b>${storageSize()}</b></div>`;
   if(t=='sw')return`<div class="set"><span>${l}</span><button class="sw${ST[k]?' on':''}" data-k="${k}" aria-label="${l}"></button></div>`;
   if(t=='seg')return`<div class="set col"><span>${l}</span><div class="seg" data-k="${k}">${o.map(x=>{x=typeof x=='string'?[x,x]:x;return`<button data-v="${x[0]}" class="${ST[k]==x[0]?'on':''}">${x[1]}</button>`}).join('')}</div></div>`;
@@ -1415,18 +1505,16 @@ function ctl(c){
   if(t=='act')return`<button class="set" data-a="${k}"><span>${l}</span>${CH}</button>`;
   if(t=='sty')return`<div class="sty">${STY.map((s,i)=>`<button data-st="${i}" class="${ST.ac==s[1]&&ST.wp==s[3]?'on':''}" style="background:linear-gradient(135deg,${s[1]},${s[2]})">${s[0]}</button>`).join('')}</div>`;
   if(t=='pal')return`<div class="set col"><span>Палитра акцента</span><div class="pal-grid">${PAL_AC.map(c=>`<button class="pal-dot${ST.ac.toLowerCase()==c?' on':''}" data-c="${c}" style="background:${c}"></button>`).join('')}</div><div class="cp-row"><span>Основной / Градиент</span><div class="cp-box"><input type="color" data-k="ac" value="${ST.ac}"><input type="color" data-k="ac2" value="${ST.ac2}"></div></div><span>Цвет фона</span><div class="pal-grid" style="grid-template-columns:repeat(8,1fr)">${PAL_BG.map(c=>`<button class="pal-dot${ST.bgc==c?' on':''}" data-bg="${c}" style="background:${c||'conic-gradient(#7c5cff,#35c6ff,#ff6bb5,#7c5cff)'}"></button>`).join('')}</div><div class="cp-row"><span>Свой цвет фона</span><div class="cp-box">${ST.bgc?`<button class="st" data-bg="">Сброс</button>`:''}<input type="color" data-k="bgc" value="${ST.bgc||'#070912'}"></div></div></div>`;
-  if(t=='wpp')return`<div class="set col"><span>Обои чата</span><div class="wp-grid">${[['aurora','Аврора','linear-gradient(135deg,#7c5cff,#35c6ff)'],['dots','Точки','radial-gradient(#7c5cff 2px,#1a1d2e 2px) 0 0/12px 12px'],['sunset','Закат','linear-gradient(135deg,#ff7e5f,#7c5cff)'],['ocean','Океан','linear-gradient(135deg,#0ea5e9,#34d399)'],['forest','Лес','linear-gradient(135deg,#34d399,#064e3b)'],['plain','Без узора','linear-gradient(135deg,#334155,#1e293b)']].map(w=>`<button class="wp-item${!ST.wimg&&ST.wp==w[0]?' on':''}" data-wp="${w[0]}" style="background:${w[2]}">${w[1]}</button>`).join('')}</div><div style="display:flex;gap:8px;margin-top:4px"><button class="st" style="flex:1" id="upwp">🖼 Загрузить фото обоев</button>${ST.wimg?`<button class="st" id="rmwp">Убрать</button>`:''}</div></div>`;
-}
-
-function mset(){
-  const bg=me.av?`background-image:url(${me.av})`:`background:linear-gradient(135deg,hsl(${me.h} 82% 60%),hsl(${me.h+50} 78% 48%))`;
+  if(t=='wpp')return`<div class="set col"><span>Обои чата</span><div class="wp-grid">${[['aurora','Аврора','linear-gradient(135deg,#7c5cff,#35c6ff)'],['dots','Точки','radial-gradient(#7c5cff 2px,#1a1d2e 2px) 0 0/12px 12px'],['sunset','Закат','linear-gradient(135deg,#ff7e5f,#7c5cff)'],['ocean','Океан','linear-gradient(135deg,#0ea5e9,#34d399)'],['forest','Лес','linear-gradient(135deg,#34d399,#064e3b)'],['plain','Без узора','linear-gradient(135deg,#334155,#1e293b)']].map(w=>`<button class="wp-item${!ST.wimg&&ST.wp==w[0]?' on':''}" data-wp="${w[0]}" style="background:${w[2]}">${w[1]}</button>`).join('')}</div><div style="display:flex;gap:8px;margin-top:4px"><button class="st" style="flex:1" id="upwp">🖼 Загрузить фото обоев</button>${ST.wimg?`<button class="st" id="rmwp">Убрать</button>`:''}</div></div>`; }  function mset(){ const bg=me.av?`background-image:url(${me.av})`:`background:linear-gradient(135deg,hsl(${me.h} 82\% 60\%),hsl(${me.h+50} 78% 48%))`;
   const ini=(me.n||'L').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
   const myMsgs=P.flatMap(p=>p.m);
-  const myGifts=myMsgs.filter(m=>m.k==='gift'&&!m.me).length;
+  const myGifts=myMsgs.filter(m=>m.k==='gift'&&!m.me);
+  const floatG=myGifts.length?`<span class="pf-float" style="top:16px;right:22%">${myGifts[myGifts.length-1].g}</span>`:'';
   $('#p3').innerHTML=`
   <div class="top"><h1>Профиль</h1><button class="ib gl" data-s="pr" aria-label="Редактировать">${I('edit',19)}</button></div>
   <div class="card gl">
     <div class="pav-hero" id="my-hero">
+      ${floatG}
       <div class="pav-box" style="${bg}">${me.av?'':ini}<div class="pav-ov"><b style="font-size:22px">${esc(me.n)}</b><small style="opacity:.88">${esc(fmtU(me.u))} · в сети</small></div></div>
       <div class="pav-meta" style="text-align:center">
         <b style="font-size:21px;display:block">${esc(me.n)}</b>
@@ -1438,7 +1526,7 @@ function mset(){
     <div class="pav-stats">
       <div class="pav-st"><b>${(me.contacts||[]).length}</b><small>Контактов</small></div>
       <div class="pav-st"><b>🌙 ${moons}</b><small>Лун</small></div>
-      <div class="pav-st"><b>${myGifts}</b><small>Подарков</small></div>
+      <div class="pav-st"><b>${myGifts.length}</b><small>Подарков</small></div>
     </div>
   </div>
   <div class="card gl" id="my-showcase"></div>
@@ -1450,17 +1538,13 @@ function mset(){
     <button class="mrow" data-s="str"><span class="fi" style="background:linear-gradient(135deg,#6366f1,#a855f7)">${I('moon',18)}</span><span style="flex:1">Мои Луны</span><b style="color:var(--ac);font-weight:700">🌙 ${moons}</b></button>
     <button class="mrow" data-s="pks"><span class="fi" style="background:#f97316">${I('smile',18)}</span><span style="flex:1">Мои паки стикеров</span><b style="color:var(--mu)">${SK_PACKS.length}</b></button>
   </div>
-
   <div class="sec-lbl">Настройки приложения</div>
-  <div class="card gl">
-    ${['app','cht','ntf','prv'].map(k=>`<button class="mrow" data-s="${k}"><span class="fi" style="background:${SEC[k][1]}">${I(SEC[k][2],18)}</span><span style="flex:1">${SEC[k][0]}</span>${CH}</button>`).join('')}
-  </div>
-
+  <div class="card gl">${['app','cht','ntf','prv'].map(k=>`<button class="mrow" data-s="${k}"><span class="fi" style="background:${SEC[k][1]}">${I(SEC[k][2],18)}</span><span style="flex:1">${SEC[k][0]}</span>${CH}</button>`).join('')}</div>
   <div class="sec-lbl">Сеть и система</div>
   <div class="card gl">
-    <button class="mrow" data-s="cld"><span class="fi" style="background:#10b981">${I('cloud',18)}</span><span style="flex:1">Облако Supabase</span><b style="color:${dbOnline?'#34d399':'var(--mu)'};font-size:12px">${dbOnline?'Подключено':'Настроить'}</b></button>
+    <button class="mrow" data-s="cld"><span class="fi" style="background:#10b981">${I('cloud',18)}</span><span style="flex:1">Облако и Web Push</span><b style="color:${dbOnline?'#34d399':'var(--mu)'};font-size:12px">${dbOnline?'Онлайн':'Настроить'}</b></button>
     <button class="mrow" data-s="dat"><span class="fi" style="background:#ffb020">${I('db',18)}</span><span style="flex:1">Данные и память</span>${CH}</button>
-    <button class="mrow" data-s="abt"><span class="fi" style="background:#8b93b8">${I('info',18)}</span><span style="flex:1">О Lunarn и обновления</span>${CH}</button>
+    <button class="mrow" data-s="abt"><span class="fi" style="background:#8b93b8">${I('info',18)}</span><span style="flex:1">О Lunarn 6.0</span>${CH}</button>
     <button class="mrow" id="logout-btn" style="color:#ff5470"><span class="fi" style="background:#ff4d6d">${I('out',18)}</span><span style="flex:1">Выйти из аккаунта</span></button>
   </div>`;
   bindExpandAvatar($('#p3'),$('#my-hero'));
@@ -1472,94 +1556,40 @@ function sp(k,keep){
   if(k==='pr'){
     const bg=me.av?`background-image:url(${me.av})`:`background:linear-gradient(135deg,hsl(${me.h} 82% 60%),hsl(${me.h+50} 78% 48%))`;
     const ini=(me.n||'L').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
-    html=`<div class="card gl">
-      <div class="pav-hero"><div class="pav-box" style="${bg}" id="up-myav">${me.av?'':ini}</div>
-      <div style="display:flex;gap:8px;margin-top:6px"><button class="st" id="btn-upav">📷 Поставить фото</button>${me.av?`<button class="st" id="btn-rmav">Удалить</button>`:''}</div></div>
+    html=`<div class="card gl"><div class="pav-hero"><div class="pav-box" style="${bg}" id="up-myav">${me.av?'':ini}</div><div style="display:flex;gap:8px;margin-top:6px"><button class="st" id="btn-upav">📷 Поставить фото</button>${me.av?`<button class="st" id="btn-rmav">Удалить</button>`:''}</div></div>
       <div class="inf"><small>Имя</small><input data-p="n" value="${esc(me.n)}"></div>
-      <div class="inf"><small>Юзернейм (всегда с @)</small><input id="pr-u" value="${esc(fmtU(me.u))}"><div class="u-stat" id="pr-ust"></div></div>
+      <div class="inf"><small>Юзернейм</small><input id="pr-u" value="${esc(fmtU(me.u))}"><div class="u-stat" id="pr-ust"></div></div>
       <div class="inf"><small>Телефон</small><input data-p="ph" value="${esc(me.ph||'')}" placeholder="Не указано"></div>
       <div class="inf"><small>О себе</small><input data-p="b" value="${esc(me.b||'')}" placeholder="Не указано"></div>
-      <div class="set col"><span>Цвет аватара<b>${me.h}°</b></span><input type="range" min="0" max="360" value="${me.h}" data-p="h"></div>
-    </div><button class="pbt" id="pr-save">Сохранить профиль</button>`;
+      <div class="set col"><span>Цвет аватара<b>${me.h}°</b></span><input type="range" min="0" max="360" value="${me.h}" data-p="h"></div></div><button class="pbt" id="pr-save">Сохранить профиль</button>`;
   }else if(k==='pw'){
-    html=`<div class="card gl">
-      <div class="inf">Защита аккаунта<small>Пароль нужен при повторном входе по <b>${esc(fmtU(me.u))}</b>. Без него никто не сможет зайти в ваш аккаунт.</small></div>
-      ${me.pw?`<div class="inf"><small>Текущий пароль</small><input id="pw-old" type="password" placeholder="Введите текущий пароль"></div>`:''}
-      <div class="inf"><small>Новый пароль (от 4 символов)</small><input id="pw-new" type="password" placeholder="Придумайте новый пароль"></div>
-      <div class="inf"><small>Повторите пароль</small><input id="pw-rep" type="password" placeholder="Повторите новый пароль"></div>
-    </div><button class="pbt" id="pw-save">Сохранить пароль</button>`;
+    html=`<div class="card gl"><div class="inf">Защита аккаунта<small>Пароль для входа по <b>${esc(fmtU(me.u))}</b>.</small></div>
+      ${me.pw?`<div class="inf"><small>Текущий пароль</small><input id="pw-old" type="password"></div>`:''}
+      <div class="inf"><small>Новый пароль (от 4 символов)</small><input id="pw-new" type="password"></div>
+      <div class="inf"><small>Повторите пароль</small><input id="pw-rep" type="password"></div></div><button class="pbt" id="pw-save">Сохранить пароль</button>`;
   }else if(k==='str'){
-    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>${moons} Лун</h2><small style="color:var(--mu)">Валюта Lunarn для подарков</small></div>
-      <div class="acts" style="margin:0;padding:0 12px 14px">${[50,150,500].map(n=>`<button class="gl" data-top="${n}">+${n} 🌙</button>`).join('')}</div>
-      <div class="inf">Неудаляемые подарки<small>Подарки в Lunarn навсегда остаются в чате и отображаются в витрине получателя.</small></div></div>`;
+    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>${moons} Лун</h2><small style="color:var(--mu)">Валюта Lunarn</small></div><div class="acts" style="grid-template-columns:repeat(3,1fr);margin:0;padding:0 12px 14px">${[50,150,500].map(n=>`<button class="gl" data-top="${n}">+${n} 🌙</button>`).join('')}</div></div>`;
   }else if(k==='cld'){
-    html=`<div class="card gl">
-        <div class="inf">Статус подключения<small>${dbOnline?'🟢 Подключено к Supabase Realtime + Storage':'🟡 Подключение к Supabase…'}</small></div>
-        <div class="inf"><small>Supabase Project URL</small><input id="sb-url" value="${esc(ST.sbUrl||'')}"></div>
-        <div class="inf"><small>Supabase Publishable / Anon Key</small><input id="sb-key" value="${esc(ST.sbKey||'')}"></div>
-      </div>
-      <button class="pbt" id="sb-save">Переподключить Supabase</button>`;
+    html=`<div class="card gl"><div class="inf">Статус<small>${dbOnline?'🟢 Supabase Realtime + Storage':'🟡 Подключение…'}</small></div>
+      <div class="inf"><small>Supabase URL</small><input id="sb-url" value="${esc(ST.sbUrl||'')}"></div>
+      <div class="inf"><small>Supabase Key</small><input id="sb-key" value="${esc(ST.sbKey||'')}"></div>
+      <div class="inf"><small>VAPID Public Key (для фоновых пушей)</small><input id="sb-vap" value="${esc(ST.vapidPub||'')}" placeholder="Вставьте публичный VAPID-ключ"></div></div><button class="pbt" id="sb-save">Сохранить и переподключить</button>`;
   }else if(k==='pks'){
-    html=SK_PACKS.map((pk,i)=>`<div class="card gl"><div class="set"><span>${pk.icon} <b>${esc(pk.name)}</b> (${pk.items.length} шт.)</span>${i?`<button class="st" data-delpk="${i}" style="color:#ff5470">Удалить</button>`:'<span class="st">Базовый</span>'}</div></div>`).join('')
-      +`<button class="pbt" id="mk-pack-btn">+ Создать новый пак стикеров</button>`;
+    html=SK_PACKS.map((pk,i)=>`<div class="card gl"><div class="set"><span>${pk.icon} <b>${esc(pk.name)}</b> (${pk.items.length})</span>${i?`<button class="st" data-delpk="${i}" style="color:#ff5470">Удалить</button>`:'<span class="st">Базовый</span>'}</div></div>`).join('')+`<button class="pbt" id="mk-pack-btn">+ Создать пак</button>`;
   }else if(k==='blk'){
-    const b=P.filter(p=>p.blk);
-    html=`<div class="card gl">${b.length?b.map(p=>`<div class="set"><span>${esc(dispName(p))}</span><button class="st" data-u="${p.id}">Разблокировать</button></div>`).join(''):'<p class="em0">Список заблокированных пуст</p>'}</div>`;
+    const b=(me.blocked||[]).map(u=>USERS[u]||{n:'@'+u,u:'@'+u});
+    html=`<div class="card gl">${b.length?b.map(u=>`<div class="set"><span>${esc(u.n)} (${esc(fmtU(u.u))})</span><button class="st" data-unblk="${cleanU(u.u)}">Разблокировать</button></div>`).join(''):'<p class="em0">Чёрный список пуст</p>'}</div>`;
   }else if(k==='abt'){
-    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 5.0</h2><small style="color:var(--mu)">Liquid Glass · 60 FPS Кружки & WebRTC Audio/Video</small></div>
-      <div class="chg"><b>v5.0 — Большое обновление</b><ul>
-        <li>Отдельный аудиоканал звонков: звук работает сразу при ответе даже без включения камеры.</li>
-        <li>Плавные 60 FPS кружки 480×480 с переключением камеры без зависаний и без отзеркаливания.</li>
-        <li>Вход и защита аккаунта по паролю, личный список контактов, статус «Неизвестный» и приватность аватаров.</li>
-        <li>Системные уведомления ОС при свёрнутом приложении.</li>
-      </ul></div></div>`;
+    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 6.0</h2><small style="color:var(--mu)">Liquid Glass · WebRTC · Storage</small></div></div>`;
   }else{
     html=S[3].map(grp=>`<div class="sec-lbl">${grp.lbl}</div><div class="card gl">${grp.it.map(ctl).join('')}</div>`).join('');
   }
-  e.innerHTML=`<div class="top"><button class="ib gl" id="spb" aria-label="Назад">${I('back')}</button><h2 style="font-size:19px">${S[0]}</h2><span style="width:40px"></span></div>${html}`;
+  e.innerHTML=`<div class="top"><button class="ib gl" id="spb">${I('back')}</button><h2 style="font-size:19px">${S[0]}</h2><span style="width:40px"></span></div>${html}`;
   e.classList.add('on');e.scrollTop=keep?sc:0;
-  if(k==='pr'){
-    enforceAt($('#pr-u'),$('#pr-ust'),true);
-    $('#pr-save').onclick=async()=>{
-      const c=cleanU($('#pr-u').value);
-      if(c.length<3)return toast('Юзернейм от 3 символов');
-      if(uIsTaken&&c!==cleanU(me.u))return toast('@'+c+' уже занят');
-      me.u='@'+c;ls('lunarn_me',JSON.stringify(me));
-      await publishMyProfile(true);subscribeMyChats();toast('Профиль сохранён');mset();
-    };
-  }
-  if(k==='pw'){
-    $('#pw-save').onclick=async()=>{
-      if(me.pw&&$('#pw-old').value.trim()!==me.pw)return toast('Неверный текущий пароль');
-      const nw=$('#pw-new').value.trim(),rp=$('#pw-rep').value.trim();
-      if(nw.length<4)return toast('Минимум 4 символа');
-      if(nw!==rp)return toast('Пароли не совпадают');
-      me.pw=nw;saveAll();await publishMyProfile(true);
-      toast('Пароль аккаунта сохранён 🔒');$('#sp').classList.remove('on');mset();
-    };
-  }
-  if(k==='cld'){
-    $('#sb-save').onclick=()=>{
-      ST.sbUrl=$('#sb-url').value.trim();
-      ST.sbKey=$('#sb-key').value.trim();
-      ap();toast('Сохранено! Перезагружаем…');
-      setTimeout(()=>location.reload(),800);
-    };
-  }
-  if(k==='pks')$('#mk-pack-btn').onclick=newPackModal;
-}
-
-function ap(){
-  const r=document.documentElement,s=r.style;
-  ST.theme=='auto'?r.removeAttribute('data-theme'):r.dataset.theme=ST.theme;
-  s.setProperty('--ac',ST.ac);s.setProperty('--ac2',ST.ac2);
-  if(ST.bgc)s.setProperty('--bg',ST.bgc);else s.removeProperty('--bg');
-  s.setProperty('--wimg',ST.wimg?`url(${ST.wimg})`:'none');
-  s.setProperty('--wpdim',(ST.wpdim||0)/100);
-  s.setProperty('--fs',ST.fs+'px');s.setProperty('--br',ST.br+'px');s.setProperty('--bl',ST.bl+'px');
-  Object.assign(r.dataset,{wp:ST.wp,aur:ST.aur,comp:ST.comp,ticks:ST.ticks,grad:ST.grad});
-  r.classList.toggle('noanim',!ST.anim);
-  $$('#fc button').forEach(b=>{if(b.dataset.f!='all')b.style.display=ST['f_'+b.dataset.f]?'':'none'});
+  if(k==='pr'){enforceAt($('#pr-u'),$('#pr-ust'),true);$('#pr-save').onclick=async()=>{const c=cleanU($('#pr-u').value);if(c.length<3)return toast('От 3 символов');if(uIsTaken&&c!==cleanU(me.u))return toast('Занято');me.u='@'+c;saveAll();await publishMyProfile(true);subscribeMyChats();toast('Сохранено');mset()}}
+  if(k==='pw'){$('#pw-save').onclick=async()=>{if(me.pw&&$('#pw-old').value.trim()!==me.pw)return toast('Неверный пароль');const nw=$('#pw-new').value.trim();if(nw.length<4\vert{}\vert{}nw!==$('#pw-rep').value.trim())return toast('Проверьте пароль');me.pw=nw;saveAll();await publishMyProfile(true);toast('Пароль сохранён 🔒');$('#sp').classList.remove('on');mset()}}
+  if(k==='cld'){$('#sb-save').onclick=()=>{ST.sbUrl=$('#sb-url').value.trim();ST.sbKey=$('#sb-key').value.trim();ST.vapidPub=$('#sb-vap').value.trim();ap();reqSysNotif(true);toast('Сохранено! Перезагружаем…');setTimeout(()=>location.reload(),700)}}
+  if(k==='pks')$('#mk-pack-btn').onclick=newPackModal; }  function ap(){ const r=document.documentElement,s=r.style; ST.theme=='auto'?r.removeAttribute('data-theme'):r.dataset.theme=ST.theme; s.setProperty('--ac',ST.ac);s.setProperty('--ac2',ST.ac2); if(ST.bgc)s.setProperty('--bg',ST.bgc);else s.removeProperty('--bg'); s.setProperty('--wimg',ST.wimg?`url(${ST.wimg})`:'none');s.setProperty('--wpdim',(ST.wpdim\vert{}\vert{}0)/100); s.setProperty('--fs',ST.fs+'px');s.setProperty('--br',ST.br+'px');s.setProperty('--bl',ST.bl+'px'); Object.assign(r.dataset,{wp:ST.wp,aur:ST.aur,comp:ST.comp,ticks:ST.ticks,grad:ST.grad}); r.classList.toggle('noanim',!ST.anim); $$('#fc button').forEach(b=>{if(b.dataset.f!='all')b.style.display=ST['f_'+b.dataset.f]?'':'none'});
   $('#thbtn').innerHTML=I(ST.theme=='light'?'sun':'pal',20);
   ls('lunarn_st',JSON.stringify(ST));list();if(cur)drawMsgs();
 }
@@ -1569,26 +1599,31 @@ const canPost=(p)=>p&&(p.t!=='c'||p.role==='owner'||p.role==='admin');
 
 function updateUnknownBar(){
   const bar=$('#unk-bar'),cv=$('#cv');
-  if(cur&&cur.t==='u'&&!isContact(cur.u)){
+  if(cur&&cur.t==='u'&&!isContact(cur.u)&&!isAnyBlocked(cur.u)){
     bar.style.display='flex';cv.classList.add('has-unk');
-    bar.innerHTML=`<span>Неизвестный (${esc(fmtU(cur.u))}) · нет в контактах</span><button id="unk-add">+ В контакты</button>`;
-  }else{
-    bar.style.display='none';cv.classList.remove('has-unk');
-  }
+    bar.innerHTML=`<span>Неизвестный (${esc(fmtU(cur.u))})</span><button id="unk-add">+ В контакты</button>`;
+  }else{bar.style.display='none';cv.classList.remove('has-unk')}
 }
 $('#unk-bar').onclick=e=>{if(e.target.closest('#unk-add')&&cur)toggleContact(cur.u)};
+
+function updateComposerLock(){
+  if(!cur)return;
+  const blk=cur.t==='u'&&isAnyBlocked(cur.u);
+  const editable=canPost(cur)&&!blk;
+  $('#bar').style.display=editable?'flex':'none';
+  $('#cb').style.display=editable?'none':'block';
+  $('#hc').style.display=(cur.t==='s'||blk)?'none':'grid';
+  if(blk)$('#cb').textContent=iBlocked(cur.u)?'Разблокировать пользователя':'Вы не можете писать этому пользователю';
+  else $('#cb').textContent=cur.mute?'Включить звук':'Отключить звук';
+}
 
 function open(id){
   cur=P.find(p=>p.id==id);if(!cur)return;
   cur.un=0;cur.hide=0;ed=rp=null;ab();
-  if(cur.t!=='s'&&ST.ro)pushEventToTarget(cur.u,{type:'read',chatId:cur.id,fromU:me.u}).catch(()=>{});
+  if(cur.t!=='s'&&ST.ro&&!isAnyBlocked(cur.u))pushEventToTarget(cur.u,{type:'read',chatId:cur.id,fromU:me.u}).catch(()=>{});
   const c=$('#chat');c.classList.add('has','open');
   $('#ha').innerHTML=av(cur,40);$('#hn').textContent=dispName(cur);
-  updateChatStatus(cur);updateUnknownBar();
-  const editable=canPost(cur);
-  $('#bar').style.display=editable?'flex':'none';
-  $('#cb').style.display=editable?'none':'block';
-  $('#cb').textContent=cur.mute?'Включить звук':'Отключить звук';
+  updateChatStatus(cur);updateUnknownBar();updateComposerLock();
   $('#in').value='';ui();$('#em').style.display='none';
   pin();drawMsgs(1);list();saveAll();
 }
@@ -1603,16 +1638,11 @@ function bh(m,prevM){
   if(m.k==='gift'){
     const senderName=m.anon?'Анонимно':esc(m.a||dispName(p));
     const who=m.me?(m.anon?'Вы отправили подарок (анонимно)':'Вы отправили подарок'):`${senderName} подарил(а)`;
-    return`<div class="mw center${m.nw?' nw':''}" data-id="${m.id}"><div class="mw-inner"><div class="gf-card gf-open" style="cursor:pointer">
-      <div class="gf-who">${who}</div><div class="gf-em">${m.g}</div><b class="gf-name">${esc(m.gn)}</b>
-      ${m.gt?`<div class="gf-txt">«${esc(m.gt)}»</div>`:''}
-      <span class="gf-price">🌙 ${m.gp} Лун</span>
-      ${!m.me&&!m.ok?`<button class="gf-btn">Принять подарок</button>`:`<span class="gf-ok">${m.me?'Нажмите для деталей':'Нажмите, чтобы открыть'} · ${tm(m.ts)}</span>`}
-    </div></div></div>`;
+    return`<div class="mw center${m.nw?' nw':''}" data-id="${m.id}"><div class="mw-inner"><div class="gf-card gf-open" style="cursor:pointer"><div class="gf-who">${who}</div><div class="gf-em">${m.g}</div><b class="gf-name">${esc(m.gn)}</b>${m.gt?`<div class="gf-txt">«${esc(m.gt)}»</div>`:''}<span class="gf-price">🌙 ${m.gp} Лун</span>${!m.me&&!m.ok?`<button class="gf-btn">Принять подарок</button>`:`<span class="gf-ok">${m.me?'Нажмите для деталей':'Нажмите, чтобы открыть'} · ${tm(m.ts)}</span>`}</div></div></div>`;
   }
   let c='';
-  if(m.fw)c+=`<div class="fw">Переслано · ${esc(m.fw)}</div>`;
-  if(m.stRef)c+=`<div class="rq"><b>Ответ на историю</b>${esc(m.stRef)}</div>`;
+  if(m.fw)c+=`<div class="fw" data-fwu="${cleanU(m.fwu||'')}">Переслано · ${esc(m.fw)}</div>`;
+  if(m.stRef)c+=`<div class="rq st-open" data-stk="${cleanU(m.stKey||'')}" data-sti="${m.stIdx||0}"><b>Ответ на публикацию</b>${esc(m.stRef)}</div>`;
   if(p.t=='g'&&!m.me&&m.a&&(!prevM||prevM.a!==m.a))c+=`<div class="an" data-au="${cleanU(m.au||'')}" style="color:hsl(${m.ah||200} 85% 68%)">${esc(m.a)}</div>`;
   const r=m.re&&p.m.find(x=>x.id==m.re);
   if(r)c+=`<div class="rq" data-g="${r.id}"><b>${r.me?'Вы':esc(r.a||dispName(p))}</b>${esc(pv(r))}</div>`;
@@ -1625,36 +1655,22 @@ function bh(m,prevM){
   }else if(k==='vnote'){
     cls=' big';
     const bgStyle=m.poster?` style="background-image:url(${m.poster})"`:'';
-    c+=`<div class="vnote-box"><div class="vnote-wrap"${bgStyle}><video src="${m.src||''}"${m.poster?` poster="${m.poster}"`:''} preload="metadata" playsinline loop></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div></div><span class="vnote-badge">⭕ ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
+    const onceOv=m.once&&!m.me&&m.viewed?`<div class="vnote-once"><span>①</span><span>Просмотрено</span></div>`:(m.once&&!m.me?`<div class="vnote-once"><span>①</span><span>Открыть 1 раз</span></div>`:'');
+    c+=`<div class="vnote-box"><div class="vnote-wrap"${bgStyle}>${onceOv}<video src="${m.viewed?'':(m.src||'')}"${m.poster?` poster="${m.poster}"`:''} preload="metadata" playsinline ${m.once?'':'loop'}></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div></div><span class="vnote-badge">${m.once?'①':'⭕'} ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
   }else if(k==='poll'){
     const t=m.o.reduce((s,o)=>s+o[1],0)||1;
     c+=`<div class="pq">📊 ${esc(m.q)}</div>`+m.o.map((o,i)=>`<div class="po${m.my===i?' my':''}" data-v="${i}"><span class="pb" style="width:${Math.round(o[1]/t*100)}%"></span><i>${esc(o[0])}</i><em>${Math.round(o[1]/t*100)}%</em></div>`).join('')+`<small>${m.o.reduce((s,o)=>s+o[1],0)} голосов</small>`;
-  }else if(k==='img'){
-    cls=' photo-b';c+=`<img class="im" src="${m.src}" data-openimg="${m.src}" alt="Фото">`;
-  }else if(k==='gif'){
-    cls=' photo-b';c+=`<div class="gif-box"><img src="${m.src}" data-openimg="${m.src}" alt="GIF"><span class="gif-tag">GIF</span></div>`;
-  }else if(k==='file'){
-    c+=`<div class="fl"><span class="fi">${I('file')}</span><div><b>${esc(m.fn)}</b><small>${m.sz}</small></div></div>`;
-  }else if(k==='st'){
-    cls=' big';c+=m.src?`<img class="stk-img" src="${m.src}" alt="Стикер">`:`<span class="stk">${m.e}</span>`;
-  }else if(k==='loc'){
-    c+=`<div class="mp" data-geo="${m.lat},${m.lon}"><div class="mp-pin">${I('loc',16)}</div></div><b>${esc(m.lbl||'Геопозиция')}</b><small style="display:block;opacity:.75">${Number(m.lat).toFixed(4)}, ${Number(m.lon).toFixed(4)}</small>`;
-  }else if(k==='ct'){
-    c+=`<div class="fl ct-open" data-cu="${cleanU(m.cu||'')}"><span class="fi">${I('user')}</span><div><b>${esc(m.cn)}</b><small>${esc(fmtU(m.cu))} · Открыть профиль</small></div></div>`;
-  }else{
-    if(ST.bigE&&m.t.length<=8&&/^[\p{Extended_Pictographic}\u200d\ufe0f\s]+$/u.test(m.t))cls=' big';
-    c+=`<span>${linkMentions(m.t)}</span>`;
-  }
+  }else if(k==='img'){cls=' photo-b';c+=`<img class="im" src="${m.src}" data-openimg="${m.src}" alt="Фото">`;
+  }else if(k==='gif'){cls=' photo-b';c+=`<div class="gif-box"><img src="${m.src}" data-openimg="${m.src}" alt="GIF"><span class="gif-tag">GIF</span></div>`;
+  }else if(k==='file'){c+=`<div class="fl file-dl" data-furl="${m.src||''}" data-fn="${esc(m.fn)}"><span class="fi">${I('file')}</span><div><b>${esc(m.fn)}</b><small>${m.sz} · Нажмите, чтобы открыть</small></div></div>`;
+  }else if(k==='st'){cls=' big';c+=m.src?`<img class="stk-img" src="${m.src}">`:`<span class="stk">${m.e}</span>`;
+  }else if(k==='loc'){c+=`<div class="mp" data-geo="${m.lat},${m.lon}"><div class="mp-pin">${I('loc',16)}</div></div><b>${esc(m.lbl||'Геопозиция')}</b><small style="display:block;opacity:.75">${Number(m.lat).toFixed(4)}, ${Number(m.lon).toFixed(4)}</small>`;
+  }else if(k==='ct'){c+=`<div class="fl ct-open" data-cu="${cleanU(m.cu||'')}"><span class="fi">${I('user')}</span><div><b>${esc(m.cn)}</b><small>${esc(fmtU(m.cu))} · Профиль</small></div></div>`;
+  }else{if(ST.bigE&&m.t.length<=8&&/^[\p{Extended_Pictographic}\u200d\ufe0f\s]+$/u.test(m.t))cls=' big';c+=`<span>${linkMentions(m.t)}</span>`}
 
-  const rx=Object.entries(m.rx||{}).map(e=>`<button class="rc${e[1][1]?' my':''}" data-e="${e[0]}">${e[0]} ${e[1][0]}</button>`).join('');
+  const rx=Object.entries(m.rx||{}).map(e=>`<button class="rc${e[1][1]?' my':''}${m._rxPop===e[0]?' pop':''}" data-e="${e[0]}">${e[0]} ${e[1][0]}</button>`).join('');
   const grp=prevM&&prevM.me===m.me&&prevM.k!=='gift'&&Math.abs(m.ts-prevM.ts)<180000;
-  return`<div class="mw${m.me?' me':''}${grp?' grp':''}${m.nw?' nw':''}${m._edAnim?' edanim':''}" data-id="${m.id}">
-    <div class="sw-ic">${I('reply',17)}</div>
-    <div class="mw-inner">
-      <div class="b${cls}">${c}<span class="mt">${m.ed?'изм. ':''}${m.pin?'📌 ':''}${tm(m.ts)}${m.me?STATUS_IC(m):''}</span></div>
-      ${rx?`<div class="rx">${rx}</div>`:''}
-    </div>
-  </div>`;
+  return`<div class="mw${m.me?' me':''}${grp?' grp':''}${m.nw?' nw':''}${m._edAnim?' edanim':''}" data-id="${m.id}"><div class="sw-ic">${I('reply',17)}</div><div class="mw-inner"><div class="b${cls}">${c}<span class="mt">${m.ed?'изм. ':''}${m.pin?'📌 ':''}${tm(m.ts)}${m.me?STATUS_IC(m):''}</span></div>${rx?`<div class="rx">${rx}</div>`:''}</div></div>`;
 }
 
 function drawMsgs(b){
@@ -1667,131 +1683,68 @@ function drawMsgs(b){
   let h='',d='',prev=null;
   cur.m.forEach(m=>{
     const k=new Date(m.ts).toDateString();
-    if(k!=d){d=k;prev=null;h+=`<div class="ds"><span class="gl">${dl(m.ts)}</span></div>`}
-    h+=bh(m,prev);prev=m;
-  });
-  ms.innerHTML=h;
-  ms.scrollTop=b?ms.scrollHeight:keep;
-  cur.m.forEach(m=>{m.nw=0;m._rdAnim=0;m._edAnim=0});
+    if(k!=d){d=k;prev=null;h+=`<div class="ds"><span class="gl">${dl(m.ts)}</span></div>`} h+=bh(m,prev);prev=m; }); ms.innerHTML=h; ms.scrollTop=b?ms.scrollHeight:keep; cur.m.forEach(m=>{m.nw=0;m._rdAnim=0;m._edAnim=0;m._rxPop=''}); }  let swEl=null,swInner=null,swIcon=null,swX0=0,swY0=0,swDx=0,swLock=0,swTrig=0; $('#ms').addEventListener('touchstart',e=>{ if(!ST.swrp\vert{}\vert{}e.touches.length!==1)return; const w=e.target.closest('.mw');if(!w\vert{}\vert{}w.classList.contains('center'))return; swEl=w;swInner=w.querySelector('.mw-inner');swIcon=w.querySelector('.sw-ic'); swX0=e.touches[0].clientX;swY0=e.touches[0].clientY;swDx=0;swLock=0;swTrig=0;swInner.style.transition='none'; },{passive:true}); $('#ms').addEventListener('touchmove',e=>{ if(!swEl\vert{}\vert{}e.touches.length!==1)return; const dx=e.touches[0].clientX-swX0,dy=e.touches[0].clientY-swY0; if(!swLock){if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){swEl=null;return}if(dx<-8)swLock=1;else if(dx>8){swEl=null;return}} if(swLock&&dx<0){ swDx=Math.max(-76,dx*.75);swInner.style.transform=`translateX(${swDx}px)`;
+    const p=Math.min(1,Math.abs(swDx)/50);swIcon.style.opacity=p;swIcon.style.transform=`translateY(-50%) scale(${0.5+p*0.55})`; if(Math.abs(swDx)>=50&&!swTrig){swTrig=1;if(ST.vib)try{navigator.vibrate(15)}catch(err){}}else if(Math.abs(swDx)<50)swTrig=0; } },{passive:true}); function endSwipe(){ if(!swEl)return; swInner.style.transition='transform .28s cubic-bezier(.2,1.3,.4,1)';swInner.style.transform='translateX(0)'; swIcon.style.opacity='0';swIcon.style.transform='translateY(-50\%) scale(.4)'; if(swTrig&&cur){rp=swEl.dataset.id;ed=null;ab();$('#in').focus()} swEl=null; } $('#ms').addEventListener('touchend',endSwipe);$('#ms').addEventListener('touchcancel',endSwipe);  function add(x,target){ const p=target\vert{}\vert{}cur; if(p.t==='u'&&isAnyBlocked(p.u)){toast('Отправка невозможна: чат заблокирован');return null} const isSaved=p.t==='s'; const m=Object.assign({id:'m_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),me:1,t:'',ts:Date.now(),rd:isSaved?1:0,pending:isSaved?0:1,nw:1,rx:{}},x); p.m.push(m); if(cur===p)drawMsgs(1); list();saveAll(); if(!isSaved&&navigator.onLine){ pushEventToTarget(p.u,{type:'msg',chatId:p.id,chatType:p.t,fromU:me.u,sender:{n:me.n,u:me.u,h:me.h,av:me.av},msg:m}) .then(()=>{setTimeout(()=>{m.pending=0;if(cur===p)drawMsgs();list();saveAll()},200)}) .catch(()=>{toast('Ошибка отправки — повторим при связи')}); }else if(!isSaved){toast('Ожидание сети…')} return m; }  const fx=()=>{ if(ST.vib)try{navigator.vibrate(20)}catch(e){} if(ST.snd)try{const a=new(window.AudioContext\vert{}\vert{}window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(760,a.currentTime);o.frequency.exponentialRampToValueAtTime(980,a.currentTime+.09);g.gain.setValueAtTime(.04,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.14);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.15);setTimeout(()=>a.close(),350)}catch(e){} };  function send(){ const v=$('#in').value.trim();if(!v)return; if(ed){ ed.t=v;ed.ed=1;ed._edAnim=1; if(cur.t!=='s')pushEventToTarget(cur.u,{type:'edit',chatId:cur.id,fromU:me.u,msgId:ed.id,text:v}).catch(()=>{}); ed=null;drawMsgs();list();saveAll(); }else add({t:v,re:rp}); sendTypingState(false); $('#in').value='';rp=null;ab();ui();auto(); } function auto(){const t=$('#in');t.style.height='42px';t.style.height=Math.min(t.scrollHeight,110)+'px'} let lastSbIcon=''; function ui(){ const target=$('#in').value.trim()?'send':(recMode==='mic'?'mic':'vcam'); const sb=$('#sb'),ic=sb.querySelector('.sb-ic'); if(target!==lastSbIcon){sb.classList.add('morph');setTimeout(()=>{ic.innerHTML=I(target,21);sb.classList.remove('morph')},110);lastSbIcon=target} } function ab(){ const e=$('#ab'),m=ed\vert{}\vert{}(rp&&cur.m.find(x=>x.id==rp)); e.style.display=m?'flex':'none'; if(m)e.innerHTML=`${I(ed?'edit':'reply',18)}<span><b>${ed?'Изменить':'Ответ'}</b> · ${esc(pv(m))}</span><button class="ib" id="ax">${I('x',18)}</button>`; } function jump(id){ const el=$(`#ms [data-id="${id}"]`);
+  if(!el)return toast('Сообщение не найдено');
+  el.scrollIntoView({block:'center',behavior:'smooth'});
+  el.classList.remove('fh');void el.offsetWidth;el.classList.add('fh');
+  setTimeout(()=>el.classList.remove('fh'),1350);
 }
-
-let swEl=null,swInner=null,swIcon=null,swX0=0,swY0=0,swDx=0,swLock=0,swTrig=0;
-$('#ms').addEventListener('touchstart',e=>{
-  if(!ST.swrp||e.touches.length!==1)return;
-  const w=e.target.closest('.mw');if(!w||w.classList.contains('center'))return;
-  swEl=w;swInner=w.querySelector('.mw-inner');swIcon=w.querySelector('.sw-ic');
-  swX0=e.touches[0].clientX;swY0=e.touches[0].clientY;swDx=0;swLock=0;swTrig=0;swInner.style.transition='none';
-},{passive:true});
-$('#ms').addEventListener('touchmove',e=>{
-  if(!swEl||e.touches.length!==1)return;
-  const dx=e.touches[0].clientX-swX0,dy=e.touches[0].clientY-swY0;
-  if(!swLock){if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){swEl=null;return}if(dx<-8)swLock=1;else if(dx>8){swEl=null;return}}
-  if(swLock&&dx<0){
-    swDx=Math.max(-76,dx*.75);swInner.style.transform=`translateX(${swDx}px)`;
-    const p=Math.min(1,Math.abs(swDx)/50);swIcon.style.opacity=p;swIcon.style.transform=`translateY(-50%) scale(${0.5+p*0.55})`;
-    if(Math.abs(swDx)>=50&&!swTrig){swTrig=1;if(ST.vib)try{navigator.vibrate(15)}catch(err){}}else if(Math.abs(swDx)<50)swTrig=0;
+function rxn(m,e){
+  m.rx=m.rx||{};
+  const r=m.rx[e]||(m.rx[e]=[0,0]);
+  const added=!r[1];
+  if(added){r[0]++;r[1]=1;m._rxPop=e}
+  else{r[0]=Math.max(0,r[0]-1);r[1]=0;if(!r[0])delete m.rx[e]}
+  saveAll();
+  if(cur&&cur.t!=='s'&&!isAnyBlocked(cur.u)){
+    pushEventToTarget(cur.u,{type:'react',chatId:cur.id,fromU:me.u,msgId:m.id,emoji:e,add:added}).catch(()=>{});
   }
-},{passive:true});
-function endSwipe(){
-  if(!swEl)return;
-  swInner.style.transition='transform .28s cubic-bezier(.2,1.3,.4,1)';swInner.style.transform='translateX(0)';
-  swIcon.style.opacity='0';swIcon.style.transform='translateY(-50%) scale(.4)';
-  if(swTrig&&cur){rp=swEl.dataset.id;ed=null;ab();$('#in').focus()}
-  swEl=null;
-}
-$('#ms').addEventListener('touchend',endSwipe);$('#ms').addEventListener('touchcancel',endSwipe);
-
-function add(x,target){
-  const p=target||cur;
-  const isSaved=p.t==='s';
-  const m=Object.assign({id:'m_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),me:1,t:'',ts:Date.now(),rd:isSaved?1:0,pending:isSaved?0:1,nw:1,rx:{}},x);
-  p.m.push(m);
-  if(cur===p)drawMsgs(1);
-  list();saveAll();
-  if(!isSaved&&navigator.onLine){
-    pushEventToTarget(p.u,{type:'msg',chatId:p.id,chatType:p.t,fromU:me.u,sender:{n:me.n,u:me.u,h:me.h,av:me.av},msg:m})
-      .then(()=>{setTimeout(()=>{m.pending=0;if(cur===p)drawMsgs();list();saveAll()},240)})
-      .catch(()=>{toast('Ошибка отправки — повторим при связи')});
-  }else if(!isSaved){
-    toast('Ожидание сети… Сообщение отправится автоматически');
-  }
-  return m;
 }
 
-const fx=()=>{
-  if(ST.vib)try{navigator.vibrate(20)}catch(e){}
-  if(ST.snd)try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(760,a.currentTime);o.frequency.exponentialRampToValueAtTime(980,a.currentTime+.09);g.gain.setValueAtTime(.04,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.14);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.15);setTimeout(()=>a.close(),350)}catch(e){}
-};
-
-function send(){
-  const v=$('#in').value.trim();if(!v)return;
-  if(ed){
-    ed.t=v;ed.ed=1;ed._edAnim=1;
-    if(cur.t!=='s')pushEventToTarget(cur.u,{type:'edit',chatId:cur.id,fromU:me.u,msgId:ed.id,text:v}).catch(()=>{});
-    ed=null;drawMsgs();list();saveAll();
-  }else{
-    add({t:v,re:rp});
-  }
-  sendTypingState(false);
-  $('#in').value='';rp=null;ab();ui();auto();
-}
-function auto(){const t=$('#in');t.style.height='42px';t.style.height=Math.min(t.scrollHeight,110)+'px'}
-let lastSbIcon='';
-function ui(){
-  const target=$('#in').value.trim()?'send':(recMode==='mic'?'mic':'vcam');
-  const sb=$('#sb'),ic=sb.querySelector('.sb-ic');
-  if(target!==lastSbIcon){sb.classList.add('morph');setTimeout(()=>{ic.innerHTML=I(target,21);sb.classList.remove('morph')},110);lastSbIcon=target}
-}
-function ab(){
-  const e=$('#ab'),m=ed||(rp&&cur.m.find(x=>x.id==rp));
-  e.style.display=m?'flex':'none';
-  if(m)e.innerHTML=`${I(ed?'edit':'reply',18)}<span><b>${ed?'Изменить':'Ответ'}</b> · ${esc(pv(m))}</span><button class="ib" id="ax">${I('x',18)}</button>`;
-}
-function jump(id){const el=$(`#ms [data-id="${id}"]`);if(!el)return;el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('fh');setTimeout(()=>el.classList.remove('fh'),1200)}
-function rxn(m,e){const r=m.rx[e]||(m.rx[e]=[0,0]);if(r[1]){r[0]--;r[1]=0;if(!r[0])delete m.rx[e]}else{r[0]++;r[1]=1}saveAll()}
-
-let mediaRec=null,mediaStream=null,recChunks=[],recPeaks=[],audioCtx=null,analyser=null,wvRaf=null;
+let mediaRec=null,mediaStream=null,recChunks=[],recPeaks=[],audioCtx=null,analyser=null,wvRaf=null,recStartTs=0;
 
 async function startAudioRec(){
-  rs=0;recChunks=[];recPeaks=[];
-  $('#rc').classList.add('on');$('#rt').textContent='0:00';$('#rec-wv').innerHTML='';
+  rs=0;recChunks=[];recPeaks=[];recStartTs=Date.now();
+  $('#rc').classList.add('on');$('#rt').textContent='0:00,0';$('#rec-wv').innerHTML='';
   try{
-    mediaStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).catch(()=>navigator.mediaDevices.getUserMedia({audio:true}));
     mediaRec=new MediaRecorder(mediaStream);
     mediaRec.ondataavailable=e=>{if(e.data.size)recChunks.push(e.data)};
-    mediaRec.start();
+    mediaRec.start(150);
     audioCtx=new(window.AudioContext||window.webkitAudioContext)();
     const src=audioCtx.createMediaStreamSource(mediaStream);
-    analyser=audioCtx.createAnalyser();analyser.fftSize=256;src.connect(analyser);
+    analyser=audioCtx.createAnalyser();analyser.fftSize=128;analyser.smoothingTimeConstant=0.72;src.connect(analyser);
     const buf=new Uint8Array(analyser.frequencyBinCount);
-    const sample=()=>{
-      analyser.getByteTimeDomainData(buf);
-      let max=0;for(let i=0;i<buf.length;i++){const v=Math.abs(buf[i]-128)/128;if(v>max)max=v}
-      const h=Math.max(4,Math.min(26,Math.round(4+max*48)));
-      recPeaks.push(h);
-      const bar=document.createElement('i');bar.style.height=h+'px';
-      const wv=$('#rec-wv');wv.append(bar);if(wv.children.length>36)wv.firstChild.remove();
-      wvRaf=setTimeout(()=>requestAnimationFrame(sample),70);
+    let lastBar=0;
+    const sample=(now)=>{
+      if(!audioCtx)return;
+      analyser.getByteFrequencyData(buf);
+      let sum=0;for(let i=0;i<16;i++)sum+=buf[i];
+      const h=Math.max(4,Math.min(26,Math.round(4+(sum/16/255)*30)));
+      if(now-lastBar>65){
+        lastBar=now;recPeaks.push(h);
+        const bar=document.createElement('i');bar.style.height=h+'px';
+        const wv=$('#rec-wv');wv.append(bar);if(wv.children.length>38)wv.firstChild.remove();
+      }
+      const ms=Date.now()-recStartTs;rs=Math.floor(ms/1000);
+      $('#rt').textContent=`${Math.floor(rs/60)}:${String(rs%60).padStart(2,'0')},${Math.floor((ms%1000)/100)}`;
+      wvRaf=requestAnimationFrame(sample);
     };
-    sample();
-  }catch(e){toast('Разрешите доступ к микрофону для записи аудио');$('#rc').classList.remove('on');return}
-  ri=setInterval(()=>{rs++;$('#rt').textContent=Math.floor(rs/60)+':'+String(rs%60).padStart(2,'0')},1000);
+    wvRaf=requestAnimationFrame(sample);
+  }catch(e){toast('Разрешите доступ к микрофону');$('#rc').classList.remove('on')}
 }
 
 function stopAudioRec(doSend){
-  clearInterval(ri);clearTimeout(wvRaf);$('#rc').classList.remove('on');
+  cancelAnimationFrame(wvRaf);$('#rc').classList.remove('on');
   if(audioCtx){audioCtx.close().catch(()=>{});audioCtx=null}
-  const dur=Math.max(rs,1);
-  const peaks=[];const n=28,len=recPeaks.length||1;
-  for(let i=0;i<n;i++){peaks.push(recPeaks[Math.min(len-1,Math.floor(i*len/n))]||8)}
+  const dur=Math.max(rs,1),peaks=[],n=28,len=recPeaks.length||1;
+  for(let i=0;i<n;i++)peaks.push(recPeaks[Math.min(len-1,Math.floor(i*len/n))]||8);
   if(mediaRec&&mediaRec.state!=='inactive'){
     mediaRec.onstop=async()=>{
       if(doSend&&recChunks.length){
-        const rawMime=mediaRec.mimeType||'audio/mp4';
-        const cleanMime=rawMime.split(';')[0];
-        const ext=cleanMime.includes('webm')?'webm':'m4a';
-        const blob=new Blob(recChunks,{type:cleanMime});
-        const url=await uploadMediaBlob(blob,ext);
+        const mime=(mediaRec.mimeType||'audio/mp4').split(';')[0],ext=mime.includes('webm')?'webm':'m4a';
+        const blob=new Blob(recChunks,{type:mime}),url=await uploadMediaBlob(blob,ext);
         if(url)add({k:'voice',d:dur,src:url,peaks});
         else{const r=new FileReader();r.onload=()=>add({k:'voice',d:dur,src:r.result,peaks});r.readAsDataURL(blob)}
       }
@@ -1802,124 +1755,92 @@ function stopAudioRec(doSend){
   }
 }
 
-let vrInt=null,vrSec=0,vrFacing='user',vrTorch=false,vrCamStream=null,vrAudioStream=null,vrActive=false,vrPoster='',vrRaf=null,vrSwitching=false;
+let vrInt=null,vrMs=0,vrFacing='user',vrTorch=false,vrOnce=false,vrPaused=false,vrCamStream=null,vrAudioStream=null,vrActive=false,vrPoster='',vrRaf=null,vrSwitching=false;
 
 async function openVrCam(){
   vrSwitching=true;
   if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}
-  try{
-    vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:{ideal:480},height:{ideal:480},frameRate:{ideal:60}},audio:false});
-  }catch(e){
-    vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing},audio:false});
-  }
-  const vid=$('#vrec-v');
-  vid.srcObject=vrCamStream;
-  await vid.play().catch(()=>{});
-  vrSwitching=false;
-  applyVrTorch();
+  try{vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:{ideal:480},height:{ideal:480},frameRate:{ideal:60}},audio:false})}
+  catch(e){vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing},audio:false})}
+  const vid=$('#vrec-v');vid.srcObject=vrCamStream;await vid.play().catch(()=>{});
+  vrSwitching=false;applyVrTorch();
 }
-
 async function applyVrTorch(){
-  const vrec=$('#vrec'),btn=$('#vr-torch');
-  btn.classList.toggle('on',vrTorch);
+  const vrec=$('#vrec'),btn=$('#vr-torch');btn.classList.toggle('on',vrTorch);
   if(vrFacing==='user'){vrec.classList.toggle('flash-front',vrTorch);return}
   vrec.classList.remove('flash-front');
-  const track=vrCamStream&&vrCamStream.getVideoTracks()[0];
-  if(track&&track.applyConstraints){
-    try{await track.applyConstraints({advanced:[{torch:vrTorch}]})}catch(e){if(vrTorch)toast('Фонарик недоступен')}
-  }
+  const tr=vrCamStream&&vrCamStream.getVideoTracks()[0];
+  if(tr&&tr.applyConstraints)try{await tr.applyConstraints({advanced:[{torch:vrTorch}]})}catch(e){if(vrTorch)toast('Вспышка недоступна')}
 }
-
 function drawVrFrame(){
   const cvs=$('#vr-cvs'),vid=$('#vrec-v');
   if(!cvs||!vid)return;
   const ctx=cvs.getContext('2d');
-  if(!vrSwitching&&vid.readyState>=2&&vid.videoWidth>0){
+  if(!vrSwitching&&!vrPaused&&vid.readyState>=2&&vid.videoWidth>0){
     const vw=vid.videoWidth,vh=vid.videoHeight,s=Math.min(vw,vh);
-    ctx.setTransform(1,0,0,1,0,0);
-    ctx.drawImage(vid,(vw-s)/2,(vh-s)/2,s,s,0,0,480,480);
+    ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(vid,(vw-s)/2,(vh-s)/2,s,s,0,0,480,480);
     if(!vrPoster)try{vrPoster=cvs.toDataURL('image/jpeg',0.78)}catch(e){}
   }
   if(vrActive)vrRaf=requestAnimationFrame(drawVrFrame);
 }
-
 async function startVideoCircle(){
   if(vrActive)return;
-  vrActive=true;vrSec=0;recChunks=[];vrTorch=false;vrPoster='';vrSwitching=false;
+  vrActive=true;vrMs=0;recChunks=[];vrTorch=false;vrOnce=false;vrPaused=false;vrPoster='';vrSwitching=false;
   $('#vrec').classList.add('on');$('#vrec').classList.remove('flash-front');
-  $('#vr-torch').classList.remove('on');$('#vrt').textContent='0:00 / 0:30';
-  $('#vr-ring').style.strokeDashoffset='816';
+  $('#vr-torch').classList.remove('on');$('#vr-once').classList.remove('on');$('#vr-pause').innerHTML=I('pause',18);
+  $('#vrt').textContent='0:00,00';$('#vr-ring').style.strokeDashoffset='816';
   try{
-    await openVrCam();
-    if(!vrActive)return;
-    vrAudioStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    await openVrCam();if(!vrActive)return;
+    vrAudioStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).catch(()=>navigator.mediaDevices.getUserMedia({audio:true}));
     if(!vrActive){stopVideoCircle(0);return}
-    const cvs=$('#vr-cvs');
-    drawVrFrame();
+    const cvs=$('#vr-cvs');drawVrFrame();
     const cvsStream=cvs.captureStream?cvs.captureStream(60):vrCamStream;
     const outStream=new MediaStream([...cvsStream.getVideoTracks(),...vrAudioStream.getAudioTracks()]);
-    const listMimes=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4','video/webm;codecs=vp8,opus','video/webm'];
-    const mime=listMimes.find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m))||'';
-    const opts=mime?{mimeType:mime,videoBitsPerSecond:1500000,audioBitsPerSecond:64000}:{videoBitsPerSecond:1500000};
-    mediaRec=new MediaRecorder(outStream,opts);
+    const mime=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4','video/webm;codecs=vp8,opus','video/webm'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m))||'';
+    mediaRec=new MediaRecorder(outStream,mime?{mimeType:mime,videoBitsPerSecond:1500000,audioBitsPerSecond:64000}:{videoBitsPerSecond:1500000});
     mediaRec.ondataavailable=e=>{if(e.data&&e.data.size>0)recChunks.push(e.data)};
     mediaRec.start(200);
-  }catch(e){
-    toast('Разрешите камеру и микрофон');stopVideoCircle(0);return;
-  }
+  }catch(e){toast('Разрешите камеру и микрофон');stopVideoCircle(0);return}
+  let lastT=Date.now();
   vrInt=setInterval(()=>{
-    vrSec++;
-    $('#vrt').textContent=`${Math.floor(vrSec/60)}:${String(vrSec%60).padStart(2,'0')} / 0:30`;
-    $('#vr-ring').style.strokeDashoffset=String(816*(1-vrSec/30));
-    if(vrSec>=30)stopVideoCircle(1);
-  },1000);
+    const now=Date.now(),dt=now-lastT;lastT=now;
+    if(vrPaused)return;
+    vrMs+=dt;const sec=Math.floor(vrMs/1000),cs=String(Math.floor((vrMs%1000)/10)).padStart(2,'0');
+    $('#vrt').textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')},${cs}`;
+    $('#vr-ring').style.strokeDashoffset=String(816*(1-Math.min(1,vrMs/30000)));
+    if(vrMs>=30000)stopVideoCircle(1);
+  },60);
 }
-
 function stopVideoCircle(doSend){
   vrActive=false;clearInterval(vrInt);cancelAnimationFrame(vrRaf);
   $('#vrec').classList.remove('on','flash-front');
-  const dur=Math.max(vrSec,1),poster=vrPoster;
-  const rec=mediaRec;mediaRec=null;
-  const cleanup=()=>{
-    if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}
-    if(vrAudioStream){vrAudioStream.getTracks().forEach(t=>t.stop());vrAudioStream=null}
-    $('#vrec-v').srcObject=null;
-  };
+  const dur=Math.max(1,Math.round(vrMs/1000)),poster=vrPoster,once=vrOnce,rec=mediaRec;mediaRec=null;
+  const cleanup=()=>{if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}if(vrAudioStream){vrAudioStream.getTracks().forEach(t=>t.stop());vrAudioStream=null}$('#vrec-v').srcObject=null};
   if(rec&&rec.state!=='inactive'){
     rec.onstop=async()=>{
       cleanup();
       if(doSend&&recChunks.length){
-        const rawMime=rec.mimeType||'video/mp4';
-        const cleanMime=rawMime.split(';')[0];
-        const ext=cleanMime.includes('mp4')?'mp4':'webm';
-        const blob=new Blob(recChunks,{type:cleanMime});
-        toast('Отправка кружка…');
-        const publicUrl=await uploadMediaBlob(blob,ext);
-        if(publicUrl){
-          add({k:'vnote',d:dur,src:publicUrl,poster});
-        }else{
-          const r=new FileReader();r.onload=()=>add({k:'vnote',d:dur,src:r.result,poster});r.readAsDataURL(blob);
-        }
+        const mime=(rec.mimeType||'video/mp4').split(';')[0],ext=mime.includes('mp4')?'mp4':'webm';
+        const blob=new Blob(recChunks,{type:mime});toast('Отправка кружка…');
+        const url=await uploadMediaBlob(blob,ext);
+        if(url)add({k:'vnote',d:dur,src:url,poster,once});
+        else{const r=new FileReader();r.onload=()=>add({k:'vnote',d:dur,src:r.result,poster,once});r.readAsDataURL(blob)}
       }
     };
     try{rec.stop()}catch(e){cleanup()}
   }else cleanup();
 }
-$('#vr-flip').onclick=async()=>{
-  if(vrSwitching)return;
-  vrFacing=vrFacing==='user'?'environment':'user';
-  try{await openVrCam()}catch(e){vrSwitching=false;toast('Вторая камера недоступна')}
-};
+$('#vr-flip').onclick=async()=>{if(vrSwitching)return;vrFacing=vrFacing==='user'?'environment':'user';try{await openVrCam()}catch(e){vrSwitching=false;toast('Вторая камера недоступна')}};
 $('#vr-torch').onclick=()=>{vrTorch=!vrTorch;applyVrTorch()};
-$('#vr-cancel').onclick=()=>stopVideoCircle(0);
-$('#vr-send').onclick=()=>stopVideoCircle(1);
+$('#vr-once').onclick=()=>{vrOnce=!vrOnce;$('#vr-once').classList.toggle('on',vrOnce);toast(vrOnce?'Одноразовый просмотр вкл.':'Обычный кружок')};
+$('#vr-pause').onclick=()=>{
+  vrPaused=!vrPaused;$('#vr-pause').innerHTML=I(vrPaused?'play':'pause',18);
+  if(mediaRec){try{vrPaused?mediaRec.pause():mediaRec.resume()}catch(e){}}
+};
+$('#vr-cancel').onclick=()=>stopVideoCircle(0);$('#vr-send').onclick=()=>stopVideoCircle(1);
 
 let activeAudio=null,activeVc=null,audioRaf=null;
-function stopActiveAudio(){
-  if(activeAudio){activeAudio.pause();activeAudio=null}
-  cancelAnimationFrame(audioRaf);
-  if(activeVc){activeVc.querySelector('.vp').innerHTML=I('play',18);activeVc=null}
-}
+function stopActiveAudio(){if(activeAudio){activeAudio.pause();activeAudio=null}cancelAnimationFrame(audioRaf);if(activeVc){activeVc.querySelector('.vp').innerHTML=I('play',18);activeVc=null}}
 function playVoiceMsg(vc,src,seekPct){
   if(!src)return toast('Аудиофайл отсутствует');
   if(activeVc===vc&&activeAudio&&seekPct==null){
@@ -1927,18 +1848,9 @@ function playVoiceMsg(vc,src,seekPct){
     else{activeAudio.pause();vc.querySelector('.vp').innerHTML=I('play',18);cancelAnimationFrame(audioRaf)}
     return;
   }
-  if(activeVc!==vc){
-    stopActiveAudio();
-    activeVc=vc;activeAudio=new Audio(src);
-    activeAudio.onended=()=>{vc.querySelector('.wv-fg').style.clipPath='inset(0 100% 0 0)';stopActiveAudio()};
-  }
-  const startPlay=()=>{
-    if(seekPct!=null&&activeAudio.duration)activeAudio.currentTime=seekPct*activeAudio.duration;
-    activeAudio.play().catch(()=>{});
-    vc.querySelector('.vp').innerHTML=I('pause',18);
-    tickAudio();
-  };
-  if(activeAudio.readyState>=1)startPlay();else activeAudio.onloadedmetadata=startPlay;
+  if(activeVc!==vc){stopActiveAudio();activeVc=vc;activeAudio=new Audio(src);activeAudio.onended=()=>{vc.querySelector('.wv-fg').style.clipPath='inset(0 100% 0 0)';stopActiveAudio()}}
+  const goP=()=>{if(seekPct!=null&&activeAudio.duration)activeAudio.currentTime=seekPct*activeAudio.duration;activeAudio.play().catch(()=>{});vc.querySelector('.vp').innerHTML=I('pause',18);tickAudio()};
+  if(activeAudio.readyState>=1)goP();else activeAudio.onloadedmetadata=goP;
 }
 function tickAudio(){
   if(!activeAudio||!activeVc||activeAudio.paused)return;
@@ -1950,23 +1862,18 @@ function tickAudio(){
 }
 
 let sbHoldT=null,sbDidHold=0;
-$('#sb').addEventListener('pointerdown',()=>{
-  if($('#in').value.trim())return;
-  sbDidHold=0;
-  sbHoldT=setTimeout(()=>{sbDidHold=1;if(ST.vib)try{navigator.vibrate(22)}catch(e){}recMode==='mic'?startAudioRec():startVideoCircle()},240);
-});
+$('#sb').addEventListener('pointerdown',()=>{if($('#in').value.trim())return;sbDidHold=0;sbHoldT=setTimeout(()=>{sbDidHold=1;if(ST.vib)try{navigator.vibrate(22)}catch(e){}recMode==='mic'?startAudioRec():startVideoCircle()},240)});
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>$('#sb').addEventListener(ev,()=>clearTimeout(sbHoldT)));
 $('#sb').onclick=()=>{
   if(sbDidHold){sbDidHold=0;return}
   if($('#in').value.trim()){send();return}
   recMode=recMode==='mic'?'vcam':'mic';if(ST.vib)try{navigator.vibrate(14)}catch(e){}ui();
-  toast(recMode==='mic'?'🎤 Голосовое (удерживайте)':'⭕ Кружок 60 FPS (удерживайте)');
+  toast(recMode==='mic'?'🎤 Голосовое (удерживайте)':'⭕ Кружок (удерживайте)');
 };
 $('#rx').onclick=()=>stopAudioRec(0);$('#rs').onclick=()=>stopAudioRec(1);
 
 function openSpotlight(w,m){
   const ml=$('#ml'),inner=w.querySelector('.mw-inner'),r=inner.getBoundingClientRect();
-  const rxList=['❤️','🔥','😂','👍','😮','🌙'];
   const items=[
     ['Ответить','reply',()=>{rp=m.id;ed=null;ab();$('#in').focus()}],
     ['Копировать','copy',()=>{try{navigator.clipboard.writeText(m.t||pv(m))}catch(x){}toast('Скопировано')}],
@@ -1975,101 +1882,60 @@ function openSpotlight(w,m){
     ['Переслать','fwd',()=>{fm=m;sheet(`<div class="sh1"><h3>Переслать</h3></div>`+P.map(p=>`<button class="row" data-f="${p.id}">${av(p,40)}<b>${esc(dispName(p))}</b></button>`).join(''))}],
     ...(canDelete(cur,m)?[['Удалить','trash',()=>openDeleteModal(w,m),1]]:[])
   ];
-  ml.innerHTML=`
-    <div class="ml-rx" id="ml-rx">${rxList.map(e=>`<button data-e="${e}">${e}</button>`).join('')}</div>
-    <div class="ml-clone${m.me?' me':''}" id="ml-cl">${inner.innerHTML}</div>
-    <div class="ml-menu" id="ml-mn">${items.map((t,i)=>`<button data-i="${i}" class="${t[3]?'rd':''}">${I(t[1],18)}${t[0]}</button>`).join('')}</div>`;
+  ml.innerHTML=`<div class="ml-rx" id="ml-rx">${['❤️','🔥','😂','👍','😮','🌙'].map(e=>`<button data-e="${e}">${e}</button>`).join('')}</div><div class="ml-clone${m.me?' me':''}" id="ml-cl">${inner.innerHTML}</div><div class="ml-menu" id="ml-mn">${items.map((t,i)=>`<button data-i="${i}" class="${t[3]?'rd':''}">${I(t[1],18)}${t[0]}</button>`).join('')}</div>`;
   ml._it=items;ml._m=m;ml.classList.add('on');
-
-  const cl=$('#ml-cl'),rx=$('#ml-rx'),mn=$('#ml-mn');
-  const bTop=Math.max(70,Math.min(r.top,innerHeight-r.height-180));
+  const cl=$('#ml-cl'),rx=$('#ml-rx'),mn=$('#ml-mn'),bTop=Math.max(70,Math.min(r.top,innerHeight-r.height-180));
   cl.style.left=r.left+'px';cl.style.top=bTop+'px';cl.style.width=r.width+'px';
-  const rxL=Math.max(10,Math.min(m.me?r.right-rx.offsetWidth:r.left,innerWidth-rx.offsetWidth-10));
-  rx.style.left=rxL+'px';rx.style.top=Math.max(12,bTop-rx.offsetHeight-10)+'px';
-  const mnL=Math.max(10,Math.min(m.me?r.right-mn.offsetWidth:r.left,innerWidth-mn.offsetWidth-10));
-  let mnT=bTop+r.height+10;
-  if(mnT+mn.offsetHeight>innerHeight-14)mnT=Math.max(12,bTop-mn.offsetHeight-rx.offsetHeight-18);
-  mn.style.left=mnL+'px';mn.style.top=mnT+'px';
+  rx.style.left=Math.max(10,Math.min(m.me?r.right-rx.offsetWidth:r.left,innerWidth-rx.offsetWidth-10))+'px';rx.style.top=Math.max(12,bTop-rx.offsetHeight-10)+'px';
+  let mnT=bTop+r.height+10;if(mnT+mn.offsetHeight>innerHeight-14)mnT=Math.max(12,bTop-mn.offsetHeight-rx.offsetHeight-18);
+  mn.style.left=Math.max(10,Math.min(m.me?r.right-mn.offsetWidth:r.left,innerWidth-mn.offsetWidth-10))+'px';mn.style.top=mnT+'px';
   if(ST.vib)try{navigator.vibrate(20)}catch(e){}
 }
 const closeSpotlight=()=>$('#ml').classList.remove('on');
-$('#ml').onclick=e=>{
-  const b=e.target.closest('button');if(!b){closeSpotlight();return}
-  const ml=$('#ml');
-  if(b.dataset.e){rxn(ml._m,b.dataset.e);drawMsgs()}else if(b.dataset.i!=null){ml._it[+b.dataset.i][2]()}
-  closeSpotlight();
-};
+$('#ml').onclick=e=>{const b=e.target.closest('button');if(!b){closeSpotlight();return}const ml=$('#ml');if(b.dataset.e){rxn(ml._m,b.dataset.e);drawMsgs()}else if(b.dataset.i!=null)ml._it[+b.dataset.i][2]();closeSpotlight()};
 
-function vaporizeEl(el,cb){
-  const r=el.getBoundingClientRect();
-  for(let i=0;i<22;i++){
-    const pt=document.createElement('span');pt.className='vpart';
-    pt.style.left=(r.left+Math.random()*r.width)+'px';
-    pt.style.top=(r.top+Math.random()*r.height)+'px';
-    pt.style.setProperty('--vx',(Math.random()*70-35)+'px');
-    pt.style.setProperty('--vy',(-25-Math.random()*55)+'px');
-    document.body.append(pt);setTimeout(()=>pt.remove(),680);
-  }
-  el.classList.add('vapor');
-  setTimeout(cb,480);
+function smoothDelEl(el,cb){
+  el.style.maxHeight=el.offsetHeight+'px';void el.offsetHeight;
+  el.classList.add('del-out');setTimeout(cb,320);
 }
-
 function openDeleteModal(w,m){
   if(m.k==='gift')return toast('Подарки нельзя удалить');
-  const dm=$('#del-modal');
-  const canAll=cur.t!=='s'&&(m.me||cur.role==='owner'||cur.role==='admin');
-  dm.innerHTML=`<div class="del-card gl"><h3>Удалить сообщение?</h3><p>Выберите, как удалить это сообщение</p><div class="del-btns">
-    ${canAll?`<button class="rd" id="del-all">Удалить у всех</button>`:''}
-    <button id="del-me">Удалить только у меня</button>
-    <button id="del-no" style="background:transparent;color:var(--mu)">Отмена</button>
-  </div></div>`;
+  const dm=$('#del-modal'),canAll=cur.t!=='s'&&(m.me||cur.role==='owner'||cur.role==='admin');
+  dm.innerHTML=`<div class="del-card gl"><h3>Удалить сообщение?</h3><p>Выберите способ удаления</p><div class="del-btns">${canAll?`<button class="rd" id="del-all">Удалить у всех</button>`:''}<button id="del-me">Удалить только у меня</button><button id="del-no" style="background:transparent;color:var(--mu)">Отмена</button></div></div>`;
   dm.classList.add('on');
-  const remove=(forAll)=>{
-    dm.classList.remove('on');
-    const done=()=>{cur.m=cur.m.filter(x=>x.id!==m.id);pin();drawMsgs();list();saveAll()};
-    if(forAll){
-      pushEventToTarget(cur.u,{type:'del',chatId:cur.id,fromU:me.u,msgId:m.id}).catch(()=>{});
-      vaporizeEl(w,done);
-    }else done();
-  };
-  if($('#del-all'))$('#del-all').onclick=()=>remove(true);
-  $('#del-me').onclick=()=>remove(false);
-  $('#del-no').onclick=()=>dm.classList.remove('on');
+  const rem=(forAll)=>{dm.classList.remove('on');const done=()=>{cur.m=cur.m.filter(x=>x.id!==m.id);pin();drawMsgs();list();saveAll()};if(forAll)pushEventToTarget(cur.u,{type:'del',chatId:cur.id,fromU:me.u,msgId:m.id}).catch(()=>{});smoothDelEl(w,done)};
+  if($('#del-all'))$('#del-all').onclick=()=>rem(true);$('#del-me').onclick=()=>rem(false);$('#del-no').onclick=()=>dm.classList.remove('on');
   dm.onclick=e=>{if(e.target===dm)dm.classList.remove('on')};
 }
 
 function openLightbox(src){$('#iv-img').src=src;$('#iv-dl').href=src;$('#imgv').classList.add('on')}
 $('#iv-x').innerHTML=I('x',24);$('#iv-x').onclick=()=>$('#imgv').classList.remove('on');
-
-function menu(x,y,items){
-  const m=$('#mn');m.innerHTML=items.map((t,i)=>`<button data-i="${i}" class="${t[3]?'rd':''}">${I(t[1],18)}${t[0]}</button>`).join('');
-  m._it=items;m.classList.add('on');
-  m.style.left=Math.max(8,Math.min(x,innerWidth-m.offsetWidth-8))+'px';
-  m.style.top=Math.max(8,Math.min(y,innerHeight-m.offsetHeight-8))+'px';
-}
+function menu(x,y,items){const m=$('#mn');m.innerHTML=items.map((t,i)=>`<button data-i="${i}" class="${t[3]?'rd':''}">${I(t[1],18)}${t[0]}</button>`).join('');m._it=items;m.classList.add('on');m.style.left=Math.max(8,Math.min(x,innerWidth-m.offsetWidth-8))+'px';m.style.top=Math.max(8,Math.min(y,innerHeight-m.offsetHeight-8))+'px'}
 const hm=()=>$('#mn').classList.remove('on');
 function sheet(h){$('#sc').innerHTML=h;$('#sh').classList.add('on')}
 const csh=()=>$('#sh').classList.remove('on');
 
 function newChatModal(){
   sheet(`<div class="sh1"><h3>Новый чат, группа или канал</h3></div>
-    <input class="inp" id="nc_n" placeholder="Название чата или имя">
+    <input class="inp" id="nc_n" placeholder="Название (для группы/канала)">
     <input class="inp" id="nc_u" value="@" placeholder="@username">
-    <div class="seg" id="nc_t" style="margin-bottom:12px">
-      <button data-v="u" class="on">Личный чат</button>
-      <button data-v="g">Группа (владелец)</button>
-      <button data-v="c">Канал (владелец)</button>
-    </div>
-    <button class="pbt" id="nc_go">Создать</button>`);
+    <div class="seg" id="nc_t" style="margin-bottom:12px"><button data-v="u" class="on">Найти юзера</button><button data-v="g">Группа</button><button data-v="c">Канал</button></div>
+    <button class="pbt" id="nc_go">Открыть / Создать</button>`);
   enforceAt($('#nc_u'));
   $('#nc_t').onclick=e=>{const b=e.target.closest('button');if(!b)return;$$('#nc_t button').forEach(x=>x.classList.toggle('on',x==b))};
-  $('#nc_go').onclick=()=>{
+  $('#nc_go').onclick=async()=>{
     const n=$('#nc_n').value.trim(),t=$('#nc_t .on').dataset.v,cu=cleanU($('#nc_u').value);
-    if(t==='u'&&cu.length>=3&&USERS[cu]){csh();open(ensureUserChat(USERS[cu]).id);return}
+    if(t==='u'){
+      if(cu.length<3)return toast('Введите @username');
+      let u=USERS[cu];
+      if(!u&&sb&&navigator.onLine){const {data}=await sb.from('users').select('*').eq('username',cu).maybeSingle();if(data){syncUserRow(data);u=USERS[cu]}}
+      if(!u)return toast('Пользователь @'+cu+' не зарегистрирован');
+      csh();open(ensureUserChat(u).id);return;
+    }
     if(!n)return toast('Введите название');
-    const id=t==='u'&&cu?chatRoomId(me.u,cu):'c_'+Date.now();
-    const u='@'+(cu||id.slice(-6));
-    P.unshift({id,n,u,h:Math.random()*360|0,t,role:'owner',on:t==='u'?1:0,s:t==='u'?'онлайн':t==='g'?'Владелец группы':'Владелец канала',m:[]});
+    if(cu&&USERS[cu])return toast('@'+cu+' уже занят пользователем');
+    const id='c_'+Date.now(),u='@'+(cu||id.slice(-6));
+    P.unshift({id,n,u,h:Math.random()*360|0,t,role:'owner',s:t==='g'?'Группа · владелец':'Канал · владелец',m:[]});
     csh();list();saveAll();open(id);
   };
 }
@@ -2078,10 +1944,9 @@ function pollModal(){
   sheet(`<div class="sh1"><h3>Создать опрос</h3></div><input class="inp" id="pl_q" placeholder="Вопрос"><input class="inp" id="pl_1" placeholder="Вариант 1"><input class="inp" id="pl_2" placeholder="Вариант 2"><input class="inp" id="pl_3" placeholder="Вариант 3"><button class="pbt" id="pl_go">Отправить</button>`);
   $('#pl_go').onclick=()=>{const q=$('#pl_q').value.trim()||'Опрос',o=[$('#pl_1').value.trim(),$('#pl_2').value.trim(),$('#pl_3').value.trim()].filter(Boolean).map(x=>[x,0]);if(o.length<2)return toast('Минимум 2 варианта');csh();add({k:'poll',q,o})};
 }
-
 function contactPickerModal(){
   const listU=(me.contacts||[]).map(k=>USERS[k]).filter(Boolean);
-  sheet(`<div class="sh1"><h3>Отправить контакт</h3></div><div class="card gl">${listU.length?listU.map(u=>`<button class="row" data-sendct="${cleanU(u.u)}">${av(Object.assign({t:'u'},u),42)}<div class="rb"><b>${esc(u.n)}</b><span>${esc(fmtU(u.u))}</span></div></button>`).join(''):'<p class="em0">В вашем списке контактов пока никого нет</p>'}</div>`);
+  sheet(`<div class="sh1"><h3>Отправить контакт</h3></div><div class="card gl">${listU.length?listU.map(u=>`<button class="row" data-sendct="${cleanU(u.u)}">${av(Object.assign({t:'u'},u),42)}<div class="rb"><b>${esc(u.n)}</b><span>${esc(fmtU(u.u))}</span></div></button>`).join(''):'<p class="em0">В контактах пока никого нет</p>'}</div>`);
 }
 
 let giftAnon=false;
@@ -2091,8 +1956,7 @@ function shop(){
     <div class="gg">${G.map((g,i)=>`<button class="gi" data-i="${i}"><span>${g[0]}</span><b>${g[1]}</b><small>🌙 ${g[2]}</small></button>`).join('')}</div>
     <input class="inp" id="gtxt" style="margin-top:12px" placeholder="Текст к подарку (необязательно)">
     <div class="set" style="padding:8px 4px"><span>Отправить анонимно</span><button class="sw" id="ganon" type="button"></button></div>
-    <button class="pbt" id="gs" disabled>Выберите подарок</button>
-    <button class="tp" id="tpu">Пополнить на 100 🌙</button>`);
+    <button class="pbt" id="gs" disabled>Выберите подарок</button><button class="tp" id="tpu">Пополнить на 100 🌙</button>`);
 }
 function attach(){sheet(`<div class="sh1"><h3>Прикрепить</h3></div><div class="ag">${[['img','Фото'],['file','Файл'],['loc','Геопозиция'],['user','Контакт'],['poll','Опрос'],['gift','Подарок 🌙']].map(a=>`<button data-a="${a[0]}"><span class="fi">${I(a[0],24)}</span>${a[1]}</button>`).join('')}</div>`)}
 
@@ -2100,277 +1964,177 @@ function att(a){
   csh();const f=$('#fi');
   if(a==='img'||a==='file'){
     f.accept=a==='img'?'image/*':'';
-    f.onchange=()=>{const x=f.files[0];if(!x)return;if(a==='img')compressImg(x,960,src=>add({k:'img',src}));else add({k:'file',fn:x.name,sz:(x.size/1048576).toFixed(1).replace('.',',')+' МБ'});f.value=''};
-    f.click();
+    f.onchange=async()=>{
+      const x=f.files[0];if(!x)return;
+      if(a==='img'){compressImg(x,960,src=>add({k:'img',src}))}
+      else{
+        toast('Загрузка файла…');
+        const ext=(x.name.split('.').pop()||'bin').slice(0,8);
+        const url=await uploadMediaBlob(x,ext);
+        const sz=x.size>1048576?(x.size/1048576).toFixed(1).replace('.',',')+' МБ':Math.max(1,Math.round(x.size/1024))+' КБ';
+        if(url)add({k:'file',fn:x.name,sz,src:url});
+        else{const r=new FileReader();r.onload=()=>add({k:'file',fn:x.name,sz,src:r.result});r.readAsDataURL(x)}
+      }
+      f.value='';
+    };f.click();
   }else if(a==='loc'){
     toast('Определяем GPS…');
-    if(navigator.geolocation)navigator.geolocation.getCurrentPosition(pos=>add({k:'loc',lat:pos.coords.latitude,lon:pos.coords.longitude,lbl:'Моё местоположение'}),()=>toast('Разрешите доступ к геолокации в браузере'),{timeout:6000});
-    else toast('Геолокация не поддерживается');
+    if(navigator.geolocation)navigator.geolocation.getCurrentPosition(pos=>add({k:'loc',lat:pos.coords.latitude,lon:pos.coords.longitude,lbl:'Моё местоположение'}),()=>toast('Нет доступа к GPS'),{timeout:6000});
   }else if(a==='user')contactPickerModal();
   else if(a==='poll')pollModal();
   else if(a==='gift'){if(cur.t==='s'||cur.t==='c')toast('Подарки доступны в личных чатах и группах');else shop()}
 }
 
 function newPackModal(){
-  sheet(`<div class="sh1"><h3>Новый пак стикеров</h3></div><input class="inp" id="pk-n" placeholder="Название пака (например, Мемы)"><input class="inp" id="pk-i" placeholder="Иконка пака (эмодзи)" value="✨"><button class="pbt" id="pk-go">Создать пак</button>`);
-  $('#pk-go').onclick=()=>{
-    const n=$('#pk-n').value.trim();if(!n)return toast('Введите название пака');
-    SK_PACKS.push({id:'pk_'+Date.now(),name:n,icon:$('#pk-i').value.trim()||'✨',items:[]});
-    activePackIdx=SK_PACKS.length-1;saveAll();csh();emp('s');if(CK==='pks')sp('pks',1);toast('Пак «'+n+'» создан');
-  };
+  sheet(`<div class="sh1"><h3>Новый пак стикеров</h3></div><input class="inp" id="pk-n" placeholder="Название пака"><input class="inp" id="pk-i" placeholder="Иконка (эмодзи)" value="✨"><button class="pbt" id="pk-go">Создать</button>`);
+  $('#pk-go').onclick=()=>{const n=$('#pk-n').value.trim();if(!n)return toast('Введите название');SK_PACKS.push({id:'pk_'+Date.now(),name:n,icon:$('#pk-i').value.trim()||'✨',items:[]});activePackIdx=SK_PACKS.length-1;saveAll();csh();emp('s');if(CK==='pks')sp('pks',1);toast('Пак создан')};
 }
-
 function stickerCreatorModal(){
   let skImg='';
-  sheet(`<div class="sh1"><h3>Добавить стикер в пак</h3></div>
-    <div style="text-align:center;margin-bottom:10px"><div id="sk-prev" style="width:104px;height:104px;margin:0 auto;border-radius:26px;background:var(--th);display:grid;place-items:center;font-size:56px;overflow:hidden">🦊</div></div>
-    <div class="pk-bar" id="sk-pkpick">${SK_PACKS.map((pk,i)=>`<button data-pi="${i}" class="${i===activePackIdx?'on':''}">${pk.icon} ${esc(pk.name)}</button>`).join('')}</div>
-    <button class="st" style="width:100%;margin-bottom:10px" id="sk-up">🖼 Выбрать фото из галереи</button>
-    <input class="inp" id="sk-em" placeholder="Или эмодзи" value="🦊"><input class="inp" id="sk-tx" placeholder="Подпись (необязательно)">
-    <button class="pbt" id="sk-save">Добавить в пак</button>`);
-  let pickIdx=activePackIdx;
-  $('#sk-pkpick').onclick=e=>{const b=e.target.closest('[data-pi]');if(!b)return;pickIdx=+b.dataset.pi;$$('#sk-pkpick button').forEach(x=>x.classList.toggle('on',x===b))};
+  sheet(`<div class="sh1"><h3>Добавить стикер</h3></div><div style="text-align:center;margin-bottom:10px"><div id="sk-prev" style="width:104px;height:104px;margin:0 auto;border-radius:26px;background:var(--th);display:grid;place-items:center;font-size:56px;overflow:hidden">🦊</div></div><div class="pk-bar" id="sk-pkpick">${SK_PACKS.map((pk,i)=>`<button data-pi="${i}" class="${i===activePackIdx?'on':''}">${pk.icon} ${esc(pk.name)}</button>`).join('')}</div><button class="st" style="width:100%;margin-bottom:10px" id="sk-up">🖼 Из галереи</button><input class="inp" id="sk-em" value="🦊"><input class="inp" id="sk-tx" placeholder="Подпись"><button class="pbt" id="sk-save">Сохранить</button>`);
+  let pickIdx=activePackIdx;$('#sk-pkpick').onclick=e=>{const b=e.target.closest('[data-pi]');if(!b)return;pickIdx=+b.dataset.pi;$$('#sk-pkpick button').forEach(x=>x.classList.toggle('on',x===b))};
   $('#sk-up').onclick=()=>{const f=$('#fi');f.accept='image/*';f.onchange=()=>{const x=f.files[0];if(!x)return;compressImg(x,260,src=>{skImg=src;$('#sk-prev').innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:contain">`});f.value=''};f.click()};
   $('#sk-em').oninput=e=>{if(!skImg)$('#sk-prev').textContent=e.target.value||'🦊'};
-  $('#sk-save').onclick=()=>{
-    const txt=$('#sk-tx').value.trim(),em=$('#sk-em').value.trim()||'🦊';let finalSrc=skImg;
-    if(!finalSrc){
-      const c=document.createElement('canvas');c.width=240;c.height=240;const x=c.getContext('2d');
-      x.font='128px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(em,120,txt?96:124);
-      if(txt){x.fillStyle='rgba(15,17,32,.86)';x.beginPath();x.roundRect(18,176,204,46,20);x.fill();x.fillStyle='#fff';x.font='bold 24px Onest,sans-serif';x.fillText(txt.slice(0,14),120,200)}
-      finalSrc=c.toDataURL('image/png');
-    }
-    SK_PACKS[pickIdx].items.unshift({src:finalSrc});activePackIdx=pickIdx;saveAll();csh();emp('s');toast('Стикер добавлен в пак!');
-  };
+  $('#sk-save').onclick=()=>{let s=skImg;if(!s){const c=document.createElement('canvas');c.width=240;c.height=240;const x=c.getContext('2d');x.font='128px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText($('#sk-em').value.trim()||'🦊',120,120);s=c.toDataURL('image/png')}SK_PACKS[pickIdx].items.unshift({src:s});activePackIdx=pickIdx;saveAll();csh();emp('s');toast('Стикер добавлен')};
 }
-
 function gifCreatorModal(){
   let gifSrc='';
-  sheet(`<div class="sh1"><h3>Добавить GIF</h3></div><button class="st" style="width:100%;margin-bottom:10px" id="gf-up">🎬 Загрузить .GIF</button><input class="inp" id="gf-tx" placeholder="Или текст для анимированной GIF"><input class="inp" id="gf-em" value="🌙"><button class="pbt" id="gf-save">Сохранить</button>`);
+  sheet(`<div class="sh1"><h3>Добавить GIF</h3></div><button class="st" style="width:100%;margin-bottom:10px" id="gf-up">🎬 Загрузить .GIF</button><input class="inp" id="gf-tx" placeholder="Или текст для GIF"><input class="inp" id="gf-em" value="🌙"><button class="pbt" id="gf-save">Сохранить</button>`);
   $('#gf-up').onclick=()=>{const f=$('#fi');f.accept='image/gif,image/*';f.onchange=()=>{const x=f.files[0];if(!x)return;const r=new FileReader();r.onload=()=>{gifSrc=r.result;toast('GIF загружен')};r.readAsDataURL(x);f.value=''};f.click()};
-  $('#gf-save').onclick=()=>{
-    if(!gifSrc){const t=esc($('#gf-tx').value.trim()||'LUNARN'),em=esc($('#gf-em').value.trim()||'🌙');gifSrc=mkSvgGif(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${ST.ac}"/><stop offset="100%" stop-color="${ST.ac2}"/></linearGradient></defs><rect width="220" height="120" fill="url(#g)"/><text x="110" y="56" text-anchor="middle" font-size="38">${em}<animateTransform attributeName="transform" type="scale" additive="sum" values="1;1.18;1" dur=".9s" repeatCount="indefinite"/></text><text x="110" y="96" text-anchor="middle" font-size="20" font-family="sans-serif" font-weight="bold" fill="#fff">${t}</text></svg>`)}
-    CUS_GIF.unshift({id:'cg_'+Date.now(),src:gifSrc});ls('lunarn_gif',JSON.stringify(CUS_GIF.slice(0,12)));csh();emp('g');toast('GIF сохранён');
-  };
+  $('#gf-save').onclick=()=>{if(!gifSrc){const t=esc($('#gf-tx').value.trim()||'LUNARN'),em=esc($('#gf-em').value.trim()||'🌙');gifSrc=mkSvgGif(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120"><rect width="220" height="120" fill="${ST.ac}"/><text x="110" y="56" text-anchor="middle" font-size="38">${em}</text><text x="110" y="96" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold">${t}</text></svg>`)}CUS_GIF.unshift({id:'cg_'+Date.now(),src:gifSrc});ls('lunarn_gif',JSON.stringify(CUS_GIF.slice(0,12)));csh();emp('g');toast('GIF сохранён')};
 }
 
 function prof(p){
-  const showPic=canSeeAvatar(p);
-  const title=dispName(p);
+  const showPic=canSeeAvatar(p),title=dispName(p),inC=isContact(p.u),blk=iBlocked(p.u);
   const bg=showPic?`background-image:url(${p.av})`:`background:linear-gradient(135deg,hsl(${p.h||240} 82% 60%),hsl(${(p.h||240)+50} 78% 48%))`;
   const ini=p.t=='s'?I('bm',42):(title==='Неизвестный'?'?':(title||'U').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase());
-  const roleLabel=p.t==='g'||p.t==='c'?`<span class="role-tag">${p.role==='owner'?'Владелец':p.role==='admin'?'Админ':'Участник'}</span>`:'';
-  const inC=isContact(p.u);
+  const pGifts=(p.m||[]).filter(m=>m.k==='gift'&&m.me);
+  const floatG=pGifts.length?`<span class="pf-float" style="top:16px;right:20%">${pGifts[pGifts.length-1].g}</span>`:'';
   $('#pf').innerHTML=`
-    <div class="top"><button class="ib gl" id="pc">${I('back')}</button><span></span><button class="ib gl" id="pe">${I('dots')}</button></div>
-    <div class="card gl"><div class="pav-hero" id="pf-hero">
-      <div class="pav-box" style="${bg}">${showPic?'':ini}<div class="pav-ov"><b style="font-size:22px">${esc(title)}</b><small style="opacity:.88">${esc(fmtU(p.u))} · ${esc(p.s||'')}</small></div></div>
-      <div class="pav-meta" style="text-align:center"><h2 style="font-size:22px">${esc(title)}${roleLabel}</h2><small style="color:var(--mu)">${esc(p.s||'')}</small></div>
-      <span class="pav-hint">${showPic?'Потяните вниз — фото 4:3':'Аватар скрыт настройками приватности'}</span>
+    <div class="pf-top"><button class="ib gl" id="pc">${I('back')}</button><button class="ib gl" id="pe">${I('dots')}</button></div>
+    <div class="card gl"><div class="pav-hero" id="pf-hero">${floatG}
+      <div class="pav-box" style="${bg}">${showPic?'':ini}<div class="pav-ov"><b style="font-size:22px">${esc(title)}</b><small style="opacity:.88">${esc(fmtU(p.u))} · ${esc(formatLastSeen(p))}</small></div></div>
+      <div class="pav-meta" style="text-align:center"><h2 style="font-size:22px">${esc(title)}</h2><small style="color:var(--mu)">${esc(formatLastSeen(p))}</small></div>
+      <span class="pav-hint">${showPic?'Потяните вниз — фото 4:3':'Аватар скрыт'}</span>
     </div></div>
     <div class="acts">
-      <button class="gl" data-x="msg">${I('chat',22)}Написать</button>
-      <button class="gl" data-x="call">${I('phone',22)}Звонок</button>
-      <button class="gl" data-x="vid">${I('video',22)}Видео</button>
+      <button class="gl" data-x="msg">${I('chat',20)}Чат</button>
+      <button class="gl" data-x="call" ${p.t==='s'||isAnyBlocked(p.u)?'disabled style="opacity:.4"':''}>${I('phone',20)}Звонок</button>
+      <button class="gl" data-x="vid" ${p.t==='s'||isAnyBlocked(p.u)?'disabled style="opacity:.4"':''}>${I('video',20)}Видео</button>
+      <button class="gl" data-x="gift" ${p.t==='s'||p.t==='c'?'disabled style="opacity:.4"':''}>${I('gift',20)}Подарок</button>
     </div>
     ${p.t==='u'?`<button class="pbt" style="margin:0 0 12px;${inC?'background:var(--th);color:var(--tx)':''}" data-x="ctog">${inC?'✓ В контактах (убрать)':'+ Добавить в контакты'}</button>`:''}
     <div class="card gl">
-      ${p.ph&&inC?`<div class="inf">${esc(p.ph)}<small>Телефон</small></div>`:''}
-      <div class="inf" style="cursor:pointer" data-copy="${esc(fmtU(p.u))}">${esc(fmtU(p.u))}<small>Юзернейм (нажмите для копирования)</small></div>
-      ${p.b?`<div class="inf">${esc(p.b)}<small>О себе</small></div>`:''}
+      ${p.ph&&inC&&!isAnyBlocked(p.u)?`<div class="inf">${esc(p.ph)}<small>Телефон</small></div>`:''}
+      <div class="inf" style="cursor:pointer" data-copy="${esc(fmtU(p.u))}">${esc(fmtU(p.u))}<small>Юзернейм</small></div>
+      ${p.b&&!isAnyBlocked(p.u)?`<div class="inf">${esc(p.b)}<small>О себе</small></div>`:''}
     </div>
     <div class="card gl" id="pf-showcase"></div>
-    ${p.t!='s'&&p.t!='c'?`<div class="card gl"><button class="inf btn" data-x="gift"><span>🌙 Отправить подарок</span>${CH}</button><button class="inf btn" data-x="mute"><span>${p.mute?'🔔 Включить звук':'🔕 Отключить звук'}</span>${CH}</button>${p.t==='u'?`<button class="inf btn rd" style="color:#ff5470" data-x="blk">${p.blk?'Разблокировать':'Заблокировать'}</button>`:''}</div>`:''}`;
+    ${p.t!='s'&&p.t!='c'?`<div class="card gl"><button class="inf btn" data-x="mute"><span>${p.mute?'🔔 Включить звук':'🔕 Отключить звук'}</span>${CH}</button>${p.t==='u'?`<button class="inf btn rd" style="color:#ff5470" data-x="blk">${blk?'Разблокировать':'Заблокировать'}</button>`:''}</div>`:''}`;
   $('#pf').dataset.id=p.id;$('#pf').classList.add('on');$('#pf').scrollTop=0;
   bindExpandAvatar($('#pf'),$('#pf-hero'));
   renderProfShowcase($('#pf-showcase'),p.m||[],p.u,false);
 }
 
 let cs=null,callToneInt=null,callTimeout=null,callLocalStream=null,callRemoteStream=null,callSec=0,callTarget=null,callFacing='user',pc=null,pendingOffer=null,iceQueue=[],callIsVid=false,curCallId='';
-const RTC_CFG={
-  iceServers:[
-    {urls:'stun:stun.l.google.com:19302'},
-    {urls:'stun:stun.relay.metered.ca:80'},
-    {urls:'turn:global.relay.metered.ca:80',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},
-    {urls:'turn:global.relay.metered.ca:443',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},
-    {urls:'turn:global.relay.metered.ca:443?transport=tcp',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'}
-  ]
-};
+const RTC_CFG={iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun.relay.metered.ca:80'},{urls:'turn:global.relay.metered.ca:80',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},{urls:'turn:global.relay.metered.ca:443',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'},{urls:'turn:global.relay.metered.ca:443?transport=tcp',username:'e8dd65b92f62d3e365b90700',credential:'32622110796a0762'}]};
 
 function playRemoteAudio(){
   const ca=$('#call-audio');if(!ca||!ca.srcObject)return;
   ca.muted=false;ca.volume=1;
-  ca.play().catch(()=>{
-    toast('Нажмите на экран, чтобы включить звук 🔊');
-    $('#call').addEventListener('click',()=>ca.play().catch(()=>{}),{once:true});
-  });
+  ca.play().catch(()=>{toast('Нажмите на экран, чтобы включить звук 🔊');$('#call').addEventListener('click',()=>ca.play().catch(()=>{}),{once:true})});
 }
-function unlockCallAudio(){playRemoteAudio()}
-
 function playTone(incoming){
   if(!ST.snd)return;
-  try{
-    const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();
-    if(incoming){
-      o.type='sine';o.frequency.setValueAtTime(587,a.currentTime);o.frequency.setValueAtTime(784,a.currentTime+.16);
-      g.gain.setValueAtTime(.04,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.45);
-      o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.46);
-    }else{
-      o.frequency.value=425;g.gain.value=.025;
-      o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.55);
-    }
-    setTimeout(()=>a.close(),650);
-  }catch(e){}
+  try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(incoming?587:425,a.currentTime);if(incoming)o.frequency.setValueAtTime(784,a.currentTime+.16);g.gain.setValueAtTime(.035,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.48);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.5);setTimeout(()=>a.close(),620)}catch(e){}
 }
-
 function startCallTimer(){
-  if(cs)return;
-  clearInterval(callToneInt);clearTimeout(callTimeout);
-  const e=$('#cs');if(!e)return;
-  e.textContent='00:00';
+  if(cs)return;clearInterval(callToneInt);clearTimeout(callTimeout);
+  const e=$('#cs');if(!e)return;e.textContent='00:00';
   cs=setInterval(()=>{callSec++;const el=$('#cs');if(el)el.textContent=String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0')},1000);
 }
-
 async function getSafeMedia(wantVid){
   try{return await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:wantVid?{facingMode:callFacing}:false})}
-  catch(e){
-    try{return await navigator.mediaDevices.getUserMedia({audio:true,video:false})}
-    catch(e2){return null}
-  }
+  catch(e){try{return await navigator.mediaDevices.getUserMedia({audio:true,video:false})}catch(e2){return null}}
 }
-
+function makeDraggable(el){
+  if(!el)return;let dx=0,dy=0,drag=false;
+  el.onpointerdown=e=>{drag=true;el.setPointerCapture(e.pointerId);const r=el.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;el.style.transition='none';el.style.right='auto'};
+  el.onpointermove=e=>{if(!drag)return;el.style.left=Math.max(8,Math.min(innerWidth-el.offsetWidth-8,e.clientX-dx))+'px';el.style.top=Math.max(12,Math.min(innerHeight-el.offsetHeight-12,e.clientY-dy))+'px'};
+  el.onpointerup=()=>{if(!drag)return;drag=false;el.style.transition='left .25s ease,top .25s ease';const r=el.getBoundingClientRect();el.style.left=(r.left+r.width/2<innerWidth/2?14:innerWidth-r.width-14)+'px'};
+}
 function setupPeer(targetU,keepQueue){
   if(pc){try{pc.close()}catch(e){}}
   if(!keepQueue)iceQueue=[];
-  callRemoteStream=new MediaStream();
-  pc=new RTCPeerConnection(RTC_CFG);
-  pc.onicecandidate=e=>{
-    if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',callId:curCallId,sig:'ice',fromU:me.u,candidate:e.candidate.toJSON()}).catch(err=>console.warn('ice push',err));
-  };
+  callRemoteStream=new MediaStream();pc=new RTCPeerConnection(RTC_CFG);
+  pc.onicecandidate=e=>{if(e.candidate)pushEventToTarget(targetU,{type:'webrtc',callId:curCallId,sig:'ice',fromU:me.u,candidate:e.candidate.toJSON()}).catch(err=>console.warn('ice',err))};
   pc.ontrack=e=>{
     if(!callRemoteStream.getTracks().includes(e.track))callRemoteStream.addTrack(e.track);
-    if(e.track.kind==='audio'){
-      const ca=$('#call-audio');
-      if(ca){
-        ca.srcObject=new MediaStream(callRemoteStream.getAudioTracks());
-        playRemoteAudio();
-      }
-    }
-    if(e.track.kind==='video'){
-      const remV=$('#call-remote');
-      if(remV){
-        remV.srcObject=new MediaStream(callRemoteStream.getVideoTracks());
-        remV.muted=true;
-        remV.classList.add('vis');
-        remV.play().catch(()=>{});
-        e.track.onended=()=>remV.classList.remove('vis');
-      }
-    }
+    if(e.track.kind==='audio'){const ca=$('#call-audio');if(ca){ca.srcObject=new MediaStream(callRemoteStream.getAudioTracks());playRemoteAudio()}}
+    if(e.track.kind==='video'){const rv=$('#call-remote');if(rv){rv.srcObject=new MediaStream(callRemoteStream.getVideoTracks());rv.muted=true;rv.classList.add('vis');rv.play().catch(()=>{});e.track.onended=()=>rv.classList.remove('vis')}}
   };
   pc.oniceconnectionstatechange=()=>{
-    if(!pc)return;
-    const st=pc.iceConnectionState;
+    if(!pc)return;const st=pc.iceConnectionState;
     if(st==='connected'||st==='completed'){startCallTimer();playRemoteAudio()}
     else if(st==='failed'){toast('Сбой соединения');endCall(false)}
   };
-  if(callLocalStream&&callLocalStream.getTracks().length){
-    callLocalStream.getTracks().forEach(t=>pc.addTrack(t,callLocalStream));
-  }else{
-    pc.addTransceiver('audio',{direction:'recvonly'});
-    if(callIsVid)pc.addTransceiver('video',{direction:'recvonly'});
-  }
+  if(callLocalStream&&callLocalStream.getAudioTracks().length){
+    callLocalStream.getAudioTracks().forEach(t=>{t.enabled=true;pc.addTrack(t,callLocalStream)});
+    callLocalStream.getVideoTracks().forEach(t=>pc.addTrack(t,callLocalStream));
+  }else{pc.addTransceiver('audio',{direction:'recvonly'});if(callIsVid)pc.addTransceiver('video',{direction:'recvonly'})}
   return pc;
 }
 
 async function call(p,isVid,incoming,offer,inCallId){
-  if(p.t==='s')return toast('Нельзя позвонить в Избранное');
+  if(!p||p.t==='s')return toast('В «Избранное» звонить нельзя');
+  if(p.t==='u'&&isAnyBlocked(p.u))return toast('Звонок недоступен');
   callTarget=p;callSec=0;callFacing='user';callIsVid=!!isVid;pendingOffer=offer||null;
   curCallId=inCallId||('call_'+Date.now()+'_'+Math.random().toString(36).slice(2,6));
-  if(!incoming)unlockCallAudio();
-  const c=$('#call');
-  const showPic=canSeeAvatar(p);
-  const bg=showPic?`background-image:url(${p.av})`:`background:linear-gradient(155deg,hsl(${p.h||240} 70% 35%),#070912)`;
-  c.innerHTML=`
-    <div id="call-bg" style="${bg}"></div>
-    <video id="call-remote" autoplay playsinline muted></video>
-    <video id="call-self" autoplay playsinline muted></video>
-    <div class="call-top">
-      <div class="call-ring-wrap"><span class="call-pulse"></span><span class="call-pulse"></span>${av(p,112)}</div>
-      <h2 style="font-size:26px">${esc(dispName(p))}</h2>
-      <p id="cs" style="color:rgba(255,255,255,.85);margin-top:4px">${incoming?(isVid?'Входящий видеозвонок…':'Входящий звонок…'):(isVid?'Видеовызов…':'Вызов…')}</p>
-      <div class="call-qual">🔒 WebRTC · Живой звук и видео</div>
-    </div>
-    <div class="call-bot">
-      ${incoming?`<div class="cx" id="call-in-btns">
-        <button class="cbt" id="c-acc" style="background:#34d399;width:68px;height:68px" aria-label="Принять">${I('phone',28)}</button>
-        <button class="cbt end" id="c-rej" style="width:68px;height:68px" aria-label="Отклонить">${I('phone',28)}</button>
-      </div>`:''}
-      <div class="cx" id="call-act-btns" style="${incoming?'display:none':''}">
-        <button class="cbt" id="cmic">${I('mic',24)}</button>
-        <button class="cbt${isVid?' on':''}" id="cvid">${I('video',24)}</button>
-        <button class="cbt" id="cflip" aria-label="Перевернуть камеру">${I('flip',24)}</button>
-        <button class="cbt end" id="ce">${I('phone',24)}</button>
-      </div>
-    </div>`;
-  c.classList.add('on');
+  const c=$('#call'),bg=canSeeAvatar(p)?`background-image:url(${p.av})`:`background:linear-gradient(155deg,hsl(${p.h||240} 70% 35%),#070912)`;
+  c.innerHTML=`<div id="call-bg" style="${bg}"></div><video id="call-remote" autoplay playsinline muted></video><video id="call-self" autoplay playsinline muted></video>
+    <div class="call-top"><div class="call-ring-wrap"><span class="call-pulse"></span><span class="call-pulse"></span>${av(p,112)}</div><h2 style="font-size:26px">${esc(dispName(p))}</h2><p id="cs" style="color:rgba(255,255,255,.85);margin-top:4px">${incoming?(isVid?'Входящий видеозвонок…':'Входящий звонок…'):(isVid?'Видеовызов…':'Вызов…')}</p><div class="call-qual">🔒 WebRTC · HD Audio & Video</div></div>
+    <div class="call-bot">${incoming?`<div class="cx" id="call-in-btns"><button class="cbt" id="c-acc" style="background:#34d399;width:68px;height:68px">${I('phone',28)}</button><button class="cbt end" id="c-rej" style="width:68px;height:68px">${I('phone',28)}</button></div>`:''}
+    <div class="cx" id="call-act-btns" style="${incoming?'display:none':''}"><button class="cbt" id="cmic">${I('mic',24)}</button><button class="cbt${isVid?' on':''}" id="cvid">${I('video',24)}</button><button class="cbt" id="cflip">${I('flip',24)}</button><button class="cbt end" id="ce">${I('phone',24)}</button></div></div>`;
+  c.classList.add('on');makeDraggable($('#call-self'));
   playTone(incoming);callToneInt=setInterval(()=>playTone(incoming),1900);
   clearTimeout(callTimeout);callTimeout=setTimeout(()=>{if(!cs&&callTarget){toast('Нет ответа');endCall(false)}},30000);
-
   if(!incoming){
     callLocalStream=await getSafeMedia(isVid);
-    if(!callLocalStream)toast('Микрофон не найден — режим прослушивания');
+    if(!callLocalStream)toast('Микрофон недоступен — режим прослушивания');
     else if(isVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
-    const peer=setupPeer(p.u,false);
-    const off=await peer.createOffer();
-    await peer.setLocalDescription(off);
+    const peer=setupPeer(p.u,false),off=await peer.createOffer();await peer.setLocalDescription(off);
     await pushEventToTarget(p.u,{type:'call',callId:curCallId,ts:Date.now(),vid:isVid,offer:off,sender:{n:me.n,u:me.u,h:me.h,av:me.av}}).catch(()=>{toast('Ошибка вызова');endCall(true)});
   }
 }
 
 async function acceptIncomingCall(){
   if(!callTarget||!pendingOffer)return;
-  unlockCallAudio();
   clearInterval(callToneInt);clearTimeout(callTimeout);
-  $('#call-in-btns').style.display='none';
-  $('#call-act-btns').style.display='flex';
-  $('#cs').textContent='Соединение…';
+  $('#call-in-btns').style.display='none';$('#call-act-btns').style.display='flex';$('#cs').textContent='Соединение…';
   callLocalStream=await getSafeMedia(callIsVid);
-  if(!callLocalStream)toast('Микрофон не найден — вы слышите собеседника');
+  if(!callLocalStream)toast('Микрофон недоступен');
   else if(callIsVid&&callLocalStream.getVideoTracks().length){$('#call-self').srcObject=callLocalStream;$('#call-self').style.display='block'}
-  const peer=setupPeer(callTarget.u,true);
-  await peer.setRemoteDescription(new RTCSessionDescription(pendingOffer));
+  const peer=setupPeer(callTarget.u,true),off=pendingOffer;pendingOffer=null;
+  await peer.setRemoteDescription(new RTCSessionDescription(off));
   for(const cand of iceQueue)await peer.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
-  iceQueue=[];
-  pendingOffer=null;
-  const ans=await peer.createAnswer();
-  await peer.setLocalDescription(ans);
+  iceQueue=[];const ans=await peer.createAnswer();await peer.setLocalDescription(ans);
   await pushEventToTarget(callTarget.u,{type:'webrtc',callId:curCallId,sig:'answer',fromU:me.u,answer:ans}).catch(()=>{});
 }
 
 async function handleWebRTCSignal(ev){
   if(ev.callId&&curCallId&&ev.callId!==curCallId)return;
-  if(ev.sig==='hangup'||ev.sig==='reject'){
-    if(callTarget)toast(ev.sig==='reject'?'Вызов отклонён':'Звонок завершён');
-    endCall(true);return;
-  }
+  if(ev.sig==='hangup'||ev.sig==='reject'){if(callTarget)toast(ev.sig==='reject'?'Вызов отклонён':'Звонок завершён');endCall(true);return}
   if(ev.sig==='vid_off'){const rv=$('#call-remote');if(rv)rv.classList.remove('vis');return}
-  if(!pc){
-    if(ev.sig==='ice'&&ev.candidate)iceQueue.push(ev.candidate);
-    return;
-  }
+  if(!pc){if(ev.sig==='ice'&&ev.candidate)iceQueue.push(ev.candidate);return}
   if(ev.sig==='offer'&&ev.offer){
     await pc.setRemoteDescription(new RTCSessionDescription(ev.offer)).catch(()=>{});
-    const ans=await pc.createAnswer();
-    await pc.setLocalDescription(ans);
+    const ans=await pc.createAnswer();await pc.setLocalDescription(ans);
     await pushEventToTarget(callTarget.u,{type:'webrtc',callId:curCallId,sig:'answer',fromU:me.u,answer:ans}).catch(()=>{});
   }else if(ev.sig==='answer'&&ev.answer){
     await pc.setRemoteDescription(new RTCSessionDescription(ev.answer)).catch(()=>{});
     for(const cand of iceQueue)await pc.addIceCandidate(new RTCIceCandidate(cand)).catch(()=>{});
-    iceQueue=[];
-    clearInterval(callToneInt);clearTimeout(callTimeout);
-    $('#cs').textContent='Соединение…';
-    const cid=curCallId;
-    setTimeout(()=>{if(curCallId===cid&&callTarget&&!cs){toast('Не удалось соединиться');endCall(false)}},20000);
+    iceQueue=[];clearInterval(callToneInt);clearTimeout(callTimeout);$('#cs').textContent='Соединение…';
+    const cid=curCallId;setTimeout(()=>{if(curCallId===cid&&callTarget&&!cs){toast('Не удалось соединиться');endCall(false)}},20000);
   }else if(ev.sig==='ice'&&ev.candidate){
     if(pc.remoteDescription)await pc.addIceCandidate(new RTCIceCandidate(ev.candidate)).catch(()=>{});
     else iceQueue.push(ev.candidate);
@@ -2379,23 +2143,16 @@ async function handleWebRTCSignal(ev){
 
 async function toggleCallVideo(enable){
   const selfV=$('#call-self');if(!selfV)return;
-  if(callLocalStream){
-    const oldVt=callLocalStream.getVideoTracks()[0];
-    if(oldVt){oldVt.stop();callLocalStream.removeTrack(oldVt)}
-  }
+  if(callLocalStream){const old=callLocalStream.getVideoTracks()[0];if(old){old.stop();callLocalStream.removeTrack(old)}}
   if(enable){
     try{
-      const vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:callFacing}});
-      const nt=vs.getVideoTracks()[0];
+      const vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:callFacing}}),nt=vs.getVideoTracks()[0];
       if(!callLocalStream)callLocalStream=new MediaStream();
-      callLocalStream.addTrack(nt);
-      selfV.srcObject=callLocalStream;selfV.style.display='block';
+      callLocalStream.addTrack(nt);selfV.srcObject=callLocalStream;selfV.style.display='block';
       if(pc&&callTarget){
         const snd=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
-        if(snd)await snd.replaceTrack(nt);
-        else pc.addTrack(nt,callLocalStream);
-        const off=await pc.createOffer();
-        await pc.setLocalDescription(off);
+        if(snd)await snd.replaceTrack(nt);else pc.addTrack(nt,callLocalStream);
+        const off=await pc.createOffer();await pc.setLocalDescription(off);
         await pushEventToTarget(callTarget.u,{type:'webrtc',callId:curCallId,sig:'offer',fromU:me.u,offer:off}).catch(()=>{});
       }
     }catch(e){toast('Камера недоступна')}
@@ -2413,8 +2170,7 @@ function endCall(remoteEnded){
   if(!remoteEnded&&tgt)pushEventToTarget(tgt.u,{type:'webrtc',callId:cid,sig:wasMiss?'reject':'hangup',fromU:me.u}).catch(()=>{});
   if(pc){try{pc.close()}catch(e){}pc=null}
   if(callLocalStream){callLocalStream.getTracks().forEach(t=>t.stop());callLocalStream=null}
-  callRemoteStream=null;
-  const ca=$('#call-audio');if(ca){ca.pause();ca.srcObject=null}
+  callRemoteStream=null;const ca=$('#call-audio');if(ca){ca.pause();ca.srcObject=null}
   $('#call').classList.remove('on');
   if(tgt){const dur=callSec?String(Math.floor(callSec/60)).padStart(2,'0')+':'+String(callSec%60).padStart(2,'0'):'';LG.unshift([tgt.id,wasMiss?'miss':'out',Date.now(),dur,tgt.n]);saveAll();if(tabs===2)logs()}
 }
@@ -2423,34 +2179,23 @@ $('#nw').innerHTML=I('plus');$('#addc').innerHTML=I('plus');$('#si').innerHTML=I
 $('#bk').innerHTML=I('back');$('#hc').innerHTML=I('phone');$('#hx').innerHTML=I('dots');
 $('#at').innerHTML=I('clip');$('#eb').innerHTML=I('smile');$('#dn').innerHTML=I('down');
 $('#rx').innerHTML=I('trash');$('#rs').innerHTML=I('send',20);$('#csx').innerHTML=I('x',18);
-$('#vr-cancel').innerHTML=I('trash',22);$('#vr-send').innerHTML=I('send',24);
-$('#vr-flip').innerHTML=I('flip',22);$('#vr-torch').innerHTML=I('bolt',22);
+$('#vr-send').innerHTML=I('up',26);$('#vr-flip').innerHTML=I('flip',20);$('#vr-torch').innerHTML=I('bolt',20);$('#vr-pause').innerHTML=I('pause',18);
 
 const EM=[...'😀😂🥹😍😘😎🤔😮😢😡🥳🤝👍👏🙏💪🔥✨❤️💜💎🎉🚀🌹☕🍕🎂🐱🌈🌙⭐😴🤩🥶🤯🙈💯👀'.match(/\p{Extended_Pictographic}\ufe0f?/gu)];
 function emp(t){
-  $('#em').dataset.t=t;
-  let extra='',grid='';
-  if(t==='e'){
-    grid=`<div class="eg">${EM.map(e=>`<button data-val="${e}">${e}</button>`).join('')}</div>`;
-  }else if(t==='s'){
-    const pk=SK_PACKS[activePackIdx]||SK_PACKS[0];
-    extra=`<div class="pk-bar">${SK_PACKS.map((p,i)=>`<button data-pi="${i}" class="${i===activePackIdx?'on':''}">${p.icon} ${esc(p.name)}</button>`).join('')}<button id="new-pk" style="color:var(--ac)">+ Пак</button></div>`;
-    grid=`<div class="eg sk">${pk.items.map((it,i)=>it.src?`<button data-sksrc="${i}"><img src="${it.src}"></button>`:`<button data-val="${it.e}">${it.e}</button>`).join('')}</div>`;
-  }else{
-    const all=[...CUS_GIF,...BUILTIN_GIFS];
-    grid=`<div class="eg gf">${all.map(g=>`<button data-gif="${g.src}"><img src="${g.src}"></button>`).join('')}</div>`;
-  }
-  const addBtn=t==='s'?`<button class="cr-btn" id="new-sk">+ Стикер</button>`:t==='g'?`<button class="cr-btn" id="new-gf">+ GIF</button>`:'';
-  $('#em').innerHTML=`<div class="et"><button data-t="e" class="${t=='e'?'on':''}">Эмодзи</button><button data-t="s" class="${t=='s'?'on':''}">Стикеры</button><button data-t="g" class="${t=='g'?'on':''}">GIF</button>${addBtn}</div>${extra}${grid}`;
+  $('#em').dataset.t=t;let extra='',grid='';
+  if(t==='e')grid=`<div class="eg">${EM.map(e=>`<button data-val="${e}">${e}</button>`).join('')}</div>`;
+  else if(t==='s'){const pk=SK_PACKS[activePackIdx]||SK_PACKS[0];extra=`<div class="pk-bar">${SK_PACKS.map((p,i)=>`<button data-pi="${i}" class="${i===activePackIdx?'on':''}">${p.icon} ${esc(p.name)}</button>`).join('')}<button id="new-pk" style="color:var(--ac)">+ Пак</button></div>`;grid=`<div class="eg sk">${pk.items.map((it,i)=>it.src?`<button data-sksrc="${i}"><img src="${it.src}"></button>`:`<button data-val="${it.e}">${it.e}</button>`).join('')}</div>`}
+  else grid=`<div class="eg gf">${[...CUS_GIF,...BUILTIN_GIFS].map(g=>`<button data-gif="${g.src}"><img src="${g.src}"></button>`).join('')}</div>`;
+  $('#em').innerHTML=`<div class="et"><button data-t="e" class="${t=='e'?'on':''}">Эмодзи</button><button data-t="s" class="${t=='s'?'on':''}">Стикеры</button><button data-t="g" class="${t=='g'?'on':''}">GIF</button>${t==='s'?`<button class="cr-btn" id="new-sk">+ Стикер</button>`:t==='g'?`<button class="cr-btn" id="new-gf">+ GIF</button>`:''}</div>${extra}${grid}`;
 }
 emp('e');
 
 $('#thbtn').onclick=()=>{ST.theme=ST.theme=='dark'?'light':'dark';ap();toast(ST.theme=='dark'?'Тёмная тема':'Светлая тема')};
-$('#nw').onclick=newChatModal;$('#addc').onclick=newChatModal;
-$('#q').oninput=list;
+$('#nw').onclick=newChatModal;$('#addc').onclick=newChatModal;$('#q').oninput=list;
 $('#fc').onclick=e=>{const b=e.target.closest('button');if(!b)return;fl=b.dataset.f;$$('#fc button').forEach(x=>x.classList.toggle('on',x==b));list()};
 $('#cl').onclick=e=>{const r=e.target.closest('.row');if(r)open(r.dataset.id)};
-$('#lg').onclick=e=>{const r=e.target.closest('.row');if(!r)return;const l=LG[r.dataset.c];const p=P.find(x=>x.id===l[0]);if(p)call(p,false)};
+$('#lg').onclick=e=>{const r=e.target.closest('.row');if(!r)return;const p=P.find(x=>x.id===LG[r.dataset.c][0]);if(p)call(p,false)};
 $('#bk').onclick=()=>{$('#chat').classList.remove('open');cur=null;list()};
 $('#hp').onclick=()=>prof(cur);$('#hc').onclick=()=>call(cur,false);
 $('#hx').onclick=e=>{
@@ -2461,22 +2206,18 @@ $('#hx').onclick=e=>{
     ['Поиск по чату','search',()=>{$('#sq').style.display='flex';$('#csi').focus()}],
     ['Оформление','pal',()=>{go(3);sp('app')}],
     [cur.mute?'Включить звук':'Без звука','vol',()=>{cur.mute=!cur.mute;list();saveAll()}],
-    ...(cur.t==='u'||cur.t==='s'||cur.role==='owner'?[['Очистить историю','trash',()=>{cur.m=cur.m.filter(m=>m.k==='gift');pin();drawMsgs();list();saveAll();toast('Сообщения очищены (подарки сохранены)')},1]]:[])
+    ...(cur.t==='u'||cur.t==='s'||cur.role==='owner'?[['Очистить историю','trash',()=>{cur.m=cur.m.filter(m=>m.k==='gift');pin();drawMsgs();list();saveAll();toast('История очищена')},1]]:[])
   ]);
 };
 $('#pn').onclick=()=>jump($('#pn').dataset.g);
-$('#cb').onclick=()=>{cur.mute=!cur.mute;$('#cb').textContent=cur.mute?'Включить звук':'Отключить звук';list();saveAll()};
+$('#cb').onclick=()=>{if(cur.t==='u'&&iBlocked(cur.u)){toggleBlockUser(cur.u);return}cur.mute=!cur.mute;updateComposerLock();list();saveAll()};
 $('#in').oninput=()=>{ui();auto();sendTypingState(!!$('#in').value.trim())};
 $('#in').onkeydown=e=>{if(e.key=='Enter'&&!e.shiftKey&&ST.ent&&matchMedia('(pointer:fine)').matches){e.preventDefault();send()}};
-$('#at').onclick=attach;
-$('#eb').onclick=()=>{const e=$('#em');e.style.display=e.style.display=='block'?'none':'block'};
+$('#at').onclick=attach;$('#eb').onclick=()=>{const e=$('#em');e.style.display=e.style.display=='block'?'none':'block'};
 $('#em').onclick=e=>{
   const b=e.target.closest('button');if(!b)return;
-  if(b.id==='new-sk')return stickerCreatorModal();
-  if(b.id==='new-pk')return newPackModal();
-  if(b.id==='new-gf')return gifCreatorModal();
-  if(b.dataset.pi!=null){activePackIdx=+b.dataset.pi;return emp('s')}
-  if(b.dataset.t)return emp(b.dataset.t);
+  if(b.id==='new-sk')return stickerCreatorModal();if(b.id==='new-pk')return newPackModal();if(b.id==='new-gf')return gifCreatorModal();
+  if(b.dataset.pi!=null){activePackIdx=+b.dataset.pi;return emp('s')}if(b.dataset.t)return emp(b.dataset.t);
   if(b.dataset.sksrc!=null){add({k:'st',src:SK_PACKS[activePackIdx].items[+b.dataset.sksrc].src});$('#em').style.display='none'}
   else if(b.dataset.gif){add({k:'gif',src:b.dataset.gif});$('#em').style.display='none'}
   else if($('#em').dataset.t==='s'){add({k:'st',e:b.dataset.val});$('#em').style.display='none'}
@@ -2490,87 +2231,58 @@ $('#sc').onclick=e=>{
   else if(t.dataset.sendct){const u=USERS[t.dataset.sendct];csh();if(u)add({k:'ct',cn:u.n,cu:u.u})}
   else if(t.classList.contains('gi')){gsel=+t.dataset.i;$$('.gi').forEach(b=>b.classList.toggle('sel',b==t));const g=G[gsel],b=$('#gs');b.disabled=moons<g[2];b.textContent=moons<g[2]?'Не хватает 🌙':`Отправить за 🌙 ${g[2]}`}
   else if(t.id==='ganon'){giftAnon=!giftAnon;t.classList.toggle('on',giftAnon)}
-  else if(t.id==='gs'){const g=G[gsel],gt=$('#gtxt').value.trim();moons-=g[2];csh();add({k:'gift',g:g[0],gn:g[1],gp:g[2],gt,anon:giftAnon,a:me.n});burst()}
-  else if(t.id==='tpu'){moons+=100;saveAll();$('#bal').textContent='🌙 '+moons;toast('+100 🌙 на баланс');const s=$('.gi.sel');if(s)s.click()}
-  else if(t.dataset.f){const p=P.find(x=>x.id===t.dataset.f);add(Object.assign({},fm,{pin:0,re:0,fw:dispName(cur)}),p);csh();toast('Переслано: '+dispName(p))}
+  else if(t.id==='gs'){const g=G[gsel],gt=$('#gtxt').value.trim();moons-=g[2];csh();add({k:'gift',g:g[0],gn:g[1],gp:g[2],gt,anon:giftAnon,a:me.n});playGiftAnim(g[0],'Подарок отправлен!')}
+  else if(t.id==='tpu'){moons+=100;saveAll();$('#bal').textContent='🌙 '+moons;toast('+100 🌙');const s=$('.gi.sel');if(s)s.click()}
+  else if(t.dataset.f){const p=P.find(x=>x.id===t.dataset.f);add(Object.assign({},fm,{pin:0,re:0,fw:dispName(cur),fwu:cleanU(cur.u)}),p);csh();toast('Переслано: '+dispName(p))}
 };
 
 let lpTimer=null,lpX=0,lpY=0,lpFired=0,lastTapT=0,lastTapId=null;
-$('#ms').addEventListener('pointerdown',e=>{
-  const w=e.target.closest('.mw');if(!w||!cur||e.button===2)return;
-  lpFired=0;lpX=e.clientX;lpY=e.clientY;w.classList.add('holding');
-  lpTimer=setTimeout(()=>{lpFired=1;w.classList.remove('holding');const m=cur.m.find(x=>x.id==w.dataset.id);if(m)openSpotlight(w,m)},400);
-});
-$('#ms').addEventListener('pointermove',e=>{
-  if(lpTimer&&Math.hypot(e.clientX-lpX,e.clientY-lpY)>10){clearTimeout(lpTimer);lpTimer=null;const h=$('#ms .holding');if(h)h.classList.remove('holding')}
-});
+$('#ms').addEventListener('pointerdown',e=>{const w=e.target.closest('.mw');if(!w||!cur||e.button===2)return;lpFired=0;lpX=e.clientX;lpY=e.clientY;w.classList.add('holding');lpTimer=setTimeout(()=>{lpFired=1;w.classList.remove('holding');const m=cur.m.find(x=>x.id==w.dataset.id);if(m)openSpotlight(w,m)},400)});
+$('#ms').addEventListener('pointermove',e=>{if(lpTimer&&Math.hypot(e.clientX-lpX,e.clientY-lpY)>10){clearTimeout(lpTimer);lpTimer=null;const h=$('#ms .holding');if(h)h.classList.remove('holding')}});
 $('#ms').addEventListener('pointerup',e=>{
   clearTimeout(lpTimer);lpTimer=null;const h=$('#ms .holding');if(h)h.classList.remove('holding');
-  if(lpFired||e.target.closest('button,.rq,.rc,.po,.vp,.wv-wrap,.gf-btn,.gf-open,.vnote-wrap,.ct-open,.mention,.an,[data-openimg]'))return;
+  if(lpFired||e.target.closest('button,.rq,.rc,.po,.vp,.wv-wrap,.gf-btn,.gf-open,.vnote-wrap,.ct-open,.file-dl,.fw,.mention,.an,[data-openimg]'))return;
   const w=e.target.closest('.mw');if(!w||!ST.dblr)return;
   const now=Date.now(),id=w.dataset.id;
-  if(id===lastTapId&&now-lastTapT<330){
-    lastTapT=0;lastTapId=null;const m=cur.m.find(x=>x.id==id);
-    if(m){rxn(m,ST.dblE||'❤️');popEmoji(e.clientX,e.clientY,ST.dblE||'❤️');if(ST.vib)try{navigator.vibrate(15)}catch(err){}drawMsgs()}
-  }else{lastTapT=now;lastTapId=id}
+  if(id===lastTapId&&now-lastTapT<330){lastTapT=0;lastTapId=null;const m=cur.m.find(x=>x.id==id);if(m){rxn(m,ST.dblE||'❤️');popEmoji(e.clientX,e.clientY,ST.dblE||'❤️');if(ST.vib)try{navigator.vibrate(15)}catch(err){}drawMsgs()}}
+  else{lastTapT=now;lastTapId=id}
 });
 $('#ms').addEventListener('contextmenu',e=>{const w=e.target.closest('.mw');if(!w||!cur)return;e.preventDefault();const m=cur.m.find(x=>x.id==w.dataset.id);if(m)openSpotlight(w,m)});
 
 $('#ms').onclick=e=>{
-  if(lpFired)return;
-  const t=e.target;
+  if(lpFired)return;const t=e.target;
   const wvBtn=t.closest('[data-wave]');if(wvBtn){add({k:'st',e:wvBtn.dataset.wave});return}
   const oi=t.closest('[data-openimg]');if(oi){openLightbox(oi.dataset.openimg);return}
-  const men=t.closest('.mention');
-  if(men){
-    const k=cleanU(men.dataset.u);
-    if(k===cleanU(me.u)){go(3);$('#chat').classList.remove('open');return}
-    const u=USERS[k]||{n:'@'+k,u:'@'+k,h:240,s:'пользователь Lunarn'};
-    prof(ensureUserChat(u));return;
-  }
-  const an=t.closest('.an');
-  if(an){const k=cleanU(an.dataset.au),u=USERS[k]||{n:an.textContent,u:'@'+(k||'user'),h:240};prof(ensureUserChat(u));return}
-  const ct=t.closest('.ct-open');
-  if(ct){const k=cleanU(ct.dataset.cu),u=USERS[k]||{n:ct.querySelector('b').textContent,u:'@'+k,h:240};prof(ensureUserChat(u));return}
-  const w=t.closest('.mw');if(!w)return;
-  const m=cur.m.find(x=>x.id==w.dataset.id);if(!m)return;
-  if(t.closest('.rq'))return jump(t.closest('.rq').dataset.g);
+  const fdl=t.closest('.file-dl');if(fdl){const u=fdl.dataset.furl;if(!u)return toast('Файл недоступен');const a=document.createElement('a');a.href=u;a.download=fdl.dataset.fn||'file';a.target='_blank';a.click();return}
+  const fw=t.closest('.fw');if(fw&&fw.dataset.fwu){const u=USERS[fw.dataset.fwu];if(u)prof(ensureUserChat(u));return}
+  const stO=t.closest('.st-open');if(stO&&stO.dataset.stk){openStory(stO.dataset.stk,+stO.dataset.sti||0);return}
+  const men=t.closest('.mention');if(men){const k=cleanU(men.dataset.u);if(k===cleanU(me.u)){go(3);$('#chat').classList.remove('open');return}const u=USERS[k];if(u)prof(ensureUserChat(u));else toast('Пользователь не найден');return}
+  const an=t.closest('.an');if(an){const k=cleanU(an.dataset.au),u=USERS[k];if(u)prof(ensureUserChat(u));return}
+  const ct=t.closest('.ct-open');if(ct){const k=cleanU(ct.dataset.cu),u=USERS[k];if(u)prof(ensureUserChat(u));return}
+  const w=t.closest('.mw');if(!w)return;const m=cur.m.find(x=>x.id==w.dataset.id);if(!m)return;
+  if(t.closest('.rq')&&t.closest('.rq').dataset.g)return jump(t.closest('.rq').dataset.g);
   const rc=t.closest('.rc');if(rc){rxn(m,rc.dataset.e);return drawMsgs()}
-  const po=t.closest('.po');if(po&&m.my==null){m.my=+po.dataset.v;m.o[m.my][1]++;saveAll();return drawMsgs()}
+  const po=t.closest('.po');if(po&&m.my==null){m.my=+po.dataset.v;m.o[m.my][1]++;saveAll();if(cur.t!=='s')pushEventToTarget(cur.u,{type:'vote',chatId:cur.id,fromU:me.u,msgId:m.id,opt:m.my}).catch(()=>{});return drawMsgs()}
   const mp=t.closest('.mp');if(mp&&mp.dataset.geo){toast('Координаты: '+mp.dataset.geo);return}
-  const vp=t.closest('.vp');if(vp){const vc=vp.closest('.vc');playVoiceMsg(vc,vc.dataset.src);return}
-  const ww=t.closest('.wv-wrap');
-  if(ww){
-    const r=ww.getBoundingClientRect(),pct=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-    ww.querySelector('.wv-fg').style.clipPath=`inset(0 ${100-pct*100}% 0 0)`;
-    playVoiceMsg(ww.closest('.vc'),ww.closest('.vc').dataset.src,pct);return;
-  }
+  const vp=t.closest('.vp');if(vp){playVoiceMsg(vp.closest('.vc'),vp.closest('.vc').dataset.src);return}
+  const ww=t.closest('.wv-wrap');if(ww){const r=ww.getBoundingClientRect(),pct=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));ww.querySelector('.wv-fg').style.clipPath=`inset(0 ${100-pct*100}% 0 0)`;playVoiceMsg(ww.closest('.vc'),ww.closest('.vc').dataset.src,pct);return}
   const vn=t.closest('.vnote-wrap');
   if(vn){
+    if(m.once&&!m.me&&m.viewed)return toast('Одноразовый кружок уже просмотрен');
     const vid=vn.querySelector('video'),ring=vn.querySelector('circle');
-    if(!vid||!m.src)return toast('Старый кружок без видео — запишите новый');
-    if(m.src.startsWith('data:')&&!vid.dataset.blob){
-      try{
-        const parts=m.src.split(','),rawMime=(parts[0].match(/:(.*?);/)||[])[1]||'video/mp4';
-        const cleanMime=rawMime.split(';')[0];
-        const bin=atob(parts[1]),arr=new Uint8Array(bin.length);
-        for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
-        vid.src=URL.createObjectURL(new Blob([arr],{type:cleanMime}));
-        vid.dataset.blob='1';
-      }catch(err){}
-    }
+    if(!vid||!m.src)return toast('Видео не найдено');
+    const ov=vn.querySelector('.vnote-once');if(ov)ov.remove();
     if(vid.paused){
       vid.muted=false;
       vid.play().then(()=>{
         vn.classList.add('playing');
         vid.ontimeupdate=()=>{if(vid.duration)ring.style.strokeDashoffset=654*(1-vid.currentTime/vid.duration)};
-      }).catch(err=>toast('Ошибка видео: '+(err.name||'не поддерживается')));
-    }else{
-      vid.pause();vn.classList.remove('playing');
-    }
+        if(m.once&&!m.me)vid.onended=()=>{m.viewed=1;saveAll();drawMsgs()};
+      }).catch(err=>toast('Ошибка видео: '+(err.name||'формат')));
+    }else{vid.pause();vn.classList.remove('playing')}
     return;
   }
-  if(t.closest('.gf-btn')&&!m.me&&!m.ok){m.ok=1;burst();toast('Подарок принят ✨');drawMsgs();saveAll();return}
+  if(t.closest('.gf-btn')&&!m.me&&!m.ok){m.ok=1;playGiftAnim(m.g,'Подарок принят ✨');drawMsgs();saveAll();return}
   if(t.closest('.gf-open')){openGiftModal(m,dispName(cur));return}
 };
 
@@ -2581,24 +2293,17 @@ document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mn'))hm()});
 
 $('#pf').onclick=e=>{
   const p=P.find(x=>x.id===$('#pf').dataset.id);if(!p)return;
-  const cp=e.target.closest('[data-copy]');if(cp){try{navigator.clipboard.writeText(cp.dataset.copy)}catch(x){}toast('Скопировано: '+cp.dataset.copy);return}
+  const cp=e.target.closest('[data-copy]');if(cp){try{navigator.clipboard.writeText(cp.dataset.copy)}catch(x){}toast('Скопировано');return}
   const t=e.target.closest('button');if(!t)return;
   if(t.id==='pc')return $('#pf').classList.remove('on');
-  if(t.id==='pe'){
-    const r=t.getBoundingClientRect();
-    menu(r.left-170,r.bottom+6,[
-      ['Поделиться','share',()=>{try{navigator.clipboard.writeText(`${dispName(p)} (${fmtU(p.u)})`)}catch(x){}toast('Контакт скопирован')}],
-      [p.pin?'Открепить чат':'Закрепить чат','pin',()=>{p.pin=p.pin?0:1;list();saveAll()}],
-      ['Удалить чат','trash',()=>{p.hide=1;$('#pf').classList.remove('on');$('#chat').classList.remove('open');cur=null;list();saveAll()},1]
-    ]);return;
-  }
+  if(t.id==='pe'){const r=t.getBoundingClientRect();menu(r.left-170,r.bottom+6,[['Поделиться','share',()=>{try{navigator.clipboard.writeText(`${dispName(p)} (${fmtU(p.u)})`)}catch(x){}toast('Скопировано')}],[p.pin?'Открепить чат':'Закрепить чат','pin',()=>{p.pin=p.pin?0:1;list();saveAll()}],['Удалить чат','trash',()=>{p.hide=1;$('#pf').classList.remove('on');$('#chat').classList.remove('open');cur=null;list();saveAll()},1]]);return}
   const x=t.dataset.x;
   if(x==='msg'){$('#pf').classList.remove('on');open(p.id)}
   else if(x==='ctog'){toggleContact(p.u);prof(p)}
   else if(x==='call'||x==='vid')call(p,x==='vid');
   else if(x==='mute'){p.mute=!p.mute;prof(p);list();saveAll()}
   else if(x==='gift'){if(cur!=p)open(p.id);$('#pf').classList.remove('on');shop()}
-  else if(x==='blk'){p.blk=!p.blk;prof(p);saveAll();toast(p.blk?'Заблокирован':'Разблокирован')}
+  else if(x==='blk'){toggleBlockUser(p.u);prof(p)}
 };
 
 $('#call').onclick=e=>{
@@ -2607,43 +2312,30 @@ $('#call').onclick=e=>{
   if(b.id==='c-rej'||b.id==='ce')return endCall(false);
   if(b.id==='cflip'){callFacing=callFacing==='user'?'environment':'user';if($('#cvid').classList.contains('on'))toggleCallVideo(true);toast('Камера перевёрнута');return}
   b.classList.toggle('on');
-  if(b.id==='cmic'){
-    const muted=b.classList.contains('on');
-    if(callLocalStream)callLocalStream.getAudioTracks().forEach(t=>t.enabled=!muted);
-    toast(muted?'Микрофон выкл.':'Микрофон вкл.');
-  }
+  if(b.id==='cmic'){const muted=b.classList.contains('on');if(callLocalStream)callLocalStream.getAudioTracks().forEach(t=>t.enabled=!muted);toast(muted?'Микрофон выкл.':'Микрофон вкл.')}
   if(b.id==='cvid')toggleCallVideo(b.classList.contains('on'));
 };
 
 $('#p3').onclick=e=>{
   const b=e.target.closest('button');if(!b)return;
-  if(b.id==='logout-btn'){
-    publishMyProfile(false);ls('lunarn_auth','');
-    $('#au-u').value=fmtU(me.u);$('#au-pw').value='';
-    setAuthMode('log');$('#auth').classList.add('on');return;
-  }
+  if(b.id==='logout-btn'){publishMyProfile(false);ls('lunarn_auth','');$('#au-u').value=fmtU(me.u);$('#au-pw').value='';setAuthMode('log');$('#auth').classList.add('on');return}
   if(b.dataset.s)sp(b.dataset.s);
 };
 $('#sp').onclick=e=>{
   const t=e.target.closest('button');if(!t)return;const d=t.dataset;
   if(t.id==='spb'){if(CK==='blk')sp('prv');else{$('#sp').classList.remove('on');mset()}return}
-  if(t.id==='btn-upav'){const f=$('#fi');f.accept='image/*';f.onchange=()=>{const x=f.files[0];if(!x)return;compressImg(x,340,src=>{me.av=src;ls('lunarn_me',JSON.stringify(me));publishMyProfile(true);sp('pr',1);strs();toast('Аватар обновлён')});f.value=''};f.click();return}
-  if(t.id==='btn-rmav'){me.av='';ls('lunarn_me',JSON.stringify(me));publishMyProfile(true);sp('pr',1);strs();return}
+  if(t.id==='btn-upav'){const f=$('#fi');f.accept='image/*';f.onchange=()=>{const x=f.files[0];if(!x)return;compressImg(x,340,src=>{me.av=src;saveAll();publishMyProfile(true);sp('pr',1);strs();toast('Аватар обновлён')});f.value=''};f.click();return}
+  if(t.id==='btn-rmav'){me.av='';saveAll();publishMyProfile(true);sp('pr',1);strs();return}
   if(d.delpk!=null){SK_PACKS.splice(+d.delpk,1);activePackIdx=0;saveAll();sp('pks',1);emp('s');return}
+  if(d.unblk){toggleBlockUser(d.unblk);sp('blk',1);return}
   if(t.classList.contains('sw')){ST[d.k]=ST[d.k]?0:1;t.classList.toggle('on');ap()}
-  else if(d.v!=null){
-    const key=t.parentNode.dataset.k;ST[key]=d.v;
-    [...t.parentNode.children].forEach(b=>b.classList.toggle('on',b==t));
-    ap();
-    if(key==='photo'){publishMyProfile(true);toast('Приватность аватара обновлена')}
-  }
+  else if(d.v!=null){const key=t.parentNode.dataset.k;ST[key]=d.v;[...t.parentNode.children].forEach(b=>b.classList.toggle('on',b==t));ap();if(key==='photo'||key==='lastseen'){publishMyProfile(true);toast('Приватность обновлена')}}
   else if(d.st){const s=STY[d.st];ST.ac=s[1];ST.ac2=s[2];ST.wp=s[3];ST.bgc=s[4];ST.wimg='';ap();sp(CK,1)}
   else if(d.c){ST.ac=d.c;ap();sp(CK,1)}
   else if(d.bg!==undefined){ST.bgc=d.bg;ap();sp(CK,1)}
   else if(d.wp){ST.wp=d.wp;ST.wimg='';ap();sp(CK,1)}
   else if(t.id==='upwp'){const f=$('#fi');f.accept='image/*';f.onchange=()=>{const x=f.files[0];if(!x)return;compressImg(x,1080,src=>{ST.wimg=src;ap();sp(CK,1);toast('Обои установлены')});f.value=''};f.click()}
   else if(t.id==='rmwp'){ST.wimg='';ap();sp(CK,1)}
-  else if(d.u){P.find(p=>p.id==d.u).blk=0;sp('blk',1);saveAll()}
   else if(d.top){moons+=+d.top;saveAll();toast('+'+d.top+' 🌙');sp('str',1)}
   else if(d.a==='reqnotif')reqSysNotif(false)
   else if(d.a==='pw')sp('pw')
@@ -2653,127 +2345,112 @@ $('#sp').onclick=e=>{
   else if(d.a==='blk')sp('blk')
   else if(d.a==='rst'){['theme','ac','ac2','bgc','wp','wimg','wpdim','fs','br','bl','anim','aur','comp','grad'].forEach(x=>ST[x]=DEF[x]);ap();sp(CK,1);toast('Сброшено')}
 };
-$('#sp').oninput=e=>{
-  const i=e.target,v=i.value;
-  if(i.dataset.p){me[i.dataset.p]=i.dataset.p==='h'?+v:v;ls('lunarn_me',JSON.stringify(me));if(i.type==='range'){i.parentNode.querySelector('b').textContent=v+'°';const b=$('#up-myav');if(b&&!me.av)b.style.background=`linear-gradient(135deg,hsl(${v} 82% 60%),hsl(${+v+50} 78% 48%))`}}
-  else if(i.type==='range'){ST[i.dataset.k]=+v;i.parentNode.querySelector('b').textContent=v;ap()}
-  else if(i.type==='color'){ST[i.dataset.k]=v;ap()}
-};
+$('#sp').oninput=e=>{const i=e.target,v=i.value;if(i.dataset.p){me[i.dataset.p]=i.dataset.p==='h'?+v:v;saveAll();if(i.type==='range'){i.parentNode.querySelector('b').textContent=v+'°';const b=$('#up-myav');if(b&&!me.av)b.style.background=`linear-gradient(135deg,hsl(${v} 82% 60%),hsl(${+v+50} 78% 48%))`}}else if(i.type==='range'){ST[i.dataset.k]=+v;i.parentNode.querySelector('b').textContent=v;ap()}else if(i.type==='color'){ST[i.dataset.k]=v;ap()}};
 $('#csi').oninput=e=>{const v=e.target.value.toLowerCase(),m=v&&[...cur.m].reverse().find(x=>pv(x).toLowerCase().includes(v));if(m)jump(m.id)};
 $('#csx').onclick=()=>{$('#sq').style.display='none';$('#csi').value=''};
 
-let stm=null,svIdx=0;
+let stm=null,svIdx=0,svRem=6000,svStart=0,svPaused=false,svScale=1,svPinch0=0;
 function strs(){
   const myKey=cleanU(me.u),myArr=getStoriesArr(myKey),hasMy=myArr.length>0;
-  const others=Object.keys(STORIES).filter(k=>k!==myKey&&isContact(k)&&getStoriesArr(k).length>0);
+  const others=Object.keys(STORIES).filter(k=>k!==myKey&&!isAnyBlocked(k)&&getStoriesArr(k).length>0);
   $('#sr').innerHTML=`<button data-sk="${myKey}" style="position:relative"><span class="rg${hasMy?'':' sn'}"><span>${av({n:me.n||'Я',u:me.u,h:me.h,av:me.av},52)}</span></span><span id="add-st-plus" style="position:absolute;right:4px;bottom:18px;width:20px;height:20px;border-radius:50%;background:var(--ac);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;border:2px solid var(--bg)">+</span>Моя</button>`
-    +others.map(k=>{const arr=getStoriesArr(k),u=USERS[k]||{n:'@'+k,u:'@'+k,h:240},allSeen=arr.every(x=>x._sn);return`<button data-sk="${k}"><span class="rg${allSeen?' sn':''}"><span>${av(Object.assign({t:'u'},u),52)}</span></span>${esc((u.n||k).split(' ')[0])}</button>`}).join('');
+    +others.map(k=>{const arr=getStoriesArr(k),u=USERS[k]||{n:'@'+k,u:'@'+k,h:240},allSeen=arr.every(x=>x._sn);return`<button data-sk="${k}"><span class="rg${allSeen?' sn':''}"><span>${av(Object.assign({t:'u'},u),52)}</span></span>${esc(dispName(Object.assign({t:'u'},u)).split(' ')[0])}</button>`}).join('');
 }
-
 function pickNewStory(){
   const f=$('#fi');f.accept='image/*,video/*';
-  f.onchange=()=>{
-    const x=f.files[0];if(!x)return;
+  f.onchange=async()=>{
+    const x=f.files[0];if(!x)return;toast('Публикация…');
     if(x.type.startsWith('video/')){
-      const url=URL.createObjectURL(x),tv=document.createElement('video');tv.preload='metadata';
-      tv.onloadedmetadata=()=>{
-        if(tv.duration>600){URL.revokeObjectURL(url);toast('Максимум 10 минут')}
-        else saveStory({id:'st_'+Date.now(),type:'vid',src:url,dur:Math.max(4,tv.duration),likes:{},ts:Date.now()});
-      };tv.src=url;
-    }else compressImg(x,900,src=>saveStory({id:'st_'+Date.now(),type:'img',src,dur:6,likes:{},ts:Date.now()}));
+      const ext=(x.name.split('.').pop()||'mp4').slice(0,5),url=await uploadMediaBlob(x,ext)||URL.createObjectURL(x);
+      saveStory({id:'st_'+Date.now(),type:'vid',src:url,dur:15,likes:{},ts:Date.now()});
+    }else{
+      compressImg(x,1080,async dataUrl=>{
+        const blob=await (await fetch(dataUrl)).blob(),url=await uploadMediaBlob(blob,'jpg')||dataUrl;
+        saveStory({id:'st_'+Date.now(),type:'img',src:url,dur:6,likes:{},ts:Date.now()});
+      });
+    }
     f.value='';
   };f.click();
 }
-
-function openStory(key,idx=0){
-  clearTimeout(stm);const myKey=cleanU(me.u),arr=getStoriesArr(key);
-  if(key===myKey&&!arr.length)return pickNewStory();
-  if(!arr.length)return;
-  if(idx<0)idx=0;
-  if(idx>=arr.length){$('#sv').classList.remove('on');strs();return}
-  svIdx=idx;
-  const st=arr[idx];st._sn=1;
-  const u=key===myKey?me:(USERS[key]||{n:'@'+key,u:'@'+key,h:240});
-  const likes=st.likes||{},liked=!!likes[myKey],likeCnt=Object.keys(likes).length;
-  const bars=arr.map((_,i)=>`<div class="sb${i<idx?' done':''}"><i${i===idx?` id="sv-bar" style="animation:sg ${st.dur||6}s linear forwards"`:''}></i></div>`).join('');
-  const v=$('#sv');
-  v.innerHTML=`
-    <div class="sb-row">${bars}</div>
-    <div class="sh2">${av(Object.assign({t:'u'},u),40)}<div><b>${esc(key===myKey?u.n:dispName(Object.assign({t:'u'},u)))}</b><small style="display:block;font-size:11px;opacity:.7">${idx+1} из ${arr.length} · ${tm(st.ts||Date.now())}</small></div>${key===myKey?`<button class="ib" id="sv-add" title="Добавить ещё">${I('plus',20)}</button><button class="ib" id="sv-del">${I('trash',20)}</button>`:''}<button class="ib" id="sx">${I('x')}</button></div>
-    <div class="sm" id="sv-stage" style="${st.type==='img'?`background:url(${st.src})`:''}">${st.type==='vid'?`<video src="${st.src}" autoplay playsinline></video>`:''}</div>
-    <div class="sr2">
-      ${key!==myKey?`<input id="sv-inp" placeholder="Ответить на историю…">`:'<span style="flex:1;font-size:13px;opacity:.75">Ваша публикация</span>'}
-      <button id="sv-like" class="${liked?'liked':''}">❤️ <small style="font-size:13px">${likeCnt||''}</small></button>
-    </div>`;
-  v.classList.add('on');v.dataset.k=key;
-  stm=setTimeout(()=>openStory(key,idx+1),(st.dur||6)*1000);
+function pauseStory(p){
+  const bar=$('#sv-bar'),vid=$('#sv video');
+  if(p&&!svPaused){svPaused=true;clearTimeout(stm);svRem=Math.max(400,svRem-(Date.now()-svStart));if(bar)bar.style.animationPlayState='paused';if(vid)vid.pause()}
+  else if(!p&&svPaused){svPaused=false;svStart=Date.now();if(bar)bar.style.animationPlayState='running';if(vid)vid.play().catch(()=>{});stm=setTimeout(()=>openStory($('#sv').dataset.k,svIdx+1),svRem)}
 }
-
+function openStory(key,idx=0){
+  clearTimeout(stm);svPaused=false;svScale=1;
+  const myKey=cleanU(me.u),arr=getStoriesArr(key);
+  if(key===myKey&&!arr.length)return pickNewStory();
+  if(!arr.length)return;if(idx<0)idx=0;
+  if(idx>=arr.length){$('#sv').classList.remove('on');strs();return}
+  svIdx=idx;const st=arr[idx];st._sn=1;
+  const u=key===myKey?me:(USERS[key]||{n:'@'+key,u:'@'+key,h:240}),likes=st.likes||{},liked=!!likes[myKey],likeCnt=Object.keys(likes).length;
+  const dur=(st.dur||6);svRem=dur*1000;svStart=Date.now();
+  const v=$('#sv');
+  v.innerHTML=`<div class="sb-row">${arr.map((_,i)=>`<div class="sb${i<idx?' done':''}"><i${i===idx?` id="sv-bar" style="animation:sg ${dur}s linear forwards"`:''}></i></div>`).join('')}</div>
+    <div class="sh2">${av(Object.assign({t:'u'},u),40)}<div><b>${esc(key===myKey?u.n:dispName(Object.assign({t:'u'},u)))}</b><small style="display:block;font-size:11px;opacity:.7">${idx+1}/${arr.length} · ${tm(st.ts||Date.now())}</small></div>${key===myKey?`<button class="ib" id="sv-add">${I('plus',20)}</button><button class="ib" id="sv-del">${I('trash',20)}</button>`:''}<button class="ib" id="sx">${I('x')}</button></div>
+    <div class="sm" id="sv-stage">${st.type==='vid'?`<video class="sm-media" id="sv-med" src="${st.src}" autoplay playsinline></video>`:`<img class="sm-media" id="sv-med" src="${st.src}">`}</div>
+    <div class="sr2">${key!==myKey?`<input id="sv-inp" placeholder="Ответить на публикацию…">`:'<span style="flex:1;font-size:13px;opacity:.75">Зажмите для паузы · 2 пальца — зум</span>'}<button id="sv-like" class="${liked?'liked':''}">❤️ <small style="font-size:13px">${likeCnt||''}</small></button></div>`;
+  v.classList.add('on');v.dataset.k=key;
+  stm=setTimeout(()=>openStory(key,idx+1),svRem);
+}
 async function saveStory(obj){
-  const k=cleanU(me.u);
-  const arr=getStoriesArr(k);
-  arr.push(obj);
-  STORIES[k]=arr;saveAll();
-  const cloudArr=arr.filter(x=>x.type==='img');
-  if(sb&&navigator.onLine&&cloudArr.length){
-    await sb.from('stories').upsert({username:k,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
-  }
+  const k=cleanU(me.u),arr=getStoriesArr(k);arr.push(obj);STORIES[k]=arr;saveAll();
+  if(sb&&navigator.onLine)await sb.from('stories').upsert({username:k,data:arr,updated_at:Date.now()},{onConflict:'username'});
   strs();if(tabs===3)mset();openStory(k,arr.length-1);
 }
+$('#sr').onclick=e=>{if(e.target.closest('#add-st-plus')){pickNewStory();return}const b=e.target.closest('[data-sk]');if(b)openStory(b.dataset.sk,0)};
 
-$('#sr').onclick=e=>{
-  if(e.target.closest('#add-st-plus')){pickNewStory();return}
-  const b=e.target.closest('[data-sk]');if(b)openStory(b.dataset.sk,0);
-};
-
+let svHoldT=null,svDidHold=false;
+$('#sv').addEventListener('touchstart',e=>{
+  if(!e.target.closest('#sv-stage'))return;
+  if(e.touches.length===2){svPinch0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);pauseStory(true);return}
+  svDidHold=false;svHoldT=setTimeout(()=>{svDidHold=true;pauseStory(true)},180);
+},{passive:true});
+$('#sv').addEventListener('touchmove',e=>{
+  if(e.touches.length===2&&svPinch0){
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    svScale=Math.max(1,Math.min(3.5,d/svPinch0));const med=$('#sv-med');if(med)med.style.transform=`scale(${svScale})`;
+  }
+},{passive:true});
+$('#sv').addEventListener('touchend',e=>{
+  clearTimeout(svHoldT);
+  if(e.touches.length===0){
+    if(svScale>1){svScale=1;const med=$('#sv-med');if(med)med.style.transform='scale(1)'}
+    if(svPaused)pauseStory(false);
+  }
+});
 $('#sv').onclick=async e=>{
+  if(svDidHold){svDidHold=false;return}
   const t=e.target,v=$('#sv'),key=v.dataset.k,myKey=cleanU(me.u);
   if(t.closest('#sx')){clearTimeout(stm);v.classList.remove('on');strs();return}
   if(t.closest('#sv-add')){clearTimeout(stm);v.classList.remove('on');pickNewStory();return}
   if(t.closest('#sv-del')){
-    clearTimeout(stm);
-    const arr=getStoriesArr(myKey);arr.splice(svIdx,1);
+    clearTimeout(stm);const arr=getStoriesArr(myKey);arr.splice(svIdx,1);
     if(arr.length)STORIES[myKey]=arr;else delete STORIES[myKey];
-    if(sb&&navigator.onLine){
-      const cloudArr=arr.filter(x=>x.type==='img');
-      if(cloudArr.length)await sb.from('stories').upsert({username:myKey,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
-      else await sb.from('stories').delete().eq('username',myKey);
-    }
-    saveAll();strs();if(tabs===3)mset();
-    if(arr.length)openStory(myKey,Math.min(svIdx,arr.length-1));else v.classList.remove('on');
-    toast('История удалена');return;
+    if(sb&&navigator.onLine){if(arr.length)await sb.from('stories').upsert({username:myKey,data:arr,updated_at:Date.now()},{onConflict:'username'});else await sb.from('stories').delete().eq('username',myKey)}
+    saveAll();strs();if(tabs===3)mset();if(arr.length)openStory(myKey,Math.min(svIdx,arr.length-1));else v.classList.remove('on');toast('Удалено');return;
   }
   if(t.closest('#sv-like')){
     const arr=getStoriesArr(key),st=arr[svIdx];if(!st)return;st.likes=st.likes||{};
     if(st.likes[myKey])delete st.likes[myKey];else{st.likes[myKey]=1;if(ST.vib)try{navigator.vibrate(18)}catch(err){}}
-    STORIES[key]=arr;
-    if(sb&&navigator.onLine){
-      const cloudArr=arr.filter(x=>x.type==='img');
-      if(cloudArr.length)await sb.from('stories').upsert({username:key,data:cloudArr,updated_at:Date.now()},{onConflict:'username'});
-    }
+    STORIES[key]=arr;if(sb&&navigator.onLine)await sb.from('stories').upsert({username:key,data:arr,updated_at:Date.now()},{onConflict:'username'});
     saveAll();openStory(key,svIdx);return;
   }
-  if(t.closest('#sv-inp')){clearTimeout(stm);const b=$('#sv-bar');if(b)b.style.animationPlayState='paused';return}
-  if(t.closest('#sv-stage')){
-    const r=$('#sv-stage').getBoundingClientRect();
-    if(e.clientX-r.left<r.width*0.35)openStory(key,svIdx-1);
-    else openStory(key,svIdx+1);
-  }
+  if(t.closest('#sv-inp')){pauseStory(true);return}
+  if(t.closest('#sv-stage')){const r=$('#sv-stage').getBoundingClientRect();openStory(key,e.clientX-r.left<r.width*0.35?svIdx-1:svIdx+1)}
 };
-
 $('#sv').addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.id==='sv-inp'){
     const val=e.target.value.trim(),key=$('#sv').dataset.k;if(!val)return;
-    const u=USERS[key];if(u)add({t:val,stRef:'История '+dispName(Object.assign({t:'u'},u))},ensureUserChat(u));
+    const u=USERS[key];if(u)add({t:val,stRef:'Публикация '+dispName(Object.assign({t:'u'},u)),stKey:key,stIdx:svIdx},ensureUserChat(u));
     e.target.value='';clearTimeout(stm);$('#sv').classList.remove('on');toast('Ответ отправлен');
   }
 });
 
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(r=>r.update()).catch(()=>{}));
-}
-
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(r=>r.update()).catch(()=>{}))}
 ap();ui();go(0);strs();checkAuth();initCloud();
 </script>
 </body>
 </html>
+      
