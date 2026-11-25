@@ -659,7 +659,7 @@ const STATUS_IC=(m)=>{
   return`<span class="ticks${m.rd?' rd':''}${m._rdAnim?' anim':''}"><svg viewBox="0 0 20 13"><path class="ck1" d="M1.5 7l3.5 3.5L12 3"/><path class="ck2" d="M7.5 7l3.5 3.5L18 3"/></svg></span>`;
 };
 
-const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('lunarn_rt_v4'):null;
+const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('lunarn_rt_v5'):null;
 let sb=null,dbOnline=false,sbChannels=[],rtLive=null,lastTypSent=0;
 const typTimers={};
 const TYP_HTML=`<span class="typ-tx">печатает<span class="typ-dots"><i></i><i></i><i></i></span></span>`;
@@ -707,7 +707,7 @@ if(!ST.sbKey)ST.sbKey=DEFAULT_SB_KEY;
 
 function saveAll(){
   try{
-    const safeP=P.map(p=>Object.assign({},p,{m:p.m.slice(-80).map(m=>m.src&&m.src.length>950000?Object.assign({},m,{src:''}):m)}));
+    const safeP=P.map(p=>Object.assign({},p,{m:p.m.slice(-80).map(m=>m.src&&m.src.startsWith('data:')&&m.src.length>900000?Object.assign({},m,{src:''}):m)}));
     ls('lunarn_chats',JSON.stringify(safeP));
     ls('lunarn_calls',JSON.stringify(LG.slice(0,30)));
     ls('lunarn_moons',String(moons));
@@ -715,6 +715,17 @@ function saveAll(){
     ls('lunarn_packs',JSON.stringify(SK_PACKS));
     ls('lunarn_stories',JSON.stringify(STORIES));
   }catch(e){}
+}
+
+async function uploadMediaBlob(blob,ext){
+  if(!sb||!navigator.onLine)return null;
+  try{
+    const path=`${cleanU(me.u)||'user'}/${Date.now()}_${Math.random().toString(36).slice(2,7)}.${ext}`;
+    const {error}=await sb.storage.from('media').upload(path,blob,{contentType:blob.type||'application/octet-stream',upsert:true});
+    if(error)return null;
+    const {data}=sb.storage.from('media').getPublicUrl(path);
+    return data&&data.publicUrl?data.publicUrl:null;
+  }catch(e){return null}
 }
 
 function chatRoomId(a,b){return 'dm_'+[cleanU(a),cleanU(b)].sort().join('__')}
@@ -786,7 +797,7 @@ function subscribeMyChats(){
   sbChannels.forEach(ch=>sb.removeChannel(ch));sbChannels=[];
   const myKey=cleanU(me.u);
 
-  const chGlobal=sb.channel('lunarn_global')
+  const chGlobal=sb.channel('lunarn_global_live')
     .on('postgres_changes',{event:'*',schema:'public',table:'users'},payload=>{
       if(payload.new)syncUserRow(payload.new);
       if(tabs===0)list();if(tabs===1)cons();strs();saveAll();
@@ -798,6 +809,9 @@ function subscribeMyChats(){
     })
     .on('broadcast',{event:'typing'},({payload})=>{
       if(payload)handleTypingEvent(payload);
+    })
+    .on('broadcast',{event:'live_ev'},({payload})=>{
+      if(payload)handleIncomingEvent(payload);
     })
     .subscribe(status=>{
       dbOnline=(status==='SUBSCRIBED');
@@ -820,15 +834,22 @@ function subscribeMyChats(){
 }
 
 document.addEventListener('visibilitychange',()=>{
-  if(cleanU(me.u)&&sb)publishMyProfile(!document.hidden);
+  if(cleanU(me.u)&&sb){
+    publishMyProfile(!document.hidden);
+    if(!document.hidden)pullPendingInbox();
+  }
 });
 
 async function pushEventToTarget(targetU,ev){
   const key=cleanU(targetU);if(!key)return;
   ev.evId=ev.evId||('ev_'+Date.now()+'_'+Math.random().toString(36).slice(2,7));
-  if(bc)bc.postMessage(Object.assign({targetKey:key},ev));
+  const fullEv=Object.assign({targetKey:key},ev);
+  if(bc)bc.postMessage(fullEv);
+  if(rtLive&&dbOnline){
+    rtLive.send({type:'broadcast',event:'live_ev',payload:fullEv}).catch(()=>{});
+  }
   if(sb&&navigator.onLine){
-    const {error}=await sb.from('inbox').insert({target_u:key,payload:ev});
+    const {error}=await sb.from('inbox').insert({target_u:key,payload:fullEv});
     if(error)throw error;
   }
 }
@@ -866,7 +887,7 @@ function updateChatStatus(p){
 
 function handleIncomingEvent(ev){
   if(!ev)return;
-  if(ev.evId){if(seenEv.has(ev.evId))return;seenEv.add(ev.evId);if(seenEv.size>300)seenEv.clear()}
+  if(ev.evId){if(seenEv.has(ev.evId))return;seenEv.add(ev.evId);if(seenEv.size>400)seenEv.clear()}
   const myKey=cleanU(me.u);
   if(ev.targetKey&&ev.targetKey!==myKey)return;
   if(ev.type==='msg'){
@@ -904,7 +925,7 @@ function handleIncomingEvent(ev){
     const m=p&&p.m.find(x=>x.id===ev.msgId);
     if(m){m.t=ev.text;m.ed=1;m._edAnim=1;if(cur===p)drawMsgs();list();saveAll()}
   }else if(ev.type==='call'){
-    if(ev.ts&&Date.now()-ev.ts>25000)return;
+    if(ev.ts&&Date.now()-ev.ts>30000)return;
     if(callTarget)return;
     const p=ensureUserChat(ev.sender);
     call(p,!!ev.vid,true,ev.offer,ev.callId);
@@ -1335,7 +1356,7 @@ function sp(k,keep){
       <div class="inf">Неудаляемые подарки<small>Подарки в Lunarn навсегда остаются в чате и отображаются в витрине получателя (по 3 в ряд).</small></div></div>`;
   }else if(k==='cld'){
     html=`<div class="card gl">
-        <div class="inf">Статус подключения<small>${dbOnline?'🟢 Подключено к Supabase Realtime':'🟡 Подключение к Supabase…'}</small></div>
+        <div class="inf">Статус подключения<small>${dbOnline?'🟢 Подключено к Supabase Realtime + Storage':'🟡 Подключение к Supabase…'}</small></div>
         <div class="inf"><small>Supabase Project URL</small><input id="sb-url" value="${esc(ST.sbUrl||'')}"></div>
         <div class="inf"><small>Supabase Publishable / Anon Key</small><input id="sb-key" value="${esc(ST.sbKey||'')}"></div>
       </div>
@@ -1347,10 +1368,10 @@ function sp(k,keep){
     const b=P.filter(p=>p.blk);
     html=`<div class="card gl">${b.length?b.map(p=>`<div class="set"><span>${esc(p.n)}</span><button class="st" data-u="${p.id}">Разблокировать</button></div>`).join(''):'<p class="em0">Список заблокированных пуст</p>'}</div>`;
   }else if(k==='abt'){
-    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 4.3</h2><small style="color:var(--mu)">Liquid Glass · Supabase Realtime & WebRTC</small></div>
-      <div class="chg"><b>v4.3 — Видео в звонках и кружки iOS/ПК</b><ul>
-        <li>Двустороннее видео в звонках WebRTC с переключением камеры прямо во время разговора.</li>
-        <li>Прямая запись видеокружков без чёрного экрана с превью-кадром и вынесенным таймером.</li>
+    html=`<div class="card gl"><div class="pav-hero"><div style="font-size:60px">🌙</div><h2>Lunarn 4.5</h2><small style="color:var(--mu)">Liquid Glass · Supabase Storage & WebRTC</small></div>
+      <div class="chg"><b>v4.5 — Облачные кружки и мгновенные звонки</b><ul>
+        <li>Видеокружки загружаются напрямую в Supabase Storage и открываются без чёрного экрана на iPhone и ПК.</li>
+        <li>Двойной канал вызова WebRTC (Broadcast + Realtime) с мгновенным откликом и камерой в разговоре.</li>
         <li>Статус «печатает...», анонимные подарки и мульти-истории в профиле.</li>
       </ul></div></div>`;
   }else{
@@ -1444,7 +1465,7 @@ function bh(m,prevM){
   }else if(k==='vnote'){
     cls=' big';
     const bgStyle=m.poster?` style="background-image:url(${m.poster})"`:'';
-    c+=`<div class="vnote-box"><div class="vnote-wrap"${bgStyle}><video src="${m.src||''}"${m.poster?` poster="${m.poster}"`:''} preload="metadata" playsinline loop ${ST.autoV?'autoplay muted':''}></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div></div><span class="vnote-badge">⭕ ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
+    c+=`<div class="vnote-box"><div class="vnote-wrap"${bgStyle}><video src="${m.src||''}"${m.poster?` poster="${m.poster}"`:''} preload="metadata" playsinline loop></video><svg class="vnote-ring" viewBox="0 0 214 214"><circle cx="107" cy="107" r="104"/></svg><div class="vnote-play">${I('play',34)}</div></div><span class="vnote-badge">⭕ ${Math.floor((m.d||1)/60)}:${String((m.d||1)%60).padStart(2,'0')}</span></div>`;
   }else if(k==='poll'){
     const t=m.o.reduce((s,o)=>s+o[1],0)||1;
     c+=`<div class="pq">📊 ${esc(m.q)}</div>`+m.o.map((o,i)=>`<div class="po${m.my===i?' my':''}" data-v="${i}"><span class="pb" style="width:${Math.round(o[1]/t*100)}%"></span><i>${esc(o[0])}</i><em>${Math.round(o[1]/t*100)}%</em></div>`).join('')+`<small>${m.o.reduce((s,o)=>s+o[1],0)} голосов</small>`;
@@ -1620,7 +1641,7 @@ let vrInt=null,vrSec=0,vrFacing='user',vrTorch=false,vrCamStream=null,vrAudioStr
 
 async function openVrCam(){
   if(vrCamStream){vrCamStream.getTracks().forEach(t=>t.stop());vrCamStream=null}
-  vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:{ideal:360},height:{ideal:360}},audio:false});
+  vrCamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:vrFacing,width:{ideal:240},height:{ideal:240},frameRate:{ideal:20,max:24}},audio:false});
   const vid=$('#vrec-v');vid.srcObject=vrCamStream;await vid.play();
   applyVrTorch();
 }
@@ -1657,8 +1678,7 @@ async function startVideoCircle(){
     vrAudioStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
     if(!vrActive){stopVideoCircle(0);return}
     const outStream=new MediaStream([...vrCamStream.getVideoTracks(),...vrAudioStream.getAudioTracks()]);
-    const isApple=/iPhone|iPad|iPod|Mac/.test(navigator.userAgent)&&!/Chrome/.test(navigator.userAgent);
-    const listMimes=isApple?['video/mp4','video/webm']:['video/webm;codecs=vp8,opus','video/webm','video/mp4'];
+    const listMimes=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4','video/webm;codecs=vp8,opus','video/webm'];
     const mime=listMimes.find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m))||'';
     const opts=mime?{mimeType:mime,videoBitsPerSecond:280000,audioBitsPerSecond:32000}:{videoBitsPerSecond:280000};
     mediaRec=new MediaRecorder(outStream,opts);
@@ -1688,12 +1708,20 @@ function stopVideoCircle(doSend){
     $('#vrec-v').srcObject=null;
   };
   if(rec&&rec.state!=='inactive'){
-    rec.onstop=()=>{
+    rec.onstop=async()=>{
       cleanup();
       if(doSend&&recChunks.length){
-        const blob=new Blob(recChunks,{type:rec.mimeType||'video/mp4'});
-        if(blob.size>950000)return toast('Кружок слишком тяжёлый, запишите короче');
-        const r=new FileReader();r.onload=()=>add({k:'vnote',d:dur,src:r.result,poster});r.readAsDataURL(blob);
+        const rawMime=rec.mimeType||'video/mp4';
+        const cleanMime=rawMime.split(';')[0];
+        const ext=cleanMime.includes('mp4')?'mp4':'webm';
+        const blob=new Blob(recChunks,{type:cleanMime});
+        toast('Отправка кружка…');
+        const publicUrl=await uploadMediaBlob(blob,ext);
+        if(publicUrl){
+          add({k:'vnote',d:dur,src:publicUrl,poster});
+        }else{
+          const r=new FileReader();r.onload=()=>add({k:'vnote',d:dur,src:r.result,poster});r.readAsDataURL(blob);
+        }
       }
     };
     try{rec.stop()}catch(e){cleanup()}
@@ -2076,7 +2104,7 @@ async function call(p,isVid,incoming,offer,inCallId){
     </div>`;
   c.classList.add('on');
   playTone(incoming);callToneInt=setInterval(()=>playTone(incoming),1900);
-  clearTimeout(callTimeout);callTimeout=setTimeout(()=>{if(!cs&&callTarget){toast('Нет ответа');endCall(false)}},28000);
+  clearTimeout(callTimeout);callTimeout=setTimeout(()=>{if(!cs&&callTarget){toast('Нет ответа');endCall(false)}},30000);
 
   if(!incoming){
     callLocalStream=await getSafeMedia(isVid);
@@ -2300,9 +2328,25 @@ $('#ms').onclick=e=>{
   const vn=t.closest('.vnote-wrap');
   if(vn){
     const vid=vn.querySelector('video'),ring=vn.querySelector('circle');
-    if(vid&&vid.src){
-      if(vid.paused||vid.muted){vid.muted=false;vid.play().catch(()=>{});vn.classList.add('playing');vid.ontimeupdate=()=>{if(vid.duration)ring.style.strokeDashoffset=654*(1-vid.currentTime/vid.duration)}}
-      else{vid.pause();vn.classList.remove('playing')}
+    if(!vid||!m.src)return toast('Старый кружок без видеофайла — запишите новый');
+    if(m.src.startsWith('data:')&&!vid.dataset.blob){
+      try{
+        const parts=m.src.split(','),rawMime=(parts[0].match(/:(.*?);/)||[])[1]||'video/mp4';
+        const cleanMime=rawMime.split(';')[0];
+        const bin=atob(parts[1]),arr=new Uint8Array(bin.length);
+        for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+        vid.src=URL.createObjectURL(new Blob([arr],{type:cleanMime}));
+        vid.dataset.blob='1';
+      }catch(err){}
+    }
+    if(vid.paused){
+      vid.muted=false;
+      vid.play().then(()=>{
+        vn.classList.add('playing');
+        vid.ontimeupdate=()=>{if(vid.duration)ring.style.strokeDashoffset=654*(1-vid.currentTime/vid.duration)};
+      }).catch(err=>toast('Ошибка видео: '+(err.name||'не поддерживается')));
+    }else{
+      vid.pause();vn.classList.remove('playing');
     }
     return;
   }
@@ -2489,7 +2533,9 @@ $('#sv').addEventListener('keydown',e=>{
   }
 });
 
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(r=>r.unregister())).catch(()=>{});
+}
 
 ap();ui();go(0);strs();checkAuth();initCloud();
 </script>
