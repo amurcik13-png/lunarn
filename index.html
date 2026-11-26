@@ -1189,21 +1189,43 @@ function burst(){for(let i=0;i<28;i++){const s=document.createElement('span');s.
 function popEmoji(x,y,em){const s=document.createElement('span');s.className='dbl-pop';s.textContent=em;s.style.left=x+'px';s.style.top=y+'px';document.body.append(s);setTimeout(()=>s.remove(),680)}
 function linkMentions(txt){return esc(txt).replace(/\n/g,'<br>').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">$1</a>').replace(/(^|\s)(@[a-zA-Z0-9_]{3,28})/g,'$1<span class="mention" data-u="$2">$2</span>')}
 
+let _vpRaf=0,_prevKb=false;
 function syncVP(){
-  const vv=window.visualViewport,app=$('#app'),cp=$('#cp');
-  if(vv&&vv.height<window.innerHeight-80){
-    const h=Math.round(vv.height)+'px';
-    app.style.height=h;app.style.minHeight=h;app.style.top=Math.round(vv.offsetTop)+'px';
-    if(cp)cp.style.bottom='6px';
-    const ms=$('#ms');if(ms&&cur)ms.scrollTop=ms.scrollHeight;
-  }else{
-    app.style.height='';app.style.minHeight='';app.style.top='0px';
-    if(cp)cp.style.bottom='';
-  }
-  window.scrollTo(0,0);
+  const app=$('#app'),cp=$('#cp'),ms=$('#ms');
+  if(!app)return;
+  if(window.scrollY!==0||window.scrollX!==0)window.scrollTo(0,0);
+  const vv=window.visualViewport;
+  const h=Math.round(vv?vv.height:window.innerHeight);
+  const top=Math.round(vv?vv.offsetTop:0);
+  const kbOpen=h<window.innerHeight-90;
+  const wasAtBot=ms?(ms.scrollHeight-ms.scrollTop-ms.clientHeight<140):false;
+
+  document.body.classList.toggle('kb-open',kbOpen);
+  app.style.top='0px';
+  app.style.height=h+'px';
+  app.style.minHeight='0px';
+  app.style.transform=top>0?`translate3d(0,${top}px,0)`:'';
+  if(cp)cp.style.bottom=kbOpen?'6px':'calc(env(safe-area-inset-bottom,0px) + 6px)';
+  if(ms&&cur&&(wasAtBot||(kbOpen&&!_prevKb)))ms.scrollTop=ms.scrollHeight;
+  _prevKb=kbOpen;
 }
-if(window.visualViewport){window.visualViewport.addEventListener('resize',syncVP);window.visualViewport.addEventListener('scroll',syncVP)}
-window.addEventListener('resize',syncVP);syncVP();
+function trackVP(msDur=450){
+  cancelAnimationFrame(_vpRaf);
+  const end=performance.now()+msDur;
+  const step=()=>{
+    syncVP();
+    if(performance.now()<end)_vpRaf=requestAnimationFrame(step);
+  };
+  _vpRaf=requestAnimationFrame(step);
+}
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',()=>trackVP(260));
+  window.visualViewport.addEventListener('scroll',syncVP);
+}
+window.addEventListener('resize',syncVP);
+document.addEventListener('focusin',e=>{if(e.target.matches('input,textarea'))trackVP(520)});
+document.addEventListener('focusout',e=>{if(e.target.matches('input,textarea'))trackVP(420)});
+syncVP();
 document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
 document.addEventListener('touchmove',e=>{if(e.touches.length>1&&!e.target.closest('#sv'))e.preventDefault()},{passive:false});
 
@@ -2620,18 +2642,6 @@ html,body,#app{min-height:0!important}
   sweepStaleOnline();
 
   /* === 2. КЛАВИАТУРА БЕЗ ТРЯСКИ И БЕЗ СБРОСА ВНИЗ === */
-  syncVP = function(){
-    const vv=window.visualViewport, app=$('#app'), cp=$('#cp'), ms=$('#ms');
-    const h=Math.round(vv ? vv.height : window.innerHeight);
-    const top=Math.round(vv ? vv.offsetTop : 0);
-    const wasNearBottom = ms ? (ms.scrollHeight - ms.scrollTop - ms.clientHeight < 120) : true;
-    app.style.height = h + 'px';
-    app.style.top = top + 'px';
-    const kbOpen = h < window.innerHeight - 90;
-    if(cp) cp.style.bottom = kbOpen ? '6px' : '';
-    if(ms && cur && wasNearBottom) ms.scrollTop = ms.scrollHeight;
-    window.scrollTo(0,0);
-  };
   ['pointerdown','mousedown'].forEach(ev=>{
     $('#sb').addEventListener(ev, e=>{ if($('#in').value.trim()) e.preventDefault(); }, true);
   });
