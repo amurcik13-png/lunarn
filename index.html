@@ -1792,6 +1792,18 @@
           <button id="hdr-right-btn" class="glass-btn icon-only" onclick="handleHeaderRight()" aria-label="Действие"></button>
         </header>
 
+        <!-- TAB: CHATS -->
+        <section id="tab-chats" class="tab-view active">
+          <div class="search-wrap">
+            <div class="search-pill">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="chat-search" type="text" placeholder="Поиск по чатам..." oninput="renderChatList()" />
+            </div>
+          </div>
+          <div id="chats-list" class="chat-list"></div>
+          <div style="height:105px"></div>
+        </section>
+
         <!-- TAB: CONTACTS -->
         <section id="tab-contacts" class="tab-view">
           <div class="search-wrap">
@@ -1804,6 +1816,7 @@
           <div class="ios-section-title">Мои контакты</div>
           <div id="contacts-list" class="chat-list"></div>
         </section>
+
         <!-- TAB: CALLS -->
         <section id="tab-calls" class="tab-view">
           <div class="ios-section-title">Недавние звонки</div>
@@ -1871,7 +1884,7 @@
           </div>
           <div style="height:105px"></div>
         </section>
-      </main>
+      
 
       <!-- FLOATING LIQUID GLASS TABBAR -->
       <nav id="tabbar" class="glass-tabbar">
@@ -2156,7 +2169,8 @@
     <input id="wall-file-input" type="file" accept="image/*" style="display:none" onchange="onWallpaperPicked(this)" />
     <input id="sticker-file-input" type="file" accept="image/*" style="display:none" onchange="onStickerFilePicked(this)" />
     <input id="avatar-file-input" type="file" accept="image/*" style="display:none" onchange="onAvatarFilePicked(this)" />
-  </div><!-- /#app -->
+  </div><!-- /#app-shell -->
+  </div><!-- /#app-root -->
 
 <style>
 /* === REDESIGNED iOS DARK + LIQUID GLASS STYLES === */
@@ -2193,7 +2207,7 @@
 .chat-item-card{display:flex;align-items:center;gap:12px;padding:11px 14px;margin:0 10px 6px;border-radius:20px;background:rgba(22,22,26,.78);border:1px solid rgba(255,255,255,.05);transition:transform .14s,background .14s;cursor:pointer}
 .chat-item-card:active{transform:scale(.98);background:rgba(40,40,48,.9)}
 .chat-item-av{position:relative;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#5b8cff,#7c5cff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;flex-shrink:0;background-size:cover;background-position:center}
-.online-dot{position:absolute;right:1px;bottom:1px;width:13px;height:13px;border-radius:50%;background:#30d158;border:2.5px solid #141416}
+.online-dot{display:block;position:absolute;right:1px;bottom:1px;width:13px;height:13px;border-radius:50%;background:#30d158;border:2.5px solid #141416}
 .chat-item-mid{flex:1;min-width:0}
 .chat-item-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .chat-item-name{font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2382,6 +2396,8 @@ function syncViewport() {
   const top = vv ? vv.offsetTop : 0;
   document.documentElement.style.setProperty("--app-h", h + "px");
   document.documentElement.style.setProperty("--app-top", top + "px");
+  document.documentElement.style.setProperty("--vv-height", h + "px");
+  document.documentElement.style.setProperty("--vv-top", top + "px");
   if (STATE.activeChat) {
     const box = $("chat-messages");
     if (box) box.scrollTop = box.scrollHeight;
@@ -3555,30 +3571,118 @@ function subscribeRealtime() {
   setInterval(loadUsers, 25000);
 }
 
-/* === 18. AUTH & APP BOOTSTRAP === */
-async function loginOrRegister(usernameRaw, displayName, password = "") {
-  const username = usernameRaw.replace(/^@/, "").trim().toLowerCase();
-  if (!username) return false;
-  const { data: existing } = await sb.from("users").select("*").ilike("username", username).maybeSingle();
-  if (existing) {
-    if (existing.password && password && existing.password !== password) {
-      alert("Неверный пароль"); return false;
+/* === 18. AUTH, HEADER & APP BOOTSTRAP === */
+let authMode = "login";
+
+function setAuthMode(mode) {
+  authMode = mode;
+  $("auth-tab-login")?.classList.toggle("active", mode === "login");
+  $("auth-tab-reg")?.classList.toggle("active", mode === "reg");
+  if ($("auth-name")) $("auth-name").style.display = mode === "reg" ? "block" : "none";
+  if ($("auth-phone")) $("auth-phone").style.display = mode === "reg" ? "block" : "none";
+  if ($("auth-submit")) $("auth-submit").textContent = mode === "reg" ? "Зарегистрироваться" : "Войти";
+  if ($("auth-err")) $("auth-err").style.display = "none";
+}
+
+function showAuthErr(msg) {
+  const el = $("auth-err");
+  if (!el) return alert(msg);
+  el.textContent = msg;
+  el.style.display = "block";
+}
+
+async function submitAuth() {
+  const username = ($("auth-user")?.value || "").replace(/^@/, "").trim().toLowerCase();
+  const password = $("auth-pass")?.value || "";
+  const name = ($("auth-name")?.value || "").trim();
+  const phone = ($("auth-phone")?.value || "").trim();
+
+  if (!username) return showAuthErr("Введи юзернейм");
+  if (authMode === "reg" && !password) return showAuthErr("Придумай пароль");
+
+  const btn = $("auth-submit");
+  if (btn) btn.disabled = true;
+
+  try {
+    const { data: existing, error } = await sb
+      .from("users")
+      .select("*")
+      .ilike("username", username)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (authMode === "login") {
+      if (!existing) return showAuthErr("Аккаунт не найден. Переключись на «Регистрация».");
+      if (existing.password && existing.password !== password) return showAuthErr("Неверный пароль");
+      STATE.me = existing;
+    } else {
+      if (existing) return showAuthErr("Этот юзернейм уже занят");
+      const newUser = {
+        username,
+        n: name || username,
+        u: "@" + username,
+        ph: phone,
+        b: "В сети в Lunarn 🌙",
+        h: Math.floor(Math.random() * 360),
+        password,
+        is_online: true,
+        updated_at: new Date().toISOString()
+      };
+      const { error: insErr } = await sb.from("users").upsert(newUser, { onConflict: "username" });
+      if (insErr) throw insErr;
+      STATE.me = newUser;
     }
-    STATE.me = existing;
-  } else {
-    const newUser = { username, n: displayName || username, u: "@" + username, b: "В сети в Lunarn 🌙", password, is_online: true, updated_at: new Date().toISOString() };
-    await sb.from("users").upsert(newUser, { onConflict: "username" });
-    STATE.me = newUser;
+
+    lsSet("lunarn_me", STATE.me);
+    bootLoggedIn();
+  } catch (e) {
+    showAuthErr("Ошибка: " + (e?.message || e));
+  } finally {
+    if (btn) btn.disabled = false;
   }
-  lsSet("lunarn_me", STATE.me);
-  bootLoggedIn();
-  return true;
+}
+
+let currentTab = "chats";
+const _origSwitchTab = switchTab;
+switchTab = function(tab) {
+  currentTab = tab;
+  _origSwitchTab(tab);
+  const titles = {
+    chats: STATE.showArchive ? "Архив" : "Чаты",
+    contacts: "Контакты",
+    calls: "Звонки",
+    settings: "Настройки"
+  };
+  if ($("hdr-title")) $("hdr-title").textContent = titles[tab] || "Lunarn";
+  if ($("hdr-left-btn")) $("hdr-left-btn").textContent = tab === "chats" ? (STATE.showArchive ? "Чаты" : "Архив") : "Изм.";
+  if ($("hdr-right-btn")) $("hdr-right-btn").textContent = tab === "settings" ? "🎨" : "＋";
+};
+
+function handleHeaderLeft() {
+  if (currentTab === "chats") toggleArchiveView();
+  else openEditProfile();
+}
+
+function handleHeaderRight() {
+  if (currentTab === "settings") openAppearanceModal();
+  else {
+    switchTab("contacts");
+    $("global-user-search")?.focus();
+  }
+}
+
+function handleToastClick() {
+  $("toast-wrap")?.classList.remove("show");
 }
 
 async function bootLoggedIn() {
-  if ($("auth-screen")) $("auth-screen").style.display = "none";
-  if ($("main-screen")) $("main-screen").style.display = "flex";
+  if ($("auth-screen")) {
+    $("auth-screen").classList.add("hidden");
+    $("auth-screen").style.display = "none";
+  }
   applyTheme();
+  switchTab("chats");
   renderMyProfile();
   renderCallsTab();
   startHeartbeat();
@@ -3592,9 +3696,6 @@ window.addEventListener("DOMContentLoaded", () => {
   applyTheme();
   if (STATE.me?.username) {
     bootLoggedIn();
-  } else if (!$("auth-screen")) {
-    const u = prompt("Введи свой @username для входа в Lunarn:");
-    if (u) loginOrRegister(u, u);
   }
 });
 </script>
